@@ -1,2 +1,7 @@
-# solid-be
-Solid Manager Backend
+# Solid Manager BE
+
+## Domain
+
+- Entities
+- Value Objects
+- Interfaces

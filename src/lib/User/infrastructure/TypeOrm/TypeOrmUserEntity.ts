@@ -1,0 +1,27 @@
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+import { RoleEnum } from '@/shared/enums/roleEnum';
+import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
+import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
+
+@Entity('user')
+export class TypeOrmUserEntity extends PersonAbstract {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column()
+  policy: boolean;
+
+  @Column({ enum: RoleEnum, default: RoleEnum.USER })
+  roleId: string;
+
+  @OneToOne(() => TypeOrmSubscriptionEntity)
+  @JoinColumn()
+  subscription: TypeOrmSubscriptionEntity;
+}
