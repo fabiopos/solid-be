@@ -8,7 +8,7 @@ import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMa
 @Entity('team')
 export class TypeOrmTeamEntity extends TeamAbstract {
   @Column({ default: true })
-  hasSubcription: boolean; // Indica si el equipo tiene una subscripción activa
+  hasSubscription: boolean; // Indica si el equipo tiene una subscripción activa
 
   @OneToMany(() => TypeOrmPlayerEntity, (player) => player.team)
   players: TypeOrmPlayerEntity[];

@@ -21,6 +21,7 @@ import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/Typ
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 
 import { PlayerModule } from '@/lib/Player/infrastructure/NestJs/player.module';
+import { TeamModule } from './lib/Team/infrastructure/NestJs/team.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { PlayerModule } from '@/lib/Player/infrastructure/NestJs/player.module';
       synchronize: true,
     }),
     PlayerModule,
+    TeamModule,
   ],
   controllers: [AppController],
   providers: [AppService],

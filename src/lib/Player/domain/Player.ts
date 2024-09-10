@@ -1,3 +1,4 @@
+import { Team } from '@/lib/Team/domain/Team';
 import { CreatePlayerDto } from '@/shared/dto/CreatePlayerDto';
 import {
   DocumentType,
@@ -27,6 +28,7 @@ export class Player {
   eps: string;
   arl: string;
   id?: string | undefined;
+  team?: Team;
 
   static create(dto: CreatePlayerDto) {
     const player = new Player();

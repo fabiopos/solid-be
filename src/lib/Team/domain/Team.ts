@@ -1,3 +1,5 @@
+import { CreateTeamDto } from '@/shared/dto/CreateTeamDto';
+
 export class Team {
   id: string;
   name: string;
@@ -7,10 +9,17 @@ export class Team {
   logoUrl?: string | null;
   shieldUrl?: string | null;
   createdAt: Date;
+  hasSubscription: boolean;
 
-  constructor(id: string, name: string, active: boolean) {
-    this.id = id;
-    this.name = name;
-    this.active = active;
+  static create(dto: CreateTeamDto): Team {
+    const team = new Team();
+    team.name = dto.name;
+    team.active = dto.active;
+    team.primaryColor = dto.primaryColor;
+    team.secondaryColor = dto.secondaryColor;
+    team.logoUrl = dto.logoUrl;
+    team.shieldUrl = dto.shieldUrl;
+    team.hasSubscription = dto.hasSubscription;
+    return team;
   }
 }
