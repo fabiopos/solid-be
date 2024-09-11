@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -35,7 +36,7 @@ export class TypeOrmSubscriptionEntity {
   @Column({ default: true })
   active: boolean;
 
-  @OneToOne(() => TypeOrmTeamEntity)
+  @ManyToOne(() => TypeOrmTeamEntity, (team) => team.subscriptions)
   @JoinColumn()
   team: TypeOrmTeamEntity;
 

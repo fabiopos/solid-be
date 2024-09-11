@@ -40,7 +40,6 @@ export class TypeOrmTeamRepository implements TeamRepository {
   }
 
   async create(team: Team): Promise<void> {
-    console.log('repository', team.hasSubscription);
     await this.repository.save({
       name: team.name,
       active: team.active,

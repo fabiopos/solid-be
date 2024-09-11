@@ -22,6 +22,7 @@ import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infr
 
 import { PlayerModule } from '@/lib/Player/infrastructure/NestJs/player.module';
 import { TeamModule } from './lib/Team/infrastructure/NestJs/team.module';
+import { SubscriptionModule } from './lib/Subscription/infrastructure/NestJs/subscription.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { TeamModule } from './lib/Team/infrastructure/NestJs/team.module';
     }),
     PlayerModule,
     TeamModule,
+    SubscriptionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

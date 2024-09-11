@@ -17,7 +17,6 @@ export class TeamController {
 
   @Post()
   async create(@Body() team: CreateTeamPayload) {
-    console.log('controller', team.hasSubscription);
     return this.teamCreate.run({
       active: team.active,
       name: team.name,
