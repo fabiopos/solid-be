@@ -1,5 +1,9 @@
+import { CreateTeamDto } from './CreateTeamDto';
+import { CreateUserDto } from './CreateUserDto';
+
 export class CreateSubscriptionDto {
-  teamId: string;
+  teams: CreateTeamDto[];
   paymentId: string;
   planId: string;
+  user: CreateUserDto;
 }

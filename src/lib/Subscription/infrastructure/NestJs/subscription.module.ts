@@ -5,17 +5,29 @@ import { SubscriptionController } from './subscription.controller';
 import { TypeOrmSubscriptionRepository } from '../TypeOrm/TypeOrmSubscriptionRepository';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
+import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
+import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([TypeOrmSubscriptionEntity]),
     TypeOrmModule.forFeature([TypeOrmTeamEntity]),
+    TypeOrmModule.forFeature([TypeOrmPlanEntity]),
   ],
   controllers: [SubscriptionController],
   providers: [
     {
       provide: 'SubscriptionRepository',
       useClass: TypeOrmSubscriptionRepository,
+    },
+    {
+      provide: 'TeamRepository',
+      useClass: TypeOrmTeamRepository,
+    },
+    {
+      provide: 'PlanRepository',
+      useClass: TypeOrmPlanRepository,
     },
     // {
     //   provide: 'SubscriptionGetAll',
@@ -25,9 +37,11 @@ import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeam
     // },
     {
       provide: 'SubscriptionCreate',
-      useFactory: (repository: TypeOrmSubscriptionRepository) =>
-        new SubscriptionCreate(repository),
-      inject: ['SubscriptionRepository'],
+      useFactory: (
+        repository: TypeOrmSubscriptionRepository,
+        teamRepository: TypeOrmTeamRepository,
+      ) => new SubscriptionCreate(repository, teamRepository),
+      inject: ['SubscriptionRepository', 'TeamRepository'],
     },
   ],
 })

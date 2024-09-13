@@ -12,6 +12,7 @@ export class CreateTeamPayload {
   @Length(3, 50)
   name: string;
 
+  @IsOptional()
   active: boolean;
 
   @IsBoolean()

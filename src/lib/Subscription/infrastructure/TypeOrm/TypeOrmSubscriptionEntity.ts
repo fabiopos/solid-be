@@ -36,12 +36,11 @@ export class TypeOrmSubscriptionEntity {
   @Column({ default: true })
   active: boolean;
 
-  @ManyToOne(() => TypeOrmTeamEntity, (team) => team.subscriptions)
+  @OneToMany(() => TypeOrmTeamEntity, (team) => team.subscription)
   @JoinColumn()
-  team: TypeOrmTeamEntity;
+  teams: TypeOrmTeamEntity[];
 
-  @OneToOne(() => TypeOrmPlanEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmPlanEntity, (plan) => plan.subscriptions)
   plan: TypeOrmPlanEntity;
 
   @OneToOne(() => TypeOrmPaymentEntity)

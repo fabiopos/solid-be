@@ -39,8 +39,8 @@ export class TypeOrmTeamRepository implements TeamRepository {
     return this.mapToDomain(team);
   }
 
-  async create(team: Team): Promise<void> {
-    await this.repository.save({
+  async create(team: Team): Promise<Team> {
+    const result = await this.repository.save({
       name: team.name,
       active: team.active,
       primaryColor: team.primaryColor,
@@ -49,6 +49,10 @@ export class TypeOrmTeamRepository implements TeamRepository {
       shieldUrl: team.shieldUrl,
       hasSubscription: team.hasSubscription,
     });
+    const createdTeam = Team.create(result);
+    createdTeam.id = result.id;
+
+    return createdTeam;
   }
 
   async edit(team: Team): Promise<void> {

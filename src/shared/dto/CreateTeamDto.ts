@@ -1,9 +1,10 @@
 export class CreateTeamDto {
   name: string;
   active: boolean;
+  primaryColor?: string | null;
+  secondaryColor?: string | null;
+  logoUrl?: string | null;
+  shieldUrl?: string | null;
+  createdAt?: Date | null;
   hasSubscription: boolean;
-  primaryColor: string | null | undefined;
-  secondaryColor: string | null | undefined;
-  logoUrl: string | null | undefined;
-  shieldUrl: string | null | undefined;
 }

@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
@@ -13,11 +13,11 @@ export class TypeOrmTeamEntity extends TeamAbstract {
   @OneToMany(() => TypeOrmPlayerEntity, (player) => player.team)
   players: TypeOrmPlayerEntity[];
 
-  @OneToMany(
+  @ManyToOne(
     () => TypeOrmSubscriptionEntity,
-    (subscription) => subscription.team,
+    (subscription) => subscription.teams,
   )
-  subscriptions: TypeOrmSubscriptionEntity[];
+  subscription: TypeOrmSubscriptionEntity;
 
   @OneToMany(() => TypeOrmMatchEntity, (match) => match.homeTeam)
   homeMatches: TypeOrmMatchEntity[];

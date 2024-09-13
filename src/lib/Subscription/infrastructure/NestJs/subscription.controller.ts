@@ -12,12 +12,15 @@ export class SubscriptionController {
     @Inject('SubscriptionCreate')
     private readonly subscriptionCreate: SubscriptionCreate,
   ) {}
+
   @Post()
-  async create(@Body() subscription: SubscriptionCreatePayload) {
+  async createFull(@Body() subscription: SubscriptionCreatePayload) {
+    // throw new Error('Method not implemented.');
     return this.subscriptionCreate.run({
       paymentId: subscription.paymentId,
       planId: subscription.planId,
-      teamId: subscription.teamId,
+      teams: [subscription.team],
+      user: subscription.user,
     });
   }
 }

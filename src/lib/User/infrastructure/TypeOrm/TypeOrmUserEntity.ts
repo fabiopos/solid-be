@@ -16,6 +16,9 @@ export class TypeOrmUserEntity extends PersonAbstract {
   id: string;
 
   @Column()
+  password: string;
+
+  @Column()
   policy: boolean;
 
   @Column({ enum: RoleEnum, default: RoleEnum.USER })
