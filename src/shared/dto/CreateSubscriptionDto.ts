@@ -1,3 +1,4 @@
+import { Plan } from '@/lib/Plan/domain/Plan';
 import { CreateTeamDto } from './CreateTeamDto';
 import { CreateUserDto } from './CreateUserDto';
 
@@ -6,4 +7,5 @@ export class CreateSubscriptionDto {
   paymentId: string;
   planId: string;
   user: CreateUserDto;
+  plan?: Plan;
 }

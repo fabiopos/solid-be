@@ -40,8 +40,9 @@ import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlan
       useFactory: (
         repository: TypeOrmSubscriptionRepository,
         teamRepository: TypeOrmTeamRepository,
-      ) => new SubscriptionCreate(repository, teamRepository),
-      inject: ['SubscriptionRepository', 'TeamRepository'],
+        planRepository: TypeOrmPlanRepository,
+      ) => new SubscriptionCreate(repository, teamRepository, planRepository),
+      inject: ['SubscriptionRepository', 'TeamRepository', 'PlanRepository'],
     },
   ],
 })

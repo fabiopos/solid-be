@@ -3,14 +3,17 @@ import { TypeOrmTeamEntity } from './TypeOrmTeamEntity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from '../../domain/Team';
 import { TeamRepository } from '../../domain/TeamRepository';
+import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 
 export class TypeOrmTeamRepository implements TeamRepository {
   constructor(
     @InjectRepository(TypeOrmTeamEntity)
     private readonly repository: Repository<TypeOrmTeamEntity>,
+    @InjectRepository(TypeOrmSubscriptionEntity)
+    private readonly subscriptionRepository: Repository<TypeOrmSubscriptionEntity>,
   ) {}
 
-  private mapToDomain(u: TypeOrmTeamEntity) {
+  private mapToDomain(u: TypeOrmTeamEntity): Team {
     return Team.create({
       active: u.active,
       name: u.name,
@@ -19,11 +22,12 @@ export class TypeOrmTeamRepository implements TeamRepository {
       logoUrl: u.logoUrl,
       shieldUrl: u.shieldUrl,
       hasSubscription: u.hasSubscription,
+      subscriptionId: u.subscription.id,
     });
   }
 
   async getAll(): Promise<Team[]> {
-    const teams = await this.repository.find();
+    const teams = await this.repository.find({ relations: ['subscription'] });
     return teams.map((u) => this.mapToDomain(u));
   }
 
@@ -32,6 +36,7 @@ export class TypeOrmTeamRepository implements TeamRepository {
       where: {
         id: id,
       },
+      relations: ['subscription'],
     });
 
     if (!team) return null;
@@ -40,6 +45,10 @@ export class TypeOrmTeamRepository implements TeamRepository {
   }
 
   async create(team: Team): Promise<Team> {
+    const subscription = await this.subscriptionRepository.findOneBy({
+      id: team.subscriptionId,
+    });
+
     const result = await this.repository.save({
       name: team.name,
       active: team.active,
@@ -48,8 +57,12 @@ export class TypeOrmTeamRepository implements TeamRepository {
       logoUrl: team.logoUrl,
       shieldUrl: team.shieldUrl,
       hasSubscription: team.hasSubscription,
+      subscription: subscription,
     });
-    const createdTeam = Team.create(result);
+    const createdTeam = Team.create({
+      ...result,
+      subscriptionId: result.subscription.id,
+    });
     createdTeam.id = result.id;
 
     return createdTeam;

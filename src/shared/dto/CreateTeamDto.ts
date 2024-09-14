@@ -7,4 +7,5 @@ export class CreateTeamDto {
   shieldUrl?: string | null;
   createdAt?: Date | null;
   hasSubscription: boolean;
+  subscriptionId?: string;
 }

@@ -18,41 +18,20 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   ) {}
 
   async create(payload: Subscription): Promise<Subscription> {
-    const subscription = Subscription.create({
-      paymentId: payload.paymentId,
-      planId: payload.planId,
-      teams: payload.teams,
-      user: payload.users[0],
-    });
-
-    console.log('Subscription.create', subscription);
-
-    //const team = await this.teamRepository.save(payload.teams);
-
-    // validate team
-
     // validate plan
     const plan = await this.planRepository.findOneBy({
-      id: subscription.planId,
+      id: payload.planId,
     });
-
-    // check if user exists
 
     if (!plan) throw new NotFoundException('Plan not found');
 
-    const createdSubscription = await this.repository.save({
-      plan: plan,
-      name: subscription.name,
-      startDate: subscription.startDate,
-      endDate: subscription.endDate,
-      active: subscription.active,
-    });
+    // check if user exists by email
 
-    console.log(createdSubscription);
+    console.log(payload);
 
-    subscription.id = createdSubscription.id;
+    const createdSubscription = await this.repository.save(payload);
 
-    return subscription;
+    return Subscription.fromPrimitives(createdSubscription);
   }
 
   async getAll(): Promise<Subscription[]> {

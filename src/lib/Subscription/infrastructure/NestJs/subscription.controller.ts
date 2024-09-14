@@ -1,6 +1,13 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Inject,
+  NotFoundException,
+  Post,
+} from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { SubscriptionCreatePayload } from './Validations';
+import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 
 @Controller('subscription')
 export class SubscriptionController {
@@ -15,12 +22,19 @@ export class SubscriptionController {
 
   @Post()
   async createFull(@Body() subscription: SubscriptionCreatePayload) {
-    // throw new Error('Method not implemented.');
-    return this.subscriptionCreate.run({
-      paymentId: subscription.paymentId,
-      planId: subscription.planId,
-      teams: [subscription.team],
-      user: subscription.user,
-    });
+    try {
+      const result = await this.subscriptionCreate.run({
+        paymentId: subscription.paymentId,
+        planId: subscription.planId,
+        teams: [subscription.team],
+        user: subscription.user,
+      });
+      return result;
+    } catch (error) {
+      if (error instanceof PlanNotFoundError)
+        throw new NotFoundException(error.message);
+
+      throw new Error('Internal server error');
+    }
   }
 }

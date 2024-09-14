@@ -1,3 +1,4 @@
+import { Subscription } from '@/lib/Subscription/domain/Subscription';
 import { CreateTeamDto } from '@/shared/dto/CreateTeamDto';
 
 export class Team {
@@ -10,6 +11,7 @@ export class Team {
   shieldUrl?: string | null;
   createdAt: Date;
   hasSubscription: boolean;
+  subscriptionId: string;
 
   static create(dto: CreateTeamDto): Team {
     const team = new Team();
@@ -20,6 +22,7 @@ export class Team {
     team.logoUrl = dto.logoUrl;
     team.shieldUrl = dto.shieldUrl;
     team.hasSubscription = dto.hasSubscription;
+    team.subscriptionId = dto.subscriptionId;
     return team;
   }
 }

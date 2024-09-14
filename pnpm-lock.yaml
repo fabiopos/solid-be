@@ -26,6 +26,9 @@ dependencies:
   class-validator:
     specifier: ^0.14.1
     version: 0.14.1
+  date-fns:
+    specifier: ^3.6.0
+    version: 3.6.0
   pg:
     specifier: ^8.12.0
     version: 8.12.0
@@ -2203,6 +2206,10 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
+
+  /date-fns@3.6.0:
+    resolution: {integrity: sha512-fRHTG8g/Gif+kSh50gaGEdToemgfj74aRX3swtiouboip5JDLAyDE9F11nHMIcvOaXeOC6D7SpNhi7uFyB7Uww==}
+    dev: false
 
   /dayjs@1.11.13:
     resolution: {integrity: sha512-oaMBel6gjolK862uaPQOVTA7q3TZhuSvuMQAAglQDOWYO9A91IrAOUJEyKVlqJlHE0vq5p5UXxzdPfMH/x6xNg==}

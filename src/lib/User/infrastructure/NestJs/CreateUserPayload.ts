@@ -59,6 +59,7 @@ export class CreateUserPayload {
   @IsOptional()
   address: string | undefined;
 
+  @IsOptional()
   @IsString()
   @IsUUID()
   subscriptionId: string | undefined;
