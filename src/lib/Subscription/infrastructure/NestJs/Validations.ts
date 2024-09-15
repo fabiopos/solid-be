@@ -1,5 +1,6 @@
 import { CreateTeamPayload } from '@/lib/Team/infrastructure/NestJs/Validations';
 import { CreateUserPayload } from '@/lib/User/infrastructure/NestJs/CreateUserPayload';
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsNotEmptyObject,
@@ -10,19 +11,23 @@ import {
 } from 'class-validator';
 
 export class SubscriptionCreatePayload {
+  @ApiProperty()
   @IsString()
   @Length(5, 50)
   @IsOptional()
   paymentId: string;
 
+  @ApiProperty()
   @IsString()
   planId: string;
 
+  @ApiProperty()
   @IsNotEmptyObject()
   @ValidateNested()
   @Type(() => CreateTeamPayload)
   team: CreateTeamPayload;
 
+  @ApiProperty()
   @IsNotEmptyObject()
   @ValidateNested()
   @Type(() => CreateUserPayload)
