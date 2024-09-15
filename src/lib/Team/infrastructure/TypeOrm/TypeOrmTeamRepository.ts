@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from '../../domain/Team';
 import { TeamRepository } from '../../domain/TeamRepository';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
+import { NotFoundException } from '@nestjs/common';
 
 export class TypeOrmTeamRepository implements TeamRepository {
   constructor(
@@ -48,6 +49,8 @@ export class TypeOrmTeamRepository implements TeamRepository {
     const subscription = await this.subscriptionRepository.findOneBy({
       id: team.subscriptionId,
     });
+
+    if (!subscription) throw new NotFoundException('Subscription not found');
 
     const result = await this.repository.save({
       name: team.name,

@@ -37,7 +37,6 @@ export class TypeOrmSubscriptionEntity {
   active: boolean;
 
   @OneToMany(() => TypeOrmTeamEntity, (team) => team.subscription)
-  @JoinColumn()
   teams: TypeOrmTeamEntity[];
 
   @ManyToOne(() => TypeOrmPlanEntity, (plan) => plan.subscriptions)

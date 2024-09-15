@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Unique } from 'typeorm';
 import { DocumentType } from '@/shared/enums/playerEnums';
 
 export abstract class PersonAbstract {
@@ -9,6 +9,7 @@ export abstract class PersonAbstract {
   lastName: string;
 
   @Column()
+  @Unique(['email'])
   email: string;
 
   @Column()

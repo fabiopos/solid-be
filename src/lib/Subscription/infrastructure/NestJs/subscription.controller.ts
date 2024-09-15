@@ -8,6 +8,7 @@ import {
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { SubscriptionCreatePayload } from './Validations';
 import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
+import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
 
 @Controller('subscription')
 export class SubscriptionController {
@@ -34,7 +35,10 @@ export class SubscriptionController {
       if (error instanceof PlanNotFoundError)
         throw new NotFoundException(error.message);
 
-      throw new Error('Internal server error');
+      if (error instanceof UserAlreadyExistsError)
+        throw new NotFoundException(error.message);
+
+      throw error;
     }
   }
 }

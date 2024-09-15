@@ -14,6 +14,11 @@ export class TypeOrmUserRepository implements UserRepository {
     private readonly subscriptionRepository: Repository<TypeOrmSubscriptionEntity>,
   ) {}
 
+  async getOneByEmail(email: string): Promise<User | null> {
+    const user = await this.repository.findOne({ where: { email } });
+    return user ? User.fromPrimitives(user) : null;
+  }
+
   async create(payload: User): Promise<User> {
     const user = User.create(payload);
 
@@ -21,8 +26,9 @@ export class TypeOrmUserRepository implements UserRepository {
       id: user.subscriptionId,
     });
 
+    if (!subscription) throw new NotFoundException('Subscription not found');
+
     const createdUser = await this.repository.save({
-      id: user.id,
       email: user.email,
       password: user.password,
       firstName: user.firstName,
@@ -37,7 +43,7 @@ export class TypeOrmUserRepository implements UserRepository {
       city: user.city,
       country: user.country,
       policy: user.policy,
-      subscriptionId: subscription,
+      subscription: subscription,
     });
 
     user.id = createdUser.id;

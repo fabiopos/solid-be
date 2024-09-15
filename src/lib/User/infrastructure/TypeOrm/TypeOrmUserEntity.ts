@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { RoleEnum } from '@/shared/enums/roleEnum';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
@@ -24,7 +18,6 @@ export class TypeOrmUserEntity extends PersonAbstract {
   @Column({ enum: RoleEnum, default: RoleEnum.USER })
   roleId: string;
 
-  @OneToOne(() => TypeOrmSubscriptionEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmSubscriptionEntity)
   subscription: TypeOrmSubscriptionEntity;
 }
