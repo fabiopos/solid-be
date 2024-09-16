@@ -10,10 +10,10 @@ export class CreateUserDto {
   documentType: DocumentType;
   active: boolean;
   policy: boolean;
-  city: string | undefined;
-  avatarUrl: string | undefined;
-  country: string | undefined;
-  address: string | undefined;
-  subscriptionId: string | undefined;
-  phone: string | undefined;
+  city?: string | undefined;
+  avatarUrl?: string | undefined;
+  country?: string | undefined;
+  address?: string | undefined;
+  subscriptionId?: string | undefined;
+  phone?: string | undefined;
 }

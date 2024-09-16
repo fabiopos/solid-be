@@ -10,16 +10,16 @@ export class User {
   roleId: string;
   documentNumber: string;
   documentType: DocumentType;
-  avatarUrl: string;
   active: boolean;
+  avatarUrl?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  address: string;
-  city: string;
-  country: string;
+  address?: string;
+  city?: string;
+  country?: string;
   policy: boolean;
-  subscriptionId: string;
-  phone: string;
+  subscriptionId?: string;
+  phone?: string;
 
   static create(payload: CreateUserDto): User {
     const user = new User();

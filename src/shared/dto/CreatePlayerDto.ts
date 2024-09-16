@@ -1,25 +1,25 @@
 import { DocumentType, DominantFoot, ShirtSize } from '../enums/playerEnums';
 
 export interface CreatePlayerDto {
+  teamId: string;
   firstName: string;
   lastName: string;
   documentNumber: string;
   documentType: DocumentType;
-  active: boolean;
-  avatarUrl: string;
-  phone: string;
   email: string;
-  address: string;
-  city: string;
-  country: string;
-  teamId: string;
-  shirtSize: ShirtSize;
   shirtName: string;
   shirtNumber: number;
-  favPositionId: string;
-  height: number;
+  shirtSize: ShirtSize;
   dominantFoot: DominantFoot;
-  eps: string;
-  arl: string;
+  active: boolean;
+  address?: string | undefined;
+  city?: string | undefined;
+  phone?: string | undefined;
+  country?: string | undefined;
+  avatarUrl?: string | undefined;
+  favPositionId?: string | undefined;
+  height?: number | undefined;
+  eps?: string | undefined;
+  arl?: string | undefined;
   id?: string | undefined;
 }

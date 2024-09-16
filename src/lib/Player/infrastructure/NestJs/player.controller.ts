@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { PlayerGetAll } from '../../application/PlayerGetAll/PlayerGetAll';
 import { PlayerCreate } from '../../application/PlayerCreate/PlayerCreate';
-import { Create } from './Validations';
+import { CreatePlayerPayload } from './Validations';
 import {
   DocumentType,
   DominantFoot,
@@ -28,7 +28,7 @@ export class PlayerController {
   }
 
   @Post()
-  async create(@Body() player: Create) {
+  async create(@Body() player: CreatePlayerPayload) {
     return this.playerCreate.run({
       active: player.active,
       address: player.address,
