@@ -10,6 +10,18 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     private readonly repository: Repository<TypeOrmPlayerEntity>,
   ) {}
 
+  async getOneByDocumentNumber(documentNumber: string): Promise<Player | null> {
+    const player = await this.repository.findOne({
+      where: {
+        documentNumber: documentNumber,
+      },
+    });
+
+    if (!player) return null;
+
+    return this.mapToDomain(player);
+  }
+
   private mapToDomain(u: TypeOrmPlayerEntity) {
     return Player.create({
       active: u.active,

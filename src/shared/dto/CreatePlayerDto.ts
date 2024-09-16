@@ -11,13 +11,13 @@ export interface CreatePlayerDto {
   shirtNumber: number;
   shirtSize: ShirtSize;
   dominantFoot: DominantFoot;
+  favPositionId: string;
   active: boolean;
   address?: string | undefined;
   city?: string | undefined;
   phone?: string | undefined;
   country?: string | undefined;
   avatarUrl?: string | undefined;
-  favPositionId?: string | undefined;
   height?: number | undefined;
   eps?: string | undefined;
   arl?: string | undefined;
