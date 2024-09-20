@@ -7,7 +7,9 @@ import {
   DominantFoot,
   ShirtSize,
 } from '@/shared/enums/playerEnums';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('player')
 @Controller('player')
 export class PlayerController {
   constructor(

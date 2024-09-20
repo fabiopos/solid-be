@@ -9,7 +9,9 @@ import { SubscriptionCreate } from '../../application/SubscriptionCreate/Subscri
 import { SubscriptionCreatePayload } from './Validations';
 import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('subscription')
 @Controller('subscription')
 export class SubscriptionController {
   constructor(

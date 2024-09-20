@@ -2,7 +2,9 @@ import { Body, Controller, Get, Inject, Post } from '@nestjs/common';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import { CreateTeamPayload } from './Validations';
 import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('team')
 @Controller('team')
 export class TeamController {
   constructor(
