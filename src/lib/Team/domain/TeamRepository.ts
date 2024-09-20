@@ -6,4 +6,5 @@ export interface TeamRepository {
   getOneById(id: string): Promise<Team | null>;
   edit(player: Team): Promise<void>;
   delete(id: string): Promise<void>;
+  getOneByName(name: string): Promise<Team | null>;
 }

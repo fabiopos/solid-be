@@ -35,9 +35,11 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   }
 
   async getAll(): Promise<Subscription[]> {
-    return (await this.repository.find()).map((s) =>
-      Subscription.fromPrimitives(s),
-    );
+    const subs = await this.repository.find({
+      relations: { plan: true, teams: true, users: true },
+    });
+    console.log('SUBS REPO', subs);
+    return subs.map((s) => Subscription.fromPrimitives(s));
   }
 
   async getOneById(id: string): Promise<Subscription | null> {

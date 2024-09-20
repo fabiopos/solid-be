@@ -14,6 +14,11 @@ export class TypeOrmTeamRepository implements TeamRepository {
     private readonly subscriptionRepository: Repository<TypeOrmSubscriptionEntity>,
   ) {}
 
+  async getOneByName(name: string): Promise<Team | null> {
+    const team = await this.repository.findOneBy({ name });
+    return this.mapToDomain(team);
+  }
+
   private mapToDomain(u: TypeOrmTeamEntity): Team {
     return Team.create({
       active: u.active,

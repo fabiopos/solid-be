@@ -42,13 +42,16 @@ export class Subscription {
   static fromPrimitives(dto: TypeOrmSubscriptionEntity): Subscription {
     const subscription = new Subscription();
     subscription.planId = dto.plan?.id;
-    //subscription.teams = dto.teams;
+    subscription.teams = dto.teams.map((x) => Team.create(x));
     subscription.paymentId = dto.payment?.id;
     subscription.startDate = dto.startDate; // today
     subscription.name = dto.name;
     subscription.endDate = dto.endDate;
     subscription.active = dto.active;
     subscription.createdAt = dto.createdAt;
+    subscription.id = dto.id;
+    subscription.plan = dto.plan;
+    subscription.users = dto.users.map((x) => User.fromPrimitives(x));
     return subscription;
   }
 }

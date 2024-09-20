@@ -10,6 +10,9 @@ import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrm
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
+import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
+import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 
 @Module({
   imports: [
@@ -17,6 +20,7 @@ import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUser
     TypeOrmModule.forFeature([TypeOrmTeamEntity]),
     TypeOrmModule.forFeature([TypeOrmPlanEntity]),
     TypeOrmModule.forFeature([TypeOrmUserEntity]),
+    TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
   ],
   controllers: [SubscriptionController],
   providers: [
@@ -36,12 +40,16 @@ import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUser
       provide: 'UserRepository',
       useClass: TypeOrmUserRepository,
     },
-    // {
-    //   provide: 'SubscriptionGetAll',
-    //   useFactory: (repository: TypeOrmSubscriptionRepository) =>
-    //     new SubscrptionGetAll(repository),
-    //   inject: ['PlayerRepository'],
-    // },
+    {
+      provide: 'PlayerRepository',
+      useClass: TypeOrmPlayerRepository,
+    },
+    {
+      provide: 'SubscriptionGetAll',
+      useFactory: (repository: TypeOrmSubscriptionRepository) =>
+        new SubscriptionGetAll(repository),
+      inject: ['SubscriptionRepository'],
+    },
     {
       provide: 'SubscriptionCreate',
       useFactory: (

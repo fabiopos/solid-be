@@ -47,3 +47,8 @@ export class CreateTeamPayload {
   @IsOptional()
   shieldUrl: string | null | undefined;
 }
+
+export class ValidateTeamPayload {
+  @IsString()
+  name: string;
+}
