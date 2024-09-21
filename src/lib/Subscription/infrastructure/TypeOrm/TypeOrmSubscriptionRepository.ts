@@ -26,9 +26,6 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     if (!plan) throw new NotFoundException('Plan not found');
 
     // check if user exists by email
-
-    console.log(payload);
-
     const createdSubscription = await this.repository.save(payload);
 
     return Subscription.fromPrimitives(createdSubscription);
@@ -37,8 +34,21 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   async getAll(): Promise<Subscription[]> {
     const subs = await this.repository.find({
       relations: { plan: true, teams: true, users: true },
+      order: { createdAt: 'DESC' },
+      select: {
+        id: true,
+        name: true,
+        active: true,
+        startDate: true,
+        endDate: true,
+        plan: { id: true, name: true },
+        payment: { id: true, currency: true, description: true },
+        features: { id: true, enabled: true },
+        teams: { name: true, active: true, id: true },
+        users: { firstName: true, lastName: true, email: true },
+      },
     });
-    console.log('SUBS REPO', subs);
+
     return subs.map((s) => Subscription.fromPrimitives(s));
   }
 

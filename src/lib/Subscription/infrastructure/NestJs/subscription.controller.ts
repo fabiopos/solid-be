@@ -28,7 +28,6 @@ export class SubscriptionController {
 
   @Get()
   async getAllSubscriptions() {
-    console.log('entra');
     return this.subscriptionGetAll.run();
   }
 

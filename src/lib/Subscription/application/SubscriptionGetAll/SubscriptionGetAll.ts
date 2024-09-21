@@ -5,7 +5,6 @@ export class SubscriptionGetAll {
 
   async run() {
     const result = await this.subscriptionRepository.getAll();
-    console.log('entra al RUN', result);
     return result;
   }
 }
