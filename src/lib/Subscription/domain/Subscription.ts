@@ -4,7 +4,6 @@ import { User } from '@/lib/User/domain/User';
 import { Team } from '@/lib/Team/domain/Team';
 import { Plan } from '@/lib/Plan/domain/Plan';
 import { add } from 'date-fns';
-
 export class Subscription {
   id: string;
   name: string;

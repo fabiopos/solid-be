@@ -1,6 +1,6 @@
 import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
 import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
-import { Subscription } from '../../domain/Subscription';
+// import { Subscription } from '../../domain/Subscription';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { Team } from '@/lib/Team/domain/Team';
 import { PlanRepository } from '@/lib/Plan/domain/PlanRepository';
@@ -10,6 +10,10 @@ import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError
 import { TeamNotProvidedError } from '@/lib/Team/domain/TeamNotProvidedError';
 import { UserNoPolicyError } from '@/lib/User/domain/UserNoPolicyError';
 import { UserInvalidError } from '@/lib/User/domain/UserInvalidError';
+import {
+  EmptySubscription,
+  FulfilledSubscription,
+} from '../../domain/SubscriptionSchema';
 
 export class SubscriptionCreate {
   constructor(
@@ -19,18 +23,25 @@ export class SubscriptionCreate {
     private userRepository: UserRepository,
   ) {}
 
-  async run(dto: CreateSubscriptionDto): Promise<Subscription> {
+  async run(dto: CreateSubscriptionDto): Promise<FulfilledSubscription> {
     const { user, teams, planId } = dto;
-    const subscription = Subscription.create(dto);
+    // const subscription = Subscription.create(dto);
 
     await this.validate(dto);
 
     const plan = await this.planRepository.getOneById(planId);
     if (!plan) throw new PlanNotFoundError();
-    subscription.endDate = Subscription.calculateEndDate(plan);
 
-    const createdSubscription = await this.repository.create(subscription);
-    subscription.id = createdSubscription.id;
+    const subscription = new EmptySubscription({ plan, planId: dto.planId });
+
+    // subscription.endDate = Subscription.calculateEndDate(plan);
+    const createdSubscription = await this.repository.create({
+      ...subscription,
+      startDate: subscription.startDate,
+      endDate: subscription.endDate,
+      name: subscription.name,
+      active: subscription.active,
+    });
 
     // Create team
     const teamsPromises = teams.map((t) => {
@@ -43,14 +54,21 @@ export class SubscriptionCreate {
       );
     });
     const createdTeams = await Promise.all(teamsPromises);
-    subscription.teams = createdTeams;
+    // subscription.teams = createdTeams;
 
     // Create user
     user.subscriptionId = createdSubscription.id;
     const createdUser = await this.userRepository.create(user);
-    subscription.users = [createdUser];
+    // subscription.users = [createdUser];
 
-    return subscription;
+    const fulfilledSub = new FulfilledSubscription({
+      ...createdSubscription,
+      id: createdSubscription.id,
+      teams: createdTeams,
+      users: [createdUser],
+    });
+
+    return fulfilledSub;
   }
 
   async validate(dto: CreateSubscriptionDto): Promise<void> {

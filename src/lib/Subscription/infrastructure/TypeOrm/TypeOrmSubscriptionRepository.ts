@@ -6,6 +6,10 @@ import { Subscription } from '../../domain/Subscription';
 import { NotFoundException } from '@nestjs/common';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import {
+  EmptySubscription,
+  FulfilledSubscription,
+} from '../../domain/SubscriptionSchema';
 
 export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   constructor(
@@ -17,7 +21,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     private readonly planRepository: Repository<TypeOrmPlanEntity>,
   ) {}
 
-  async create(payload: Subscription): Promise<Subscription> {
+  async create(payload: EmptySubscription): Promise<FulfilledSubscription> {
     // validate plan
     const plan = await this.planRepository.findOneBy({
       id: payload.planId,
@@ -28,7 +32,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     // check if user exists by email
     const createdSubscription = await this.repository.save(payload);
 
-    return Subscription.fromPrimitives(createdSubscription);
+    return new FulfilledSubscription({ ...createdSubscription });
   }
 
   async getAll(): Promise<Subscription[]> {

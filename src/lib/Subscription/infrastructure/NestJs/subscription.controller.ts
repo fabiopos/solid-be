@@ -40,7 +40,7 @@ export class SubscriptionController {
         teams: [subscription.team],
         user: subscription.user,
       });
-      return result;
+      return { ...result, isExpired: result.isExpired };
     } catch (error) {
       if (error instanceof PlanNotFoundError)
         throw new NotFoundException(error.message);
