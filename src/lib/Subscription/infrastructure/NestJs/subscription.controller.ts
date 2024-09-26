@@ -4,7 +4,7 @@ import {
   Get,
   Inject,
   NotFoundException,
-  Patch,
+  Post,
 } from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { SubscriptionCreatePayload } from './Validations';
@@ -31,7 +31,7 @@ export class SubscriptionController {
     return this.subscriptionGetAll.run();
   }
 
-  @Patch()
+  @Post()
   async createFull(@Body() subscription: SubscriptionCreatePayload) {
     try {
       const result = await this.subscriptionCreate.run({

@@ -1,4 +1,4 @@
-import { Subscription } from '@/lib/Subscription/domain/Subscription';
+// import { Subscription } from '@/lib/Subscription/domain/Subscription';
 import { CreateTeamDto } from '@/shared/dto/CreateTeamDto';
 
 export class Team {
@@ -23,6 +23,7 @@ export class Team {
     team.shieldUrl = dto.shieldUrl;
     team.hasSubscription = dto.hasSubscription;
     team.subscriptionId = dto.subscriptionId;
+    team.createdAt = dto.createdAt;
     return team;
   }
 }

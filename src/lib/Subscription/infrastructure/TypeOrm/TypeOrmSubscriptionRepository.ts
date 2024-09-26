@@ -30,9 +30,19 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     if (!plan) throw new NotFoundException('Plan not found');
 
     // check if user exists by email
-    const createdSubscription = await this.repository.save(payload);
+    const { active, id, name, startDate, endDate, createdAt, planId } =
+      await this.repository.save(payload);
 
-    return new FulfilledSubscription({ ...createdSubscription });
+    return new FulfilledSubscription({
+      active,
+      id,
+      name,
+      startDate,
+      endDate,
+      createdAt,
+      plan: plan,
+      planId,
+    });
   }
 
   async getAll(): Promise<Subscription[]> {

@@ -63,6 +63,7 @@ export class SubscriptionCreate {
 
     const fulfilledSub = new FulfilledSubscription({
       ...createdSubscription,
+      createdAt: createdSubscription.createdAt,
       id: createdSubscription.id,
       teams: createdTeams,
       users: [createdUser],

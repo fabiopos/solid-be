@@ -70,6 +70,7 @@ export class TypeOrmTeamRepository implements TeamRepository {
     const createdTeam = Team.create({
       ...result,
       subscriptionId: result.subscription.id,
+      createdAt: result.createdAt,
     });
     createdTeam.id = result.id;
 

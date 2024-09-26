@@ -1,11 +1,6 @@
+import { teamSchema } from '@/lib/Team/domain/TeamSchema';
 import * as S from '@effect/schema/Schema';
 import { add, isAfter } from 'date-fns';
-
-export const teamSchema = S.Struct({
-  name: S.NullishOr(S.String),
-});
-
-export type TeamType = S.Schema.Type<typeof teamSchema>;
 
 export const userSchema = S.Struct({
   id: S.optional(S.String),
@@ -15,10 +10,8 @@ export const userSchema = S.Struct({
 
 export const planSchema = S.Struct({
   id: S.NullishOr(S.String),
-  name: S.NullishOr(S.String),
-  interval: S.Trimmed.annotations(S.annotations['month, year']).pipe(
-    S.filter((v) => ['years', 'months'].some((f) => f === v)),
-  ),
+  name: S.Trimmed,
+  interval: S.Trimmed,
   intervalCount: S.Number,
   createdAt: S.NullishOr(S.Date),
   active: S.Boolean,
@@ -42,6 +35,7 @@ export const SourceSubscription = S.Struct({
 });
 
 export type SourceSubscriptionType = S.Schema.Type<typeof SourceSubscription>;
+export type PlanType = S.Schema.Type<typeof planSchema>;
 
 export class EmptySubscription extends S.TaggedClass<EmptySubscription>()(
   'EmptySubscription',
@@ -79,5 +73,13 @@ export class FulfilledSubscription extends S.TaggedClass<FulfilledSubscription>(
 
   get paymentRequired(): boolean {
     return false;
+  }
+
+  get usersCount(): number {
+    return (this.users ?? []).length;
+  }
+
+  get teamsCount(): number {
+    return (this.teams ?? []).length;
   }
 }
