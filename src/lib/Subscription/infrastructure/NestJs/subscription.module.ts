@@ -13,6 +13,7 @@ import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUser
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
 import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
 
 @Module({
   imports: [
@@ -48,6 +49,12 @@ import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrm
       provide: 'SubscriptionGetAll',
       useFactory: (repository: TypeOrmSubscriptionRepository) =>
         new SubscriptionGetAll(repository),
+      inject: ['SubscriptionRepository'],
+    },
+    {
+      provide: 'SubscriptionFind',
+      useFactory: (repository: TypeOrmSubscriptionRepository) =>
+        new SubscriptionFind(repository),
       inject: ['SubscriptionRepository'],
     },
     {

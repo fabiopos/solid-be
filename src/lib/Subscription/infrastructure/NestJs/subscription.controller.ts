@@ -4,6 +4,7 @@ import {
   Get,
   Inject,
   NotFoundException,
+  Param,
   Post,
 } from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
@@ -12,6 +13,7 @@ import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
 import { ApiTags } from '@nestjs/swagger';
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
+import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
 
 @ApiTags('subscription')
 @Controller('subscription')
@@ -24,11 +26,20 @@ export class SubscriptionController {
     private readonly subscriptionGetAll: SubscriptionGetAll,
     @Inject('SubscriptionCreate')
     private readonly subscriptionCreate: SubscriptionCreate,
+
+    @Inject('SubscriptionFind')
+    private readonly subscriptionFind: SubscriptionFind,
   ) {}
 
   @Get()
   async getAllSubscriptions() {
     return this.subscriptionGetAll.run();
+  }
+
+  @Get(':id')
+  async findSubscription(@Param() params: any) {
+    const id = params.id;
+    return this.subscriptionFind.run(id);
   }
 
   @Post()

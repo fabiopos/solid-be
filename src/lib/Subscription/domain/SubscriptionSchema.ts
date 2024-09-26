@@ -23,15 +23,15 @@ export const planSchema = S.Struct({
 export const SourceSubscription = S.Struct({
   id: S.NullishOr(S.String),
   name: S.NullishOr(S.String),
-  startDate: S.NullishOr(S.Date),
-  endDate: S.NullishOr(S.Date),
+  startDate: S.NullishOr(S.Union(S.Date, S.String)),
+  endDate: S.NullishOr(S.Union(S.Date, S.String)),
   createdAt: S.NullishOr(S.Date),
   active: S.NullishOr(S.Boolean),
-  paymentId: S.optional(S.String),
   planId: S.NullishOr(S.String),
+  paymentId: S.optional(S.String),
   teams: S.optional(S.Array(teamSchema)),
   users: S.optional(S.Array(userSchema)),
-  plan: planSchema,
+  plan: S.optional(planSchema),
 });
 
 export type SourceSubscriptionType = S.Schema.Type<typeof SourceSubscription>;

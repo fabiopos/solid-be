@@ -9,7 +9,10 @@ import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlan
 import {
   EmptySubscription,
   FulfilledSubscription,
+  planSchema,
 } from '../../domain/SubscriptionSchema';
+import { teamSchema } from '@/lib/Team/domain/TeamSchema';
+import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
 
 export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   constructor(
@@ -45,7 +48,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     });
   }
 
-  async getAll(): Promise<Subscription[]> {
+  async getAll(): Promise<FulfilledSubscription[]> {
     const subs = await this.repository.find({
       relations: { plan: true, teams: true, users: true },
       order: { createdAt: 'DESC' },
@@ -55,7 +58,13 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
         active: true,
         startDate: true,
         endDate: true,
-        plan: { id: true, name: true },
+        plan: {
+          id: true,
+          name: true,
+          interval: true,
+          intervalCount: true,
+          active: true,
+        },
         payment: { id: true, currency: true, description: true },
         features: { id: true, enabled: true },
         teams: { name: true, active: true, id: true },
@@ -63,12 +72,41 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
       },
     });
 
-    return subs.map((s) => Subscription.fromPrimitives(s));
+    return subs.map(
+      (s) =>
+        new FulfilledSubscription({
+          ...s,
+          planId: s.plan.id,
+          plan: planSchema.make({ ...s.plan }),
+          teams: s.teams.map((team) =>
+            teamSchema.make({
+              ...team,
+              subscriptionId: s.id,
+              players: [],
+            }),
+          ),
+        }),
+    );
   }
 
-  async getOneById(id: string): Promise<Subscription | null> {
-    const subscription = await this.repository.findOne({ where: { id } });
-    return subscription ? Subscription.fromPrimitives(subscription) : null;
+  async getOneById(id: string): Promise<FulfilledSubscription | null> {
+    const subscription = await this.repository.findOne({
+      where: { id },
+      relations: { plan: true, teams: { players: true } },
+    });
+    return new FulfilledSubscription({
+      ...subscription,
+      planId: subscription.plan.id,
+      teams: subscription.teams.map((team) =>
+        teamSchema.make({
+          ...team,
+          subscriptionId: subscription.id,
+          players: team.players.map((player) =>
+            playerSchema.make({ ...player, teamId: team.id }),
+          ),
+        }),
+      ),
+    });
   }
 
   async edit(subscription: Subscription): Promise<void> {
