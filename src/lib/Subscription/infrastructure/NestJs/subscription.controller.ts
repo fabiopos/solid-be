@@ -8,7 +8,7 @@ import {
   Post,
 } from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
-import { SubscriptionCreatePayload } from './Validations';
+import { SubscriptionCreatePayload, SubscriptionParams } from './Validations';
 import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
 import { ApiTags } from '@nestjs/swagger';
@@ -37,9 +37,11 @@ export class SubscriptionController {
   }
 
   @Get(':id')
-  async findSubscription(@Param() params: any) {
-    const id = params.id;
-    return this.subscriptionFind.run(id);
+  async findSubscription(@Param() params: SubscriptionParams) {
+    const { id } = params;
+    const result = await this.subscriptionFind.run(id);
+    if (!result) throw new NotFoundException();
+    return result;
   }
 
   @Post()

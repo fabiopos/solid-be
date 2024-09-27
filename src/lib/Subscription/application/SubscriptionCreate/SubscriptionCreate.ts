@@ -14,6 +14,7 @@ import {
   EmptySubscription,
   FulfilledSubscription,
 } from '../../domain/SubscriptionSchema';
+import { Effect, pipe } from 'effect';
 
 export class SubscriptionCreate {
   constructor(
@@ -24,47 +25,20 @@ export class SubscriptionCreate {
   ) {}
 
   async run(dto: CreateSubscriptionDto): Promise<FulfilledSubscription> {
-    const { user, teams, planId } = dto;
-    // const subscription = Subscription.create(dto);
+    // validate dto
+    const emptySub = await this.validate(dto);
 
-    await this.validate(dto);
+    // Create Subscription
+    const createdSubscription = await this.createSubscription(emptySub);
 
-    const plan = await this.planRepository.getOneById(planId);
-    if (!plan) throw new PlanNotFoundError();
-
-    const subscription = new EmptySubscription({ plan, planId: dto.planId });
-
-    // subscription.endDate = Subscription.calculateEndDate(plan);
-    const createdSubscription = await this.repository.create({
-      ...subscription,
-      startDate: subscription.startDate,
-      endDate: subscription.endDate,
-      name: subscription.name,
-      active: subscription.active,
-    });
-
-    // Create team
-    const teamsPromises = teams.map((t) => {
-      return this.teamRepository.create(
-        Team.create({
-          ...t,
-          hasSubscription: true,
-          subscriptionId: createdSubscription.id,
-        }),
-      );
-    });
-    const createdTeams = await Promise.all(teamsPromises);
-    // subscription.teams = createdTeams;
+    // Create teams
+    const createdTeams = await this.createTeams(dto, createdSubscription.id);
 
     // Create user
-    user.subscriptionId = createdSubscription.id;
-    const createdUser = await this.userRepository.create(user);
-    // subscription.users = [createdUser];
+    const createdUser = await this.createUser(dto, createdSubscription.id);
 
     const fulfilledSub = new FulfilledSubscription({
       ...createdSubscription,
-      createdAt: createdSubscription.createdAt,
-      id: createdSubscription.id,
       teams: createdTeams,
       users: [createdUser],
     });
@@ -72,20 +46,126 @@ export class SubscriptionCreate {
     return fulfilledSub;
   }
 
-  async validate(dto: CreateSubscriptionDto): Promise<void> {
-    const { user, planId, teams } = dto;
+  async validate(dto: CreateSubscriptionDto): Promise<EmptySubscription> {
+    const res = await Effect.runPromiseExit(this.isValidDto(dto));
 
-    if (teams.length === 0) throw new TeamNotProvidedError();
-
-    if (!planId) throw new PlanNotFoundError();
-
-    if (!user.email) throw new UserInvalidError('Email is required');
-    if (!user.firstName) throw new UserInvalidError('First name is required');
-    if (!user.lastName) throw new UserInvalidError('Last name is required');
-    if (!user.password) throw new UserInvalidError('Password is requireed');
-    if (user.policy === false) throw new UserNoPolicyError();
-
-    const existingUser = await this.userRepository.getOneByEmail(user.email);
-    if (existingUser) throw new UserAlreadyExistsError(user.email);
+    switch (res._tag) {
+      case 'Success':
+        return new EmptySubscription({ planId: dto.planId, plan: res.value });
+      case 'Failure':
+        if (res.cause._tag === 'Fail') throw res.cause.error;
+      default:
+        throw new Error('Unknown error validating subscription');
+    }
   }
+
+  async createSubscription(emptySubscription: EmptySubscription) {
+    return await this.repository.create({
+      ...emptySubscription,
+      startDate: emptySubscription.startDate,
+      endDate: emptySubscription.endDate,
+      name: emptySubscription.name,
+      active: emptySubscription.active,
+    });
+  }
+
+  async createTeams(dto: CreateSubscriptionDto, subscriptionId: string) {
+    const { teams } = dto;
+    const teamsPromises = teams.map((t) => {
+      return this.teamRepository.create(
+        Team.create({
+          ...t,
+          hasSubscription: true,
+          subscriptionId,
+        }),
+      );
+    });
+    return await Promise.all(teamsPromises);
+  }
+
+  async createUser(dto: CreateSubscriptionDto, subscriptionId: string) {
+    const { user } = dto;
+    return await this.userRepository.create({ ...user, subscriptionId });
+  }
+
+  hasTeams = (dto: CreateSubscriptionDto) =>
+    Effect.suspend(() =>
+      dto.teams.length > 0
+        ? Effect.succeed(dto)
+        : Effect.fail(new TeamNotProvidedError()),
+    );
+
+  hasPlanId = (dto: CreateSubscriptionDto) =>
+    Effect.suspend(() =>
+      !!dto.planId ? Effect.succeed(dto) : Effect.fail(new PlanNotFoundError()),
+    );
+
+  hasUser = (dto: CreateSubscriptionDto) =>
+    Effect.suspend(() =>
+      !!dto.user
+        ? Effect.succeed(dto)
+        : Effect.fail(new UserInvalidError('User not provided')),
+    );
+
+  isPolicyAccepted = (dto: CreateSubscriptionDto) =>
+    dto.user.policy
+      ? Effect.succeed(dto)
+      : Effect.fail(new UserNoPolicyError());
+
+  getUser = (email: string) =>
+    Effect.tryPromise({
+      try: () => this.userRepository.getOneByEmail(email),
+      catch: () => Effect.fail(new Error('Cannot get user')),
+    });
+
+  getPlan = (planId: string) =>
+    Effect.tryPromise({
+      try: () => this.planRepository.getOneById(planId),
+      catch: () => Effect.fail(new Error('Cannot get plan')),
+    });
+
+  userAlreadyExists = (email: string) =>
+    pipe(
+      email,
+      this.getUser,
+      Effect.matchEffect({
+        onFailure: () =>
+          Effect.fail(
+            new UserInvalidError(`Cannot get user with email ${email}`),
+          ),
+        onSuccess: (user) => Effect.succeed(!!user),
+      }),
+    );
+
+  planExists = (planId: string) =>
+    pipe(
+      planId,
+      this.getPlan,
+      Effect.matchEffect({
+        onFailure: () => Effect.fail(new PlanNotFoundError()),
+        onSuccess: (plan) =>
+          plan === null
+            ? Effect.fail(new PlanNotFoundError())
+            : Effect.succeed(plan),
+      }),
+    );
+
+  isValidDto = (dto: CreateSubscriptionDto) =>
+    pipe(
+      dto,
+      this.hasTeams,
+      Effect.flatMap(this.hasPlanId),
+      Effect.flatMap(this.hasUser),
+      Effect.flatMap(this.isPolicyAccepted),
+      Effect.map((dto) => dto.user.email),
+      Effect.flatMap(this.userAlreadyExists),
+      Effect.matchEffect({
+        onSuccess: (exists) =>
+          exists
+            ? Effect.fail(new UserAlreadyExistsError(dto.user.email))
+            : Effect.succeed(true),
+        onFailure: (e) => Effect.fail(e),
+      }),
+      Effect.flatMap(() => this.planExists(dto.planId)),
+    );
 }

@@ -6,6 +6,7 @@ import {
   IsNotEmptyObject,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
   ValidateNested,
 } from 'class-validator';
@@ -32,4 +33,9 @@ export class SubscriptionCreatePayload {
   @ValidateNested()
   @Type(() => CreateUserPayload)
   user: CreateUserPayload;
+}
+
+export class SubscriptionParams {
+  @IsUUID('all', { each: true })
+  id: string;
 }
