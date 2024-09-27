@@ -4,22 +4,23 @@ import { SubscriptionCreate } from './SubscriptionCreate';
 import { PlanRepository } from '@/lib/Plan/domain/PlanRepository';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
 import { DocumentType } from '@/shared/enums/playerEnums';
-import { Subscription } from '../../domain/Subscription';
 import { Plan } from '@/lib/Plan/domain/Plan';
 import { PlanRepositoryMock } from '@/mocks/PlanRepositoryMock';
 import { UserRepositoryMock } from '@/mocks/UserRepositoryMock';
 import { TeamRepositoryMock } from '@/mocks/TeamRepositoryMock';
 import { SubscriptionRepositoryMock } from '@/mocks/SubscriptionRepositoryMock';
-import { Team } from '@/lib/Team/domain/Team';
 import { add, format } from 'date-fns';
-import { User } from '@/lib/User/domain/User';
+import { FulfilledSubscription } from '../../domain/SubscriptionSchema';
+import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
 
 describe('SubscriptionCreate tests', () => {
   let subscriptionRepository: SubscriptionRepository;
   let teamRepository: TeamRepository;
   let planRepository: PlanRepository;
   let userRepository: UserRepository;
-  let subscriptionPayload: any;
+
+  let createdSubscriptionDto: CreateSubscriptionDto;
+
   const freePlanInstance: Plan = Plan.create({
     id: '123456',
     createdAt: new Date(),
@@ -29,7 +30,7 @@ describe('SubscriptionCreate tests', () => {
     description: 'description',
     currency: 'COP',
     interval: 'month',
-    intervalCount: '12',
+    intervalCount: 12,
   });
 
   beforeEach(() => {
@@ -37,7 +38,7 @@ describe('SubscriptionCreate tests', () => {
     teamRepository = new TeamRepositoryMock();
     planRepository = new PlanRepositoryMock();
     userRepository = new UserRepositoryMock();
-    subscriptionPayload = {
+    createdSubscriptionDto = {
       paymentId: '',
       planId: 'FREE',
       teams: [
@@ -63,15 +64,11 @@ describe('SubscriptionCreate tests', () => {
   });
 
   it('should be return an Instance of Subscription', async () => {
-    // Test code here
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
+
     jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -80,7 +77,7 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    const result = await subService.run(subscriptionPayload);
+    const result = await subService.run(createdSubscriptionDto);
 
     const expectedStartDate = format(new Date(), 'yyyy-MM-dd');
     const expectedEndDate = format(
@@ -93,7 +90,7 @@ describe('SubscriptionCreate tests', () => {
     expect(format(result.endDate, 'yyyy-MM-dd')).toBe(expectedEndDate);
     expect(result.users.length).toBe(1);
     expect(result.teams.length).toBe(1);
-    expect(result instanceof Subscription).toBe(true);
+    expect(result instanceof FulfilledSubscription).toBe(true);
   });
 
   it('should throw if no-user-policy', () => {
@@ -101,11 +98,8 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
+
     jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -114,10 +108,10 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.user.policy = false;
+    createdSubscriptionDto.user.policy = false;
 
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -126,11 +120,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(new User());
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -140,7 +129,7 @@ describe('SubscriptionCreate tests', () => {
     );
 
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -149,11 +138,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -162,9 +146,9 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.user.email = '';
+    createdSubscriptionDto.user.email = '';
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -173,11 +157,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -186,9 +165,9 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.user.firstName = '';
+    createdSubscriptionDto.user.firstName = '';
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -197,11 +176,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -210,9 +184,9 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.user.lastName = '';
+    createdSubscriptionDto.user.lastName = '';
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -221,11 +195,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -234,9 +203,9 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.user.password = '';
+    createdSubscriptionDto.user.password = '';
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 
@@ -245,11 +214,6 @@ describe('SubscriptionCreate tests', () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
-    jest.spyOn(userRepository, 'getOneByEmail').mockResolvedValue(null);
-    jest.spyOn(teamRepository, 'create').mockResolvedValue(new Team());
-    jest
-      .spyOn(subscriptionRepository, 'create')
-      .mockResolvedValue(new Subscription());
 
     const subService = new SubscriptionCreate(
       subscriptionRepository,
@@ -258,9 +222,9 @@ describe('SubscriptionCreate tests', () => {
       userRepository,
     );
 
-    subscriptionPayload.planId = '';
+    createdSubscriptionDto.planId = '';
     expect(
-      async () => await subService.run(subscriptionPayload),
+      async () => await subService.run(createdSubscriptionDto),
     ).rejects.toThrow();
   });
 });

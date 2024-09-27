@@ -13,7 +13,14 @@ export class TeamRepositoryMock implements TeamRepository {
     );
   }
   async create(payload: any) {
-    return payload;
+    const baseTeam = Team.create({
+      active: true,
+      hasSubscription: true,
+      name: 'team name',
+      createdAt: new Date(),
+      ...payload,
+    });
+    return { ...baseTeam, id: '123' };
   }
   async getAll() {
     return [];
