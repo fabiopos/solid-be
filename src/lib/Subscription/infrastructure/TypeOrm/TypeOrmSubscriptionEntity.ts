@@ -53,7 +53,6 @@ export class TypeOrmSubscriptionEntity {
     () => TypeOrmSubscriptionFeatureEntity,
     (subFeature) => subFeature.subscription,
   )
-  @JoinColumn()
   features: TypeOrmSubscriptionFeatureEntity[];
 
   // relations to

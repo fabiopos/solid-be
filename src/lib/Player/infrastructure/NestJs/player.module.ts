@@ -14,6 +14,8 @@ import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/T
 import { TypeOrmFieldPositionRepository } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionRepository';
 import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlan
     TypeOrmModule.forFeature([TypeOrmSubscriptionEntity]),
     TypeOrmModule.forFeature([TypeOrmFieldPositionEntity]),
     TypeOrmModule.forFeature([TypeOrmPlanEntity]),
+    TypeOrmModule.forFeature([TypeOrmUserEntity]),
   ],
   controllers: [PlayerController],
   providers: [
@@ -44,6 +47,10 @@ import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlan
     {
       provide: 'PlanRepository',
       useClass: TypeOrmPlanRepository,
+    },
+    {
+      provide: 'UserRepository',
+      useClass: TypeOrmUserRepository,
     },
     {
       provide: 'PlayerGetAll',

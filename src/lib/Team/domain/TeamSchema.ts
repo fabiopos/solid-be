@@ -2,10 +2,10 @@ import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
 import * as S from '@effect/schema/Schema';
 
 export const teamSchema = S.Struct({
-  id: S.String,
+  id: S.optional(S.String),
   name: S.String,
-  active: S.Boolean,
-  subscriptionId: S.String,
+  active: S.optional(S.Boolean),
+  subscriptionId: S.optional(S.String),
   hasSubscription: S.optional(S.Boolean),
   createdAt: S.optional(S.Date),
   players: S.optional(S.NullishOr(S.Array(playerSchema))),
@@ -14,6 +14,18 @@ export const teamSchema = S.Struct({
   logoUrl: S.optional(S.NullishOr(S.String)),
   shieldUrl: S.optional(S.NullishOr(S.String)),
 });
+
+export const teamCreateSchema = teamSchema.pick(
+  'active',
+  'active',
+  'hasSubscription',
+  'logoUrl',
+  'name',
+  'primaryColor',
+  'secondaryColor',
+  'shieldUrl',
+  'subscriptionId',
+);
 
 export type TeamType = S.Schema.Type<typeof teamSchema>;
 

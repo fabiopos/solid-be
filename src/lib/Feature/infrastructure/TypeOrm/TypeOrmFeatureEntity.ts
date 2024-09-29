@@ -1,9 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity('feature')
 export class TypeOrmFeatureEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn()
+  id: string;
 
   @Column()
   name: string;
@@ -11,12 +19,18 @@ export class TypeOrmFeatureEntity {
   @Column()
   description: string;
 
+  @Column({ default: 10 })
+  defaultMax: number;
+
   @Column()
   enabled: boolean;
 
-  @Column()
+  @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => TypeOrmSubscriptionFeatureEntity, (item) => item.feature)
+  subFeatures: TypeOrmSubscriptionFeatureEntity[];
 }

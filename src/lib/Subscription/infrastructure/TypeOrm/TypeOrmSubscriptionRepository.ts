@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 import { TypeOrmSubscriptionEntity } from './TypeOrmSubscriptionEntity';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { Subscription } from '../../domain/Subscription';
 import { NotFoundException } from '@nestjs/common';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
@@ -13,39 +13,143 @@ import {
 } from '../../domain/SubscriptionSchema';
 import { teamSchema } from '@/lib/Team/domain/TeamSchema';
 import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
+import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 
 export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   constructor(
+    private dataSource: DataSource,
     @InjectRepository(TypeOrmSubscriptionEntity)
     private readonly repository: Repository<TypeOrmSubscriptionEntity>,
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
     @InjectRepository(TypeOrmPlanEntity)
     private readonly planRepository: Repository<TypeOrmPlanEntity>,
+    @InjectRepository(TypeOrmUserEntity)
+    private readonly userRepository: Repository<TypeOrmUserEntity>,
   ) {}
 
   async create(payload: EmptySubscription): Promise<FulfilledSubscription> {
-    // validate plan
-    const plan = await this.planRepository.findOneBy({
-      id: payload.planId,
-    });
+    const queryRunner = this.dataSource.createQueryRunner();
 
-    if (!plan) throw new NotFoundException('Plan not found');
+    try {
+      // // validate plan
+      const plan = await this.planRepository.findOneBy({
+        id: payload.planId,
+      });
 
-    // check if user exists by email
-    const { active, id, name, startDate, endDate, createdAt, planId } =
-      await this.repository.save(payload);
+      await queryRunner.connect();
+      await queryRunner.startTransaction();
 
-    return new FulfilledSubscription({
-      active,
-      id,
-      name,
-      startDate,
-      endDate,
-      createdAt,
-      plan: plan,
-      planId,
-    });
+      // if (!plan) throw new NotFoundException('Plan not found');
+
+      const { active, endDate, name, startDate } = payload;
+      // check if user exists by email
+
+      const subscriptionToAdd = {
+        active,
+        name,
+        startDate,
+        endDate,
+        plan,
+      };
+      const insertResultSubscription = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(TypeOrmSubscriptionEntity)
+        .values(subscriptionToAdd)
+        .execute();
+
+      const result = insertResultSubscription.generatedMaps[0];
+      const createdSubscription = {
+        ...subscriptionToAdd,
+        id: result.id,
+        createdAt: result.createdAt,
+        ...result,
+      };
+
+      // add users
+      const mappedUsers = payload.users.map((u) => ({
+        ...u,
+        subscription: createdSubscription,
+      }));
+
+      const insertResultUsers = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(TypeOrmUserEntity)
+        .values(mappedUsers)
+        .returning([
+          'id',
+          'firstName',
+          'lastName',
+          'documentType',
+          'documentNumber',
+          'policy',
+        ])
+        .execute();
+
+      console.log(insertResultUsers);
+      // const createdUsers = insertResultUsers.generatedMaps;
+
+      // // add teams
+      const mappedTeams = payload.teams.map((t) => ({
+        ...t,
+        subscription: createdSubscription,
+      }));
+
+      const insertResultTeams = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(TypeOrmTeamEntity)
+        .values(mappedTeams)
+        .execute();
+
+      console.log('insertResultTeams', insertResultTeams);
+
+      const mappedFeatures = payload.features.map((f) => ({
+        ...f,
+        subscription: createdSubscription,
+      }));
+
+      const insertResultFeatures = await queryRunner.manager
+        .createQueryBuilder()
+        .insert()
+        .into(TypeOrmSubscriptionFeatureEntity)
+        .values(mappedFeatures)
+        .execute();
+
+      console.log('insertResultFeatures', insertResultFeatures);
+      // throw Error('Test error');
+
+      await queryRunner.commitTransaction();
+      // this.userRepository.save(mappedUsers, { transaction: true });
+
+      // this.teamRepository.save(mappedTeams, { transaction: true });
+
+      // add features
+
+      return new FulfilledSubscription({
+        active,
+        id: createdSubscription.id,
+        name,
+        startDate,
+        endDate,
+        createdAt: createdSubscription.createdAt,
+        plan: plan,
+        planId: payload.planId,
+        features: payload.features,
+        users: payload.users,
+        teams: payload.teams,
+      });
+    } catch (error) {
+      await queryRunner.rollbackTransaction();
+      console.log('rollback subscription');
+
+      throw error;
+    } finally {
+      await queryRunner.release();
+    }
   }
 
   async getAll(): Promise<FulfilledSubscription[]> {
@@ -92,7 +196,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   async getOneById(id: string): Promise<FulfilledSubscription | null> {
     const subscription = await this.repository.findOne({
       where: { id },
-      relations: { plan: true, teams: { players: true } },
+      relations: { plan: true, teams: { players: true }, features: true },
     });
     return new FulfilledSubscription({
       ...subscription,

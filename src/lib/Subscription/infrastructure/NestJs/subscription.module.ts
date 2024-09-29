@@ -14,6 +14,10 @@ import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/Subscri
 import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
+import { TypeOrmSubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureRepository';
+import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
+import { TypeOrmFeatureRepository } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureRepository';
+import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
 
 @Module({
   imports: [
@@ -22,6 +26,8 @@ import { SubscriptionFind } from '../../application/SubscriptionFind/Subscriptio
     TypeOrmModule.forFeature([TypeOrmPlanEntity]),
     TypeOrmModule.forFeature([TypeOrmUserEntity]),
     TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
+    TypeOrmModule.forFeature([TypeOrmSubscriptionFeatureEntity]),
+    TypeOrmModule.forFeature([TypeOrmFeatureEntity]),
   ],
   controllers: [SubscriptionController],
   providers: [
@@ -46,6 +52,14 @@ import { SubscriptionFind } from '../../application/SubscriptionFind/Subscriptio
       useClass: TypeOrmPlayerRepository,
     },
     {
+      provide: 'SubscriptionFeatureRepository',
+      useClass: TypeOrmSubscriptionFeatureRepository,
+    },
+    {
+      provide: 'FeatureRepository',
+      useClass: TypeOrmFeatureRepository,
+    },
+    {
       provide: 'SubscriptionGetAll',
       useFactory: (repository: TypeOrmSubscriptionRepository) =>
         new SubscriptionGetAll(repository),
@@ -64,18 +78,24 @@ import { SubscriptionFind } from '../../application/SubscriptionFind/Subscriptio
         teamRepository: TypeOrmTeamRepository,
         planRepository: TypeOrmPlanRepository,
         userRepository: TypeOrmUserRepository,
+        subFeatureRepository: TypeOrmSubscriptionFeatureRepository,
+        featureRepository: TypeOrmFeatureRepository,
       ) =>
         new SubscriptionCreate(
           repository,
           teamRepository,
           planRepository,
           userRepository,
+          subFeatureRepository,
+          featureRepository,
         ),
       inject: [
         'SubscriptionRepository',
         'TeamRepository',
         'PlanRepository',
         'UserRepository',
+        'SubscriptionFeatureRepository',
+        'FeatureRepository',
       ],
     },
   ],

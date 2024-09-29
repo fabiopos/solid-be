@@ -2,8 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
@@ -23,11 +22,9 @@ export class TypeOrmSubscriptionFeatureEntity {
   @Column()
   max: number;
 
-  @OneToOne(() => TypeOrmFeatureEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmFeatureEntity)
   feature: TypeOrmFeatureEntity;
 
-  @OneToOne(() => TypeOrmSubscriptionEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmSubscriptionEntity, (item) => item.features)
   subscription: TypeOrmSubscriptionEntity;
 }
