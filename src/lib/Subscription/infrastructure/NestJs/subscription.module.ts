@@ -18,6 +18,8 @@ import { TypeOrmSubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 import { TypeOrmFeatureRepository } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureRepository';
 import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
+import { JwtModule } from '@nestjs/jwt';
+import { JWT_OPTIONS } from '@/utils/constants';
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeO
     TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
     TypeOrmModule.forFeature([TypeOrmSubscriptionFeatureEntity]),
     TypeOrmModule.forFeature([TypeOrmFeatureEntity]),
+    JwtModule.register(JWT_OPTIONS),
   ],
   controllers: [SubscriptionController],
   providers: [

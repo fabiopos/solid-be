@@ -12,6 +12,7 @@ import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeam
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
 import { UserCreate } from '../../application/UserCreate';
+import { UserFindBy } from '../../application/UserFindBy';
 
 @Module({
   imports: [
@@ -51,6 +52,11 @@ import { UserCreate } from '../../application/UserCreate';
         subscriptionRepository: TypeOrmSubscriptionRepository,
       ) => new UserCreate(userRepository, subscriptionRepository),
       inject: ['UserRepository'],
+    },
+    {
+      provide: 'UserFindBy',
+      useFactory: (userRepository: TypeOrmUserRepository) =>
+        new UserFindBy(userRepository),
     },
   ],
 })

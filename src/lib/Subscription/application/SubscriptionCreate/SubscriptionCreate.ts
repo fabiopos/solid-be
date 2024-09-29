@@ -19,6 +19,7 @@ import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/
 import { subscriptionFeatureCreateSchema } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
 import { FeatureRepository } from '@/lib/Feature/domain/FeatureRepository';
 import { FeatureT } from '@/lib/Feature/domain/FeatureSchema';
+import { encryptPassword } from '@/utils/encription';
 
 export class SubscriptionCreate {
   constructor(
@@ -55,6 +56,7 @@ export class SubscriptionCreate {
   async validate(dto: CreateSubscriptionDto): Promise<EmptySubscription> {
     const res = await Effect.runPromiseExit(this.isValidDto(dto));
     const featuresToAdd = await this.getFeaturesToAdd('', dto.planId);
+    dto.user.password = await encryptPassword(dto.user.password);
     switch (res._tag) {
       case 'Success':
         return new EmptySubscription({
@@ -97,7 +99,12 @@ export class SubscriptionCreate {
 
   async createUser(dto: CreateSubscriptionDto, subscriptionId: string) {
     const { user } = dto;
-    return await this.userRepository.create({ ...user, subscriptionId });
+    const hashedPwd = await encryptPassword(user.password);
+    return await this.userRepository.create({
+      ...user,
+      password: hashedPwd,
+      subscriptionId,
+    });
   }
 
   hasTeams = (dto: CreateSubscriptionDto) =>

@@ -107,7 +107,15 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
         payment: { id: true, currency: true, description: true },
         features: { id: true, enabled: true },
         teams: { name: true, active: true, id: true },
-        users: { firstName: true, lastName: true, email: true },
+        users: {
+          id: true,
+          firstName: true,
+          lastName: true,
+          email: true,
+          documentNumber: true,
+          documentType: true,
+          policy: true,
+        },
       },
     });
 

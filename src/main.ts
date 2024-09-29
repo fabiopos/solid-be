@@ -8,7 +8,9 @@ import { config } from './utils/swagger';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
+
   const document = SwaggerModule.createDocument(app, config);
+
   SwaggerModule.setup('api', app, document, {
     customCssUrl:
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui.min.css',

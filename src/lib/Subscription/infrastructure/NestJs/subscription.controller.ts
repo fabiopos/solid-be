@@ -6,14 +6,16 @@ import {
   NotFoundException,
   Param,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { SubscriptionCreatePayload, SubscriptionParams } from './Validations';
 import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
 import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
+import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
 
 @ApiTags('subscription')
 @Controller('subscription')
@@ -36,6 +38,9 @@ export class SubscriptionController {
     return this.subscriptionGetAll.run();
   }
 
+  @ApiBearerAuth()
+  @ApiParam({ name: 'id' })
+  @UseGuards(JwtAuthGuard)
   @Get(':id')
   async findSubscription(@Param() params: SubscriptionParams) {
     const { id } = params;
