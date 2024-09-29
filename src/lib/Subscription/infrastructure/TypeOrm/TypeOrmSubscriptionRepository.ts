@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 import { TypeOrmSubscriptionEntity } from './TypeOrmSubscriptionEntity';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Subscription } from '../../domain/Subscription';
 import { NotFoundException } from '@nestjs/common';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
@@ -10,12 +10,20 @@ import {
   EmptySubscription,
   FulfilledSubscription,
   planSchema,
+  subscriptionToAddSchema,
+  userSchema,
 } from '../../domain/SubscriptionSchema';
 import { teamSchema } from '@/lib/Team/domain/TeamSchema';
 import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
+import { subscriptionFeatureSchema } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
 
+interface AddonPayload {
+  queryRunner: QueryRunner;
+  payload: EmptySubscription;
+  subscription: TypeOrmSubscriptionEntity;
+}
 export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   constructor(
     private dataSource: DataSource,
@@ -33,114 +41,41 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     const queryRunner = this.dataSource.createQueryRunner();
 
     try {
-      // // validate plan
       const plan = await this.planRepository.findOneBy({
         id: payload.planId,
       });
-
       await queryRunner.connect();
       await queryRunner.startTransaction();
 
-      // if (!plan) throw new NotFoundException('Plan not found');
-
-      const { active, endDate, name, startDate } = payload;
-      // check if user exists by email
-
-      const subscriptionToAdd = {
-        active,
-        name,
-        startDate,
-        endDate,
+      const createdSubscription = await this.insertSubscription(
+        queryRunner,
+        payload,
         plan,
-      };
-      const insertResultSubscription = await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(TypeOrmSubscriptionEntity)
-        .values(subscriptionToAdd)
-        .execute();
+      );
 
-      const result = insertResultSubscription.generatedMaps[0];
-      const createdSubscription = {
-        ...subscriptionToAdd,
-        id: result.id,
-        createdAt: result.createdAt,
-        ...result,
+      const addOnPayload = {
+        queryRunner,
+        payload,
+        subscription: createdSubscription,
       };
-
       // add users
-      const mappedUsers = payload.users.map((u) => ({
-        ...u,
-        subscription: createdSubscription,
-      }));
+      const addedUsers = await this.addUsersToSubscription(addOnPayload);
 
-      const insertResultUsers = await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(TypeOrmUserEntity)
-        .values(mappedUsers)
-        .returning([
-          'id',
-          'firstName',
-          'lastName',
-          'documentType',
-          'documentNumber',
-          'policy',
-        ])
-        .execute();
-
-      console.log(insertResultUsers);
-      // const createdUsers = insertResultUsers.generatedMaps;
-
-      // // add teams
-      const mappedTeams = payload.teams.map((t) => ({
-        ...t,
-        subscription: createdSubscription,
-      }));
-
-      const insertResultTeams = await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(TypeOrmTeamEntity)
-        .values(mappedTeams)
-        .execute();
-
-      console.log('insertResultTeams', insertResultTeams);
-
-      const mappedFeatures = payload.features.map((f) => ({
-        ...f,
-        subscription: createdSubscription,
-      }));
-
-      const insertResultFeatures = await queryRunner.manager
-        .createQueryBuilder()
-        .insert()
-        .into(TypeOrmSubscriptionFeatureEntity)
-        .values(mappedFeatures)
-        .execute();
-
-      console.log('insertResultFeatures', insertResultFeatures);
-      // throw Error('Test error');
-
-      await queryRunner.commitTransaction();
-      // this.userRepository.save(mappedUsers, { transaction: true });
-
-      // this.teamRepository.save(mappedTeams, { transaction: true });
+      // add teams
+      const addedTeams = await this.addTeamsToSubscription(addOnPayload);
 
       // add features
+      const addedFeatures = await this.addFeaturesToSubscription(addOnPayload);
+
+      await queryRunner.commitTransaction();
 
       return new FulfilledSubscription({
-        active,
-        id: createdSubscription.id,
-        name,
-        startDate,
-        endDate,
-        createdAt: createdSubscription.createdAt,
+        ...createdSubscription,
         plan: plan,
         planId: payload.planId,
-        features: payload.features,
-        users: payload.users,
-        teams: payload.teams,
+        features: addedFeatures,
+        teams: addedTeams,
+        users: addedUsers,
       });
     } catch (error) {
       await queryRunner.rollbackTransaction();
@@ -223,4 +158,150 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
 
     await this.repository.remove(subscription);
   }
+
+  getSubscriptionToAdd = async (
+    payload: EmptySubscription,
+    plan: TypeOrmPlanEntity,
+  ) => {
+    const { active, endDate, name, startDate } = payload;
+
+    return subscriptionToAddSchema.make({
+      active,
+      endDate,
+      name,
+      startDate,
+      plan,
+    });
+  };
+
+  insertSubscription = async (
+    queryRunner: QueryRunner,
+    emptySubscription: EmptySubscription,
+    plan: TypeOrmPlanEntity,
+  ) => {
+    const subscriptionToAdd = await this.getSubscriptionToAdd(
+      emptySubscription,
+      plan,
+    );
+
+    const insertResultSubscription = await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into(TypeOrmSubscriptionEntity)
+      .values(subscriptionToAdd)
+      .returning(['id'])
+      .execute();
+
+    const result = insertResultSubscription.generatedMaps[0];
+
+    return queryRunner.manager
+      .getRepository(TypeOrmSubscriptionEntity)
+      .createQueryBuilder('subscription')
+      .where('subscription.id = :id', { id: result.id })
+      .getOne();
+  };
+
+  addUsersToSubscription = async ({
+    queryRunner,
+    payload,
+    subscription,
+  }: AddonPayload) => {
+    const mappedUsers = payload.users.map((u) => ({
+      ...u,
+      subscription,
+    }));
+
+    const insertResultUsers = await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into(TypeOrmUserEntity)
+      .values(mappedUsers)
+      .returning([
+        'id',
+        'firstName',
+        'lastName',
+        'documentType',
+        'documentNumber',
+        'policy',
+        'email',
+      ])
+      .execute();
+
+    const results = insertResultUsers.generatedMaps;
+    return results.map((u) =>
+      userSchema.make({
+        id: u.id,
+        firstName: u.firstName,
+        lastName: u.lastName,
+        documentType: u.documentType,
+        documentNumber: u.documentNumber,
+        policy: u.policy,
+        email: u.email,
+      }),
+    );
+  };
+
+  addTeamsToSubscription = async ({
+    queryRunner,
+    payload,
+    subscription,
+  }: AddonPayload) => {
+    const mappedTeams = payload.teams.map((t) => ({
+      ...t,
+      subscription,
+    }));
+
+    const insertResultTeams = await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into(TypeOrmTeamEntity)
+      .values(mappedTeams)
+      .returning(['id', 'name', 'hasSubscription', 'active'])
+      .execute();
+
+    const result = insertResultTeams.generatedMaps;
+    return result.map((t) =>
+      teamSchema.make({
+        name: t.name,
+        active: t.active,
+        hasSubscription: t.hasSubscription,
+        id: t.id,
+        logoUrl: t.logoUrl,
+        primaryColor: t.primaryColor,
+        secondaryColor: t.secondaryColor,
+        shieldUrl: t.shieldUrl,
+      }),
+    );
+  };
+
+  addFeaturesToSubscription = async ({
+    queryRunner,
+    payload,
+    subscription,
+  }: AddonPayload) => {
+    const mappedFeatures = payload.features.map((f) => ({
+      ...f,
+      subscription,
+    }));
+
+    const insertResultFeatures = await queryRunner.manager
+      .createQueryBuilder()
+      .insert()
+      .into(TypeOrmSubscriptionFeatureEntity)
+      .values(mappedFeatures)
+      .returning(['createdAt', 'id', 'max', 'enabled', 'feature.id'])
+      .execute();
+
+    const result = insertResultFeatures.generatedMaps;
+
+    return result.map((f) =>
+      subscriptionFeatureSchema.make({
+        id: f.id,
+        createdAt: f.createdAt,
+        max: f.max,
+        enabled: f.enabled,
+        featureId: f.feature,
+      }),
+    );
+  };
 }

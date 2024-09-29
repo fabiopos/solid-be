@@ -17,7 +17,6 @@ export const teamSchema = S.Struct({
 
 export const teamCreateSchema = teamSchema.pick(
   'active',
-  'active',
   'hasSubscription',
   'logoUrl',
   'name',

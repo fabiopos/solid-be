@@ -47,13 +47,12 @@ export class SubscriptionController {
   @Post()
   async createFull(@Body() subscription: SubscriptionCreatePayload) {
     try {
-      const result = await this.subscriptionCreate.run({
+      return await this.subscriptionCreate.run({
         paymentId: subscription.paymentId,
         planId: subscription.planId,
         teams: [subscription.team],
         user: subscription.user,
       });
-      return { ...result };
     } catch (error) {
       if (error instanceof PlanNotFoundError)
         throw new NotFoundException(error.message);

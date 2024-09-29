@@ -1,9 +1,9 @@
 import * as S from '@effect/schema/Schema';
 
 export const featureSchema = S.Struct({
-  id: S.String,
-  name: S.String,
-  description: S.String,
+  id: S.optional(S.String),
+  name: S.optional(S.String),
+  description: S.optional(S.String),
   defaultMax: S.Number,
   enabled: S.Boolean,
   createdAt: S.Date,

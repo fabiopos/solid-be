@@ -7,7 +7,7 @@ export const subscriptionFeatureSchema = S.Struct({
   enabled: S.Boolean,
   max: S.Number,
   featureId: S.optional(S.String),
-  feature: S.optional(featureSchema.pick('id')),
+  feature: S.optional(featureSchema.pick('id', 'description', 'name')),
   subscriptionId: S.optional(S.String),
   subscription: S.optional(
     S.Struct({
