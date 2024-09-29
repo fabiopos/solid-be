@@ -10,14 +10,20 @@ import { UserRepositoryMock } from '@/mocks/UserRepositoryMock';
 import { TeamRepositoryMock } from '@/mocks/TeamRepositoryMock';
 import { SubscriptionRepositoryMock } from '@/mocks/SubscriptionRepositoryMock';
 import { add, format } from 'date-fns';
-import { FulfilledSubscription } from '../../domain/SubscriptionSchema';
+import { FulfilledSubscription, SubscriptionCreateResponse } from '../../domain/SubscriptionSchema';
 import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
+import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureRepository';
+import { SubscriptionFeatureRepositoryMock } from '@/mocks/SubscriptionFeatureRepository';
+import { FeatureRepository } from '@/lib/Feature/domain/FeatureRepository';
+import { FeatureRepositoryMock } from '@/mocks/FeatureRepository';
 
 describe('SubscriptionCreate tests', () => {
   let subscriptionRepository: SubscriptionRepository;
   let teamRepository: TeamRepository;
   let planRepository: PlanRepository;
   let userRepository: UserRepository;
+  let subscriptionFeatureRepository: SubscriptionFeatureRepository;
+  let featureRepository: FeatureRepository;
 
   let createdSubscriptionDto: CreateSubscriptionDto;
 
@@ -38,6 +44,8 @@ describe('SubscriptionCreate tests', () => {
     teamRepository = new TeamRepositoryMock();
     planRepository = new PlanRepositoryMock();
     userRepository = new UserRepositoryMock();
+    subscriptionFeatureRepository = new SubscriptionFeatureRepositoryMock();
+    featureRepository = new FeatureRepositoryMock();
     createdSubscriptionDto = {
       paymentId: '',
       planId: 'FREE',
@@ -63,7 +71,7 @@ describe('SubscriptionCreate tests', () => {
     };
   });
 
-  it('should be return an Instance of Subscription', async () => {
+  it('should be return an Instance of SubscriptionCreateResponse', async () => {
     jest
       .spyOn(planRepository, 'getOneById')
       .mockResolvedValue(freePlanInstance);
@@ -75,6 +83,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     const result = await subService.run(createdSubscriptionDto);
@@ -90,7 +100,7 @@ describe('SubscriptionCreate tests', () => {
     expect(format(result.endDate, 'yyyy-MM-dd')).toBe(expectedEndDate);
     expect(result.users.length).toBe(1);
     expect(result.teams.length).toBe(1);
-    expect(result instanceof FulfilledSubscription).toBe(true);
+    expect(result instanceof SubscriptionCreateResponse).toBe(true);
   });
 
   it('should throw if no-user-policy', () => {
@@ -106,6 +116,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.user.policy = false;
@@ -126,6 +138,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     expect(
@@ -144,6 +158,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.user.email = '';
@@ -163,6 +179,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.user.firstName = '';
@@ -182,6 +200,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.user.lastName = '';
@@ -201,6 +221,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.user.password = '';
@@ -220,6 +242,8 @@ describe('SubscriptionCreate tests', () => {
       teamRepository,
       planRepository,
       userRepository,
+      subscriptionFeatureRepository,
+      featureRepository,
     );
 
     createdSubscriptionDto.planId = '';
