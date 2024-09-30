@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthLogin } from '../../application/Login/AuthLogin';
-import { AuthLogout } from '../../application/Logout/AuthLogout';
 import { JwtService } from '@nestjs/jwt';
 import { JWT_OPTIONS } from '@/utils/constants';
 import { UserModule } from '@/lib/User/infrastructure/NestJs/user.module';
@@ -74,9 +73,7 @@ import { TypeOrmFeatureRepository } from '@/lib/Feature/infrastructure/TypeOrm/T
         new AuthLogin(userService, new JwtService(JWT_OPTIONS)),
       inject: ['UserFindBy'],
     },
-    AuthLogout,
   ],
   controllers: [AuthController],
-  exports: [AuthLogout],
 })
 export class AuthModule {}

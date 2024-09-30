@@ -24,6 +24,7 @@ export class AuthLogin {
       subscriptionId: user.subscriptionId,
     };
     const token = this.jwtService.sign(payload);
+
     const data = {
       user: payload,
       token,
