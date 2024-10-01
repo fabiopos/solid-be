@@ -11,13 +11,16 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   Length,
 } from 'class-validator';
-
+export class PlayerFindParams {
+  @IsUUID()
+  id: string;
+}
 export class CreatePlayerPayload {
   @ApiProperty({ required: true })
-  @IsString()
-  @Length(5, 255)
+  @IsUUID()
   teamId: string;
 
   @ApiProperty()
@@ -30,11 +33,15 @@ export class CreatePlayerPayload {
 
   @ApiProperty()
   @IsString()
+  favPositionId: string;
+
+  @ApiProperty()
+  @IsString()
   documentNumber: string;
 
   @ApiProperty()
   @IsEnum(DocumentType)
-  documentType: string;
+  documentType: DocumentType;
 
   @IsEmail()
   @ApiProperty()
@@ -42,6 +49,7 @@ export class CreatePlayerPayload {
 
   @ApiProperty({ required: true })
   @IsString()
+  @Length(3, 15)
   shirtName: string;
 
   @ApiProperty({ required: true })
@@ -50,19 +58,14 @@ export class CreatePlayerPayload {
 
   @ApiProperty({ required: true })
   @IsEnum(ShirtSize)
-  shirtSize: string;
+  shirtSize: ShirtSize;
 
   @ApiProperty({ required: true })
   @IsEnum(DominantFoot)
-  dominantFoot: string;
+  dominantFoot: DominantFoot;
 
   @ApiProperty()
   active: boolean;
-
-  @ApiProperty({ required: false })
-  @IsString()
-  @IsOptional()
-  favPosition: string;
 
   @ApiProperty({ required: false })
   @IsString()

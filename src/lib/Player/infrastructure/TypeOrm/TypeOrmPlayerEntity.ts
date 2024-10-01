@@ -8,7 +8,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { DominantFoot, ShirtSize } from '@/shared/enums/playerEnums';
+import {
+  DominantFoot,
+  PlayerStatus,
+  ShirtSize,
+} from '@/shared/enums/playerEnums';
 import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/TypeOrm/TypeOrmPlayerInjuryEntity';
@@ -59,6 +63,9 @@ export class TypeOrmPlayerEntity extends PersonAbstract {
 
   @Column({ nullable: true })
   eps?: string | null;
+
+  @Column({ type: 'enum', enum: PlayerStatus, default: PlayerStatus.OK })
+  status?: PlayerStatus;
 
   @OneToMany(
     () => TypeOrmPlayerPositionEntity,

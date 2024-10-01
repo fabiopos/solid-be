@@ -1,4 +1,6 @@
-export class PlayerInvalidError extends Error {
+import { BadRequestException } from '@nestjs/common';
+
+export class PlayerInvalidError extends BadRequestException {
   constructor(message: string) {
     super(message);
   }
