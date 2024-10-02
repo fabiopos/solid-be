@@ -83,6 +83,9 @@ export class EmptySubscription extends S.TaggedClass<EmptySubscription>()(
   }
 
   get endDate(): Date {
+    if (this.plan) {
+      console.log(this.plan.interval, this.plan.intervalCount);
+    }
     return add(new Date(), { [this.plan.interval]: this.plan.intervalCount });
   }
 }
@@ -134,5 +137,6 @@ export class SubscriptionCreateResponse extends S.TaggedClass<SubscriptionCreate
     features: S.Array(
       subscriptionFeatureSchema.pick('max', 'featureId', 'enabled', 'id'),
     ),
+    isExpired: S.optional(S.Boolean),
   },
 ) {}

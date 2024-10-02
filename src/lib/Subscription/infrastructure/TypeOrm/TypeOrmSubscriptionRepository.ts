@@ -49,7 +49,13 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
 
       const createdSubscription = await this.insertSubscription(
         queryRunner,
-        payload,
+        {
+          ...payload,
+          endDate: payload.endDate,
+          name: payload.name,
+          startDate: payload.startDate,
+          active: payload.active,
+        },
         plan,
       );
 

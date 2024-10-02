@@ -20,6 +20,8 @@ import { subscriptionFeatureCreateSchema } from '@/lib/SubscriptionFeature/domai
 import { FeatureRepository } from '@/lib/Feature/domain/FeatureRepository';
 import { FeatureT } from '@/lib/Feature/domain/FeatureSchema';
 import { encryptPassword } from '@/utils/encription';
+import { UserEncryptError } from '@/lib/User/domain/UserEncryptError';
+import { SubscriptionMapError } from '../../domain/SubscriptionMapError';
 
 export class SubscriptionCreate {
   constructor(
@@ -36,15 +38,16 @@ export class SubscriptionCreate {
       const emptySub = await this.validate(dto);
       const fulfilledSubscription = await this.createSubscription(emptySub);
       return SubscriptionCreateResponse.make({
-        active: fulfilledSubscription.active,
-        endDate: fulfilledSubscription.endDate,
-        features: fulfilledSubscription.features,
         id: fulfilledSubscription.id,
         name: fulfilledSubscription.name,
-        planId: fulfilledSubscription.planId,
         startDate: fulfilledSubscription.startDate,
-        users: fulfilledSubscription.users,
+        endDate: fulfilledSubscription.endDate,
+        active: fulfilledSubscription.active,
+        isExpired: fulfilledSubscription.isExpired,
+        planId: fulfilledSubscription.planId,
         plan: fulfilledSubscription.plan,
+        users: fulfilledSubscription.users,
+        features: fulfilledSubscription.features,
         teams: fulfilledSubscription.teams,
       });
     } catch (error) {
@@ -54,21 +57,15 @@ export class SubscriptionCreate {
   }
 
   async validate(dto: CreateSubscriptionDto): Promise<EmptySubscription> {
-    const res = await Effect.runPromiseExit(this.isValidDto(dto));
-    const featuresToAdd = await this.getFeaturesToAdd('', dto.planId);
-    dto.user.password = await encryptPassword(dto.user.password);
+    const res = await Effect.runPromiseExit(this.makeEmptySubscription(dto));
+    // dto.user.password = await encryptPassword(dto.user.password);
     switch (res._tag) {
       case 'Success':
-        return new EmptySubscription({
-          planId: dto.planId,
-          plan: res.value,
-          users: [dto.user],
-          teams: dto.teams,
-          features: featuresToAdd,
-        });
+        return res.value;
       case 'Failure':
         if (res.cause._tag === 'Fail') throw res.cause.error;
       default:
+        console.log(res);
         throw new Error('Unknown error validating subscription');
     }
   }
@@ -107,28 +104,28 @@ export class SubscriptionCreate {
     });
   }
 
-  hasTeams = (dto: CreateSubscriptionDto) =>
+  hasTeams = (emptySub: EmptySubscription) =>
+    emptySub.teams.length > 0
+      ? Effect.succeed(emptySub)
+      : Effect.fail(new TeamNotProvidedError());
+
+  hasPlanId = (emptySub: EmptySubscription) =>
     Effect.suspend(() =>
-      dto.teams.length > 0
-        ? Effect.succeed(dto)
-        : Effect.fail(new TeamNotProvidedError()),
+      !!emptySub.planId
+        ? Effect.succeed(emptySub)
+        : Effect.fail(new PlanNotFoundError()),
     );
 
-  hasPlanId = (dto: CreateSubscriptionDto) =>
+  hasUser = (emptySub: EmptySubscription) =>
     Effect.suspend(() =>
-      !!dto.planId ? Effect.succeed(dto) : Effect.fail(new PlanNotFoundError()),
-    );
-
-  hasUser = (dto: CreateSubscriptionDto) =>
-    Effect.suspend(() =>
-      !!dto.user
-        ? Effect.succeed(dto)
+      (emptySub.users ?? []).length > 0
+        ? Effect.succeed(emptySub)
         : Effect.fail(new UserInvalidError('User not provided')),
     );
 
-  isPolicyAccepted = (dto: CreateSubscriptionDto) =>
-    dto.user.policy
-      ? Effect.succeed(dto)
+  isPolicyAccepted = (emptySub: EmptySubscription) =>
+    emptySub.users.every((u) => u.policy)
+      ? Effect.succeed(emptySub)
       : Effect.fail(new UserNoPolicyError());
 
   getUser = (email: string) =>
@@ -143,50 +140,107 @@ export class SubscriptionCreate {
       catch: () => Effect.fail(new Error('Cannot get plan')),
     });
 
-  userAlreadyExists = (email: string) =>
+  userAlreadyExists = (emptySub: EmptySubscription) =>
     pipe(
-      email,
+      emptySub.users[0].email, // todo: make this for several users
       this.getUser,
       Effect.matchEffect({
         onFailure: () =>
           Effect.fail(
-            new UserInvalidError(`Cannot get user with email ${email}`),
+            new UserInvalidError(
+              `Cannot get user with email ${emptySub.users[0].email}`,
+            ),
           ),
-        onSuccess: (user) => Effect.succeed(!!user),
+        onSuccess: (user) =>
+          !!user
+            ? Effect.fail(new UserAlreadyExistsError(emptySub.users[0].email))
+            : Effect.succeed(emptySub),
       }),
     );
 
-  planExists = (planId: string) =>
+  planExists = (emptySub: EmptySubscription) =>
     pipe(
-      planId,
+      emptySub.planId,
       this.getPlan,
       Effect.matchEffect({
         onFailure: () => Effect.fail(new PlanNotFoundError()),
         onSuccess: (plan) =>
           plan === null
             ? Effect.fail(new PlanNotFoundError())
-            : Effect.succeed(plan),
+            : Effect.succeed(EmptySubscription.make({ ...emptySub, plan })),
       }),
     );
 
-  isValidDto = (dto: CreateSubscriptionDto) =>
-    pipe(
-      dto,
-      this.hasTeams,
-      Effect.flatMap(this.hasPlanId),
-      Effect.flatMap(this.hasUser),
-      Effect.flatMap(this.isPolicyAccepted),
-      Effect.map((dto) => dto.user.email),
-      Effect.flatMap(this.userAlreadyExists),
+  encryptSingle = (password: string) =>
+    Effect.tryPromise({
+      try: () => encryptPassword(password),
+      catch: () => Effect.fail(new UserEncryptError('Cannot encrypt password')),
+    });
+
+  encryptUserPassword = (emptySub: EmptySubscription) => {
+    return pipe(
+      emptySub.users[0].password,
+      this.encryptSingle,
       Effect.matchEffect({
-        onSuccess: (exists) =>
-          exists
-            ? Effect.fail(new UserAlreadyExistsError(dto.user.email))
-            : Effect.succeed(true),
-        onFailure: (e) => Effect.fail(e),
+        onSuccess: (encriptedPassword: string) =>
+          Effect.succeed(
+            EmptySubscription.make({
+              ...emptySub,
+              users: [{ ...emptySub.users[0], password: encriptedPassword }],
+            }),
+          ),
+        onFailure: (error) => error,
       }),
-      Effect.flatMap(() => this.planExists(dto.planId)),
     );
+  };
+
+  mapDtoToEmptySubscription(dto: CreateSubscriptionDto) {
+    return Effect.succeed(
+      EmptySubscription.make({
+        planId: dto.planId,
+        teams: dto.teams,
+        features: [],
+        plan: dto.plan,
+        users: [dto.user],
+      }),
+    );
+  }
+
+  fetchFeaturesToAdd = (planId: string) =>
+    Effect.tryPromise({
+      try: () => this.getFeaturesToAdd(planId),
+      catch: () => new SubscriptionMapError('Cannot map features'),
+    });
+
+  mapFeaturesToEmptySubscrition = (emptySub: EmptySubscription) => {
+    return pipe(
+      emptySub.planId,
+      this.fetchFeaturesToAdd,
+      Effect.matchEffect({
+        onSuccess: (featuresToAdd) =>
+          Effect.succeed(
+            EmptySubscription.make({ ...emptySub, features: featuresToAdd }),
+          ),
+        onFailure: (error) => Effect.fail(error),
+      }),
+    );
+  };
+
+  makeEmptySubscription(dto: CreateSubscriptionDto) {
+    return pipe(
+      dto,
+      this.mapDtoToEmptySubscription,
+      Effect.flatMap(this.hasTeams),
+      Effect.flatMap(this.hasPlanId),
+      Effect.flatMap(this.planExists),
+      Effect.flatMap(this.hasUser),
+      Effect.flatMap(this.userAlreadyExists),
+      Effect.flatMap(this.encryptUserPassword),
+      Effect.flatMap(this.isPolicyAccepted),
+      Effect.flatMap(this.userAlreadyExists),
+      Effect.flatMap(this.mapFeaturesToEmptySubscrition),
+    );
+  }
 
   getAllFeatures = () =>
     Effect.tryPromise({
@@ -255,7 +309,8 @@ export class SubscriptionCreate {
 
     return await this.subFeatureRepository.createItems(schemas);
   };
-  getFeaturesToAdd = async (subscriptionId: string, planId: string) => {
+
+  getFeaturesToAdd = async (planId: string) => {
     const featuresEffect = await Effect.runPromise(
       this.getDefaultFeatures(planId),
     );
@@ -263,7 +318,7 @@ export class SubscriptionCreate {
     return featuresEffect.map((x) =>
       subscriptionFeatureCreateSchema.make({
         feature: { id: x.id },
-        subscription: { id: subscriptionId },
+        subscription: { id: '' },
         max: x.defaultMax ?? 1,
         enabled: true,
       }),
