@@ -3,11 +3,10 @@ import {
   Controller,
   Inject,
   NotFoundException,
-  Patch,
   Post,
 } from '@nestjs/common';
 
-import { ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { UserValidate } from '../../application/UserValidate';
 import { NewUserValidatePayload } from './ValidateNewUser';
 import { CreateUserPayload } from './CreateUserPayload';
@@ -43,7 +42,8 @@ export class UserController {
     }
   }
 
-  @Patch()
+  @ApiCreatedResponse({ status: '3XX', description: 'Creates a new user' })
+  @Post()
   async create(@Body() payload: CreateUserPayload) {
     try {
       return this.userCreate.run({ ...payload });

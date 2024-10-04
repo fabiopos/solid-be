@@ -3,7 +3,7 @@ import { PlayerRepository } from '../../domain/PlayerRepository';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { SubscriptionRepository } from '@/lib/Subscription/domain/SubscriptionRepository';
 import { PlayerInvalidError } from '../../domain/PlayerInvalidError';
-import { FieldPositionRepository } from '@/lib/FieldPosition/application/FieldPositionRepository';
+import { FieldPositionRepository } from '@/lib/FieldPosition/domain/FieldPositionRepository';
 import { EmptyPlayer, FulfilledPlayer } from '../../domain/PlayerSchema';
 import { Effect, pipe } from 'effect';
 import { PlayerPositionRepository } from '@/lib/PlayerPosition/domain/PlayerPositionRepository';

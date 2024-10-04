@@ -10,9 +10,15 @@ import {
 } from '@nestjs/common';
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { SubscriptionCreatePayload, SubscriptionParams } from './Validations';
-import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
-import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';
-import { ApiBearerAuth, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
 import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
 import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
@@ -48,7 +54,15 @@ export class SubscriptionController {
     if (!result) throw new NotFoundException();
     return result;
   }
-
+  @ApiCreatedResponse({
+    status: '2XX',
+    description: 'Creates a new subscription',
+  })
+  @ApiBadRequestResponse({ description: 'Payload validation errors' })
+  @ApiInternalServerErrorResponse({ description: 'Other errors' })
+  @ApiNotFoundResponse({
+    description: 'Returns if a resource cannot be found i.e: planId ',
+  })
   @Post()
   async createFull(@Body() subscription: SubscriptionCreatePayload) {
     try {
@@ -59,12 +73,6 @@ export class SubscriptionController {
         user: subscription.user,
       });
     } catch (error) {
-      if (error instanceof PlanNotFoundError)
-        throw new NotFoundException(error.message);
-
-      if (error instanceof UserAlreadyExistsError)
-        throw new NotFoundException(error.message);
-
       throw error;
     }
   }

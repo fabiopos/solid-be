@@ -1,8 +1,9 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { FieldPositionRepository } from '../../application/FieldPositionRepository';
+import { FieldPositionRepository } from '../../domain/FieldPositionRepository';
 import { TypeOrmFieldPositionEntity } from './TypeOrmFieldPositionEntity';
 import { Repository } from 'typeorm';
-import { FieldPosition } from '../../application/FieldPosition';
+import { FieldPosition } from '../../domain/FieldPosition';
+import { FulfilledFieldPosition } from '../../domain/FieldPositionSchema';
 
 export class TypeOrmFieldPositionRepository implements FieldPositionRepository {
   constructor(
@@ -12,11 +13,11 @@ export class TypeOrmFieldPositionRepository implements FieldPositionRepository {
   async create(fieldPosition: FieldPosition): Promise<void> {
     await this.repository.save(fieldPosition);
   }
-  async getAll(): Promise<FieldPosition[]> {
+  async getAll(): Promise<FulfilledFieldPosition[]> {
     const result = await this.repository.find();
     return result.map((u) => this.mapToDomain(u));
   }
-  async getOneById(id: string): Promise<FieldPosition | null> {
+  async getOneById(id: string): Promise<FulfilledFieldPosition> {
     const result = await this.repository.findOneBy({ id: id });
 
     if (!result) return null;
@@ -31,9 +32,8 @@ export class TypeOrmFieldPositionRepository implements FieldPositionRepository {
   }
 
   private mapToDomain(u: TypeOrmFieldPositionEntity) {
-    const fp = new FieldPosition();
-    fp.id = u.id;
-    fp.name = u.name;
-    return fp;
+    return FulfilledFieldPosition.make({
+      ...u,
+    });
   }
 }

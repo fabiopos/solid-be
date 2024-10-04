@@ -9,3 +9,10 @@ export const fieldPositionSchema = S.Struct({
 });
 
 export type FieldPositionType = S.Schema.Type<typeof fieldPositionSchema>;
+
+export class FulfilledFieldPosition extends S.TaggedClass<FulfilledFieldPosition>()(
+  'FulfilledFieldPosition',
+  {
+    ...fieldPositionSchema.fields,
+  },
+) {}

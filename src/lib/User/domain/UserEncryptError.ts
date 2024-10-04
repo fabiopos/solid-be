@@ -1,4 +1,6 @@
-export class UserEncryptError extends Error {
+import { InternalServerErrorException } from '@nestjs/common';
+
+export class UserEncryptError extends InternalServerErrorException {
   constructor(message: string) {
     super(message);
   }
