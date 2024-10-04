@@ -7,6 +7,7 @@ import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
+import { TeamFind } from '../../application/TeamFind/TeamFind';
 
 @Module({
   imports: [
@@ -27,6 +28,12 @@ import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
       provide: 'TeamGetAll',
       useFactory: (repository: TypeOrmTeamRepository) =>
         new TeamGetAll(repository),
+      inject: ['TeamRepository'],
+    },
+    {
+      provide: 'TeamFind',
+      useFactory: (repository: TypeOrmTeamRepository) =>
+        new TeamFind(repository),
       inject: ['TeamRepository'],
     },
     {

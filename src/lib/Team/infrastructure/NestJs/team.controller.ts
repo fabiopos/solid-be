@@ -1,9 +1,11 @@
-import { Body, Controller, Get, Inject, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import { CreateTeamPayload, ValidateTeamPayload } from './Validations';
 import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
 import { ApiTags } from '@nestjs/swagger';
 import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
+import { TeamFind } from '../../application/TeamFind/TeamFind';
+import { TeamResponse } from '../../domain/TeamSchema';
 
 @ApiTags('team')
 @Controller('team')
@@ -12,11 +14,20 @@ export class TeamController {
     @Inject('TeamCreate') private readonly teamCreate: TeamCreate,
     @Inject('TeamValidate') private readonly teamValidate: TeamValidate,
     @Inject('TeamGetAll') private readonly teamGetAll: TeamGetAll,
+    @Inject('TeamFind') private readonly teamFind: TeamFind,
   ) {}
 
   @Get()
   async getAll() {
-    return this.teamGetAll.run();
+    const teams = await this.teamGetAll.run();
+    return teams;
+  }
+
+  @Get(':id')
+  async getById(@Param() params: { id: string }) {
+    const { id } = params;
+    const team = await this.teamFind.run(id);
+    return TeamResponse.make({ ...team, playersCount: team.playersCount });
   }
 
   @Post('/validate')
@@ -24,7 +35,7 @@ export class TeamController {
     return this.teamValidate.run({ teamName: team.name });
   }
 
-  @Patch()
+  @Post()
   async create(@Body() team: CreateTeamPayload) {
     return this.teamCreate.run({
       active: team.active,

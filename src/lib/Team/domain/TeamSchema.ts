@@ -45,9 +45,18 @@ export class FulfilledTeam extends S.TaggedClass<FulfilledTeam>()(
   {
     ...teamSchema.fields,
   },
-) {}
+) {
+  get playersCount(): number {
+    return (this.players ?? []).length;
+  }
+}
 
 export type TeamT = EmptyTeam | FulfilledTeam;
+
+export class TeamResponse extends S.TaggedClass<TeamResponse>()('TeamReponse', {
+  ...teamSchema.fields,
+  playersCount: S.optional(S.Number),
+}) {}
 
 //   id: string;
 //   name: string;

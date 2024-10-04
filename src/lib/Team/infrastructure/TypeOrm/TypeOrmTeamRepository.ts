@@ -5,6 +5,7 @@ import { Team } from '../../domain/Team';
 import { TeamRepository } from '../../domain/TeamRepository';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { NotFoundException } from '@nestjs/common';
+import { FulfilledTeam } from '../../domain/TeamSchema';
 
 export class TypeOrmTeamRepository implements TeamRepository {
   constructor(
@@ -14,37 +15,35 @@ export class TypeOrmTeamRepository implements TeamRepository {
     private readonly subscriptionRepository: Repository<TypeOrmSubscriptionEntity>,
   ) {}
 
-  async getOneByName(name: string): Promise<Team | null> {
+  async getOneByName(name: string): Promise<FulfilledTeam> {
     const team = await this.repository.findOneBy({ name });
     return this.mapToDomain(team);
   }
 
-  private mapToDomain(u: TypeOrmTeamEntity): Team {
-    const t = Team.create({
-      active: u.active,
-      name: u.name,
-      primaryColor: u.primaryColor,
-      secondaryColor: u.secondaryColor,
-      logoUrl: u.logoUrl,
-      shieldUrl: u.shieldUrl,
-      hasSubscription: u.hasSubscription,
-      subscriptionId: u.subscription.id,
-    });
-    t.id = u.id;
+  private mapToDomain(u: TypeOrmTeamEntity): FulfilledTeam {
+    const t = FulfilledTeam.make(u);
     return t;
   }
 
-  async getAll(): Promise<Team[]> {
-    const teams = await this.repository.find({ relations: ['subscription'] });
+  async getAll(): Promise<FulfilledTeam[]> {
+    const teams = await this.repository.find({
+      relations: {
+        subscription: true,
+      },
+      order: { createdAt: 'DESC' },
+    });
     return teams.map((u) => this.mapToDomain(u));
   }
 
-  async getOneById(id: string): Promise<Team | null> {
+  async getOneById(id: string): Promise<FulfilledTeam> {
     const team = await this.repository.findOne({
       where: {
         id: id,
       },
-      relations: ['subscription'],
+      relations: {
+        subscription: true,
+        players: true,
+      },
     });
 
     if (!team) return null;
@@ -52,7 +51,7 @@ export class TypeOrmTeamRepository implements TeamRepository {
     return this.mapToDomain(team);
   }
 
-  async create(team: Team): Promise<Team> {
+  async create(team: Team): Promise<FulfilledTeam> {
     const subscription = await this.subscriptionRepository.findOneBy({
       id: team.subscriptionId,
     });
@@ -69,12 +68,12 @@ export class TypeOrmTeamRepository implements TeamRepository {
       hasSubscription: team.hasSubscription,
       subscription: subscription,
     });
-    const createdTeam = Team.create({
+    const createdTeam = FulfilledTeam.make({
       ...result,
+      id: result.id,
       subscriptionId: result.subscription.id,
       createdAt: result.createdAt,
     });
-    createdTeam.id = result.id;
 
     return createdTeam;
   }
