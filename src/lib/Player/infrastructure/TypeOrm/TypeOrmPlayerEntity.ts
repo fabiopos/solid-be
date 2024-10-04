@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -23,8 +24,7 @@ export class TypeOrmPlayerEntity extends PersonAbstract {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => TypeOrmTeamEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmTeamEntity)
   team: TypeOrmTeamEntity;
 
   @OneToOne(() => TypeOrmPlayerPositionEntity, { nullable: true })
@@ -71,8 +71,8 @@ export class TypeOrmPlayerEntity extends PersonAbstract {
     () => TypeOrmPlayerPositionEntity,
     (playerPosition) => playerPosition.player,
   )
-  positions: TypeOrmPlayerPositionEntity[];
+  playerPositions: TypeOrmPlayerPositionEntity[];
 
   @OneToMany(() => TypeOrmPlayerInjuryEntity, (injury) => injury.player)
-  injuries: TypeOrmPlayerPositionEntity[];
+  injuries: TypeOrmPlayerInjuryEntity[];
 }

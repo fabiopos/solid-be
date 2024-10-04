@@ -11,7 +11,7 @@ export interface CreatePlayerDto {
   shirtNumber: number;
   shirtSize: ShirtSize;
   dominantFoot: DominantFoot;
-  favPositionId: string;
+  fieldPositions: string[];
   active: boolean;
   address?: string | undefined;
   city?: string | undefined;

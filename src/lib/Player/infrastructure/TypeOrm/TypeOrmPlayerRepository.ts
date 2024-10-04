@@ -16,13 +16,18 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   ) {}
 
   async create(player: EmptyPlayer): Promise<FulfilledPlayer> {
-    const result = await this.repository.save(player);
+    const result = await this.repository.save({
+      ...player,
+      playerPositions: undefined,
+      team: { id: player.team.id },
+    });
     return this.mapToFulfilledPlayer(result);
   }
 
   async getAll(teamId: string): Promise<FulfilledPlayer[]> {
     const allPlayers = await this.repository.find({
       where: { team: { id: teamId } },
+      relations: { team: true, playerPositions: { fieldPosition: true } },
     });
     const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
     return mappedPlayers;

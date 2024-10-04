@@ -20,7 +20,7 @@ export class TypeOrmTeamRepository implements TeamRepository {
   }
 
   private mapToDomain(u: TypeOrmTeamEntity): Team {
-    return Team.create({
+    const t = Team.create({
       active: u.active,
       name: u.name,
       primaryColor: u.primaryColor,
@@ -30,6 +30,8 @@ export class TypeOrmTeamRepository implements TeamRepository {
       hasSubscription: u.hasSubscription,
       subscriptionId: u.subscription.id,
     });
+    t.id = u.id;
+    return t;
   }
 
   async getAll(): Promise<Team[]> {

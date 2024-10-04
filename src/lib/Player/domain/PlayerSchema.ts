@@ -6,6 +6,8 @@ import {
   PlayerStatus,
   ShirtSize,
 } from '@/shared/enums/playerEnums';
+import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
+import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
@@ -58,6 +60,21 @@ export const playerSchema = S.Struct({
       ),
     ),
   ),
+  playerPositions: S.optional(
+    S.Array(
+      S.Struct({
+        id: S.optional(S.String),
+        category: S.optional(S.Enums(FieldPositionCategoryEnum)),
+        fieldPosition: S.optional(fieldPositionSchema),
+      }),
+    ),
+  ),
+  team: S.optional(
+    S.Struct({
+      id: S.optional(S.String),
+      name: S.optional(S.String),
+    }),
+  ),
 });
 
 export type SourcePlayerType = S.Schema.Type<typeof playerSchema>;
@@ -105,6 +122,9 @@ export class EmptyPlayer extends S.TaggedClass<EmptyPlayer>()('EmptyPlayer', {
   arl: playerSchema.fields.eps,
   weight: playerSchema.fields.weight,
   height: playerSchema.fields.height,
+  playerPositions: playerSchema.fields.playerPositions,
+  fieldPositions: S.optional(S.Array(S.String)),
+  team: S.optional(S.Struct({ id: S.optional(S.String) })),
 }) {}
 
 export class FulfilledPlayer extends S.TaggedClass<FulfilledPlayer>()(

@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { TypeOrmPlayerPositionEntity } from '../../../PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
+import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
 
 @Entity('field_position')
 export class TypeOrmFieldPositionEntity {
@@ -20,6 +21,12 @@ export class TypeOrmFieldPositionEntity {
 
   @Column({ nullable: true })
   description: string | null;
+
+  @Column({
+    enum: FieldPositionCategoryEnum,
+    default: FieldPositionCategoryEnum.MIDFIELDER,
+  })
+  category: FieldPositionCategoryEnum;
 
   @CreateDateColumn()
   createdAt: Date;

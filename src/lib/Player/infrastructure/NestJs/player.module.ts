@@ -16,6 +16,8 @@ import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrm
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
+import { TypeOrmPlayerPositionRepository } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionRepository';
+import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 
 @Module({
   imports: [
@@ -25,6 +27,7 @@ import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrm
     TypeOrmModule.forFeature([TypeOrmFieldPositionEntity]),
     TypeOrmModule.forFeature([TypeOrmPlanEntity]),
     TypeOrmModule.forFeature([TypeOrmUserEntity]),
+    TypeOrmModule.forFeature([TypeOrmPlayerPositionEntity]),
   ],
   controllers: [PlayerController],
   providers: [
@@ -53,6 +56,10 @@ import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrm
       useClass: TypeOrmUserRepository,
     },
     {
+      provide: 'PlayerPositionRepository',
+      useClass: TypeOrmPlayerPositionRepository,
+    },
+    {
       provide: 'PlayerGetAll',
       useFactory: (repository: TypeOrmPlayerRepository) =>
         new PlayerGetAll(repository),
@@ -65,18 +72,21 @@ import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrm
         teamRepository: TypeOrmTeamRepository,
         subscriptionRepository: TypeOrmSubscriptionRepository,
         fieldPositionRepository: TypeOrmFieldPositionRepository,
+        playerPositionRepository: TypeOrmPlayerPositionRepository,
       ) =>
         new PlayerCreate(
           repository,
           teamRepository,
           subscriptionRepository,
           fieldPositionRepository,
+          playerPositionRepository,
         ),
       inject: [
         'PlayerRepository',
         'TeamRepository',
         'SubscriptionRepository',
         'FieldPositionRepository',
+        'PlayerPositionRepository',
       ],
     },
   ],

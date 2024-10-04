@@ -3,7 +3,7 @@ import * as S from '@effect/schema/Schema';
 
 export const teamSchema = S.Struct({
   id: S.optional(S.String),
-  name: S.String,
+  name: S.optional(S.String),
   active: S.optional(S.Boolean),
   subscriptionId: S.optional(S.String),
   hasSubscription: S.optional(S.Boolean),

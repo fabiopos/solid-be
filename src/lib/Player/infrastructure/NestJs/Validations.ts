@@ -5,6 +5,7 @@ import {
 } from '@/shared/enums/playerEnums';
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
   IsDate,
   IsEmail,
   IsEnum,
@@ -32,8 +33,8 @@ export class CreatePlayerPayload {
   lastName: string;
 
   @ApiProperty()
-  @IsString()
-  favPositionId: string;
+  @IsArray()
+  fieldPositions: string[];
 
   @ApiProperty()
   @IsString()
