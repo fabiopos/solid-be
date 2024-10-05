@@ -11,6 +11,6 @@ export interface PlayerPositionRepository {
     item: EmptyPlayerPosition,
   ): Promise<FulfilledPlayerPosition>;
 
-  delete(id: string): Promise<void>;
+  delete(playerId: string): Promise<void>;
   getAllPositionsByPlayer(playerId: string): Promise<FulfilledPlayerPosition[]>;
 }

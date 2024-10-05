@@ -94,6 +94,7 @@ export const updatePlayerSchema = playerSchema.pick(
   'lastName',
   'phone',
   'shirtNumber',
+  'shirtName',
   'shirtSize',
   'weight',
   'status',
@@ -131,5 +132,12 @@ export class FulfilledPlayer extends S.TaggedClass<FulfilledPlayer>()(
   'FulfilledPlayer',
   {
     ...playerSchema.fields,
+  },
+) {}
+
+export class PartialPlayer extends S.TaggedClass<PartialPlayer>()(
+  'PartialPlayer',
+  {
+    ...updatePlayerSchema.fields,
   },
 ) {}

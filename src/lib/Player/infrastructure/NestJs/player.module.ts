@@ -18,6 +18,8 @@ import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUser
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 import { TypeOrmPlayerPositionRepository } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionRepository';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
+import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
+import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
 
 @Module({
   imports: [
@@ -75,6 +77,38 @@ import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure
         playerPositionRepository: TypeOrmPlayerPositionRepository,
       ) =>
         new PlayerCreate(
+          repository,
+          teamRepository,
+          subscriptionRepository,
+          fieldPositionRepository,
+          playerPositionRepository,
+        ),
+      inject: [
+        'PlayerRepository',
+        'TeamRepository',
+        'SubscriptionRepository',
+        'FieldPositionRepository',
+        'PlayerPositionRepository',
+      ],
+    },
+    {
+      provide: 'PlayerDelete',
+      useFactory: (
+        repository: TypeOrmPlayerRepository,
+        playerPositionRepository: TypeOrmPlayerPositionRepository,
+      ) => new PlayerDelete(repository, playerPositionRepository),
+      inject: ['PlayerRepository', 'PlayerPositionRepository'],
+    },
+    {
+      provide: 'PlayerUpdate',
+      useFactory: (
+        repository: TypeOrmPlayerRepository,
+        teamRepository: TypeOrmTeamRepository,
+        subscriptionRepository: TypeOrmSubscriptionRepository,
+        fieldPositionRepository: TypeOrmFieldPositionRepository,
+        playerPositionRepository: TypeOrmPlayerPositionRepository,
+      ) =>
+        new PlayerUpdate(
           repository,
           teamRepository,
           subscriptionRepository,

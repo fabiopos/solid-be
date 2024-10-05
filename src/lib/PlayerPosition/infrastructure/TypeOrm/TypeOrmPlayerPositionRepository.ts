@@ -54,12 +54,17 @@ export class TypeOrmPlayerPositionRepository
     return this.mapToFulfilled(result);
   }
 
-  async delete(id: string): Promise<void> {
-    const itemToDelete = await this.playerRepository.findOneBy({
-      id,
+  async delete(playerId: string): Promise<void> {
+    const itemToDelete = await this.playerRepository.findOne({
+      where: { id: playerId },
+      relations: { playerPositions: true },
     });
-    await this.repository.delete(itemToDelete);
+
+    if (!itemToDelete) return;
+    const ids = (itemToDelete.playerPositions ?? []).map((x) => x.id);
+    if (ids.length > 0) await this.repository.delete(ids);
   }
+
   async getAllPositionsByPlayer(
     playerId: string,
   ): Promise<FulfilledPlayerPosition[]> {

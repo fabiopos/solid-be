@@ -38,10 +38,30 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     return this.mapToFulfilledPlayer(player);
   }
 
-  async edit(id: string, player: UpdatePlayerType): Promise<FulfilledPlayer> {
-    await this.repository.update(id, { ...player });
-    const updatedPlayer = await this.repository.findOne({ where: { id } });
-    return this.mapToFulfilledPlayer(updatedPlayer);
+  async edit(id: string, payload: UpdatePlayerType): Promise<FulfilledPlayer> {
+    const player = await this.repository.findOne({ where: { id } });
+
+    player.active = payload.active;
+    player.firstName = payload.firstName;
+    player.lastName = payload.lastName;
+    player.address = payload.address;
+    player.arl = payload.arl;
+    player.avatarUrl = payload.avatarUrl;
+    player.city = payload.city;
+    player.country = payload.country;
+    player.dominantFoot = payload.dominantFoot;
+    player.status = payload.status;
+    player.shirtName = payload.shirtName;
+    player.eps = payload.eps;
+    player.shirtSize = payload.shirtSize;
+    player.height = payload.height;
+    player.weight = payload.weight;
+    player.shirtNumber = payload.shirtNumber;
+    player.phone = payload.phone;
+
+    await this.repository.save(player);
+
+    return this.mapToFulfilledPlayer(player);
   }
 
   async delete(id: string): Promise<void> {
