@@ -15,6 +15,8 @@ import {
   IsString,
   IsUUID,
   Length,
+  Max,
+  Min,
 } from 'class-validator';
 export class PlayerGetAllParams {
   @IsUUID()
@@ -205,11 +207,15 @@ export class UpdatePlayerPayload {
   @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
+  @Min(140)
+  @Max(210)
   height: number;
 
   @ApiProperty({ required: false })
   @IsNumber()
   @IsOptional()
+  @Min(35)
+  @Max(200)
   weight: number;
 
   @ApiProperty({ required: false })

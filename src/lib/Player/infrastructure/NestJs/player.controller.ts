@@ -62,6 +62,7 @@ export class PlayerController {
   ) {
     try {
       const { id } = params;
+
       return this.playerUpdate.run(
         id,
         PartialPlayer.make({

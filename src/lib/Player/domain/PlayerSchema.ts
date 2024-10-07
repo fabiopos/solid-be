@@ -141,3 +141,7 @@ export class PartialPlayer extends S.TaggedClass<PartialPlayer>()(
     ...updatePlayerSchema.fields,
   },
 ) {}
+
+export const decodePartialPlayer = S.decodeUnknownEither(PartialPlayer, {
+  errors: 'all',
+});
