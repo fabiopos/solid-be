@@ -1,11 +1,12 @@
 import { DocumentType } from '../enums/playerEnums';
+import { RoleEnum } from '../enums/roleEnum';
 
 export class CreateUserDto {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
-  roleId: string;
+  roleId: RoleEnum;
   documentNumber: string;
   documentType: DocumentType;
   active: boolean;

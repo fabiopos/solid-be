@@ -11,13 +11,13 @@ import {
   FulfilledSubscription,
   planSchema,
   subscriptionToAddSchema,
-  userSchema,
 } from '../../domain/SubscriptionSchema';
 import { teamSchema } from '@/lib/Team/domain/TeamSchema';
 import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 import { subscriptionFeatureSchema } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
+import { userSchema } from '@/lib/User/domain/UserSchema';
 
 interface AddonPayload {
   queryRunner: QueryRunner;

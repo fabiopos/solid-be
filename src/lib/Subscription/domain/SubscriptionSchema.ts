@@ -3,20 +3,9 @@ import {
   subscriptionFeatureSchema,
 } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
 import { teamCreateSchema, teamSchema } from '@/lib/Team/domain/TeamSchema';
-import { DocumentType } from '@/shared/enums/playerEnums';
+import { userSchema } from '@/lib/User/domain/UserSchema';
 import * as S from '@effect/schema/Schema';
 import { add, isAfter } from 'date-fns';
-
-export const userSchema = S.Struct({
-  id: S.optional(S.String),
-  firstName: S.NullishOr(S.String),
-  lastName: S.NullishOr(S.String),
-  documentNumber: S.String,
-  documentType: S.Enums(DocumentType),
-  policy: S.Boolean,
-  email: S.String,
-  password: S.optional(S.String),
-});
 
 export const planSchema = S.Struct({
   id: S.NullishOr(S.String),

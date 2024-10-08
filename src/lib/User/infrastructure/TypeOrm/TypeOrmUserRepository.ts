@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../domain/User';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { NotFoundException } from '@nestjs/common';
+import { UserUpdateInput } from '../../domain/UserSchema';
 
 export class TypeOrmUserRepository implements UserRepository {
   constructor(
@@ -60,8 +61,25 @@ export class TypeOrmUserRepository implements UserRepository {
     return user ? User.fromPrimitives(user) : null;
   }
 
-  async edit(user: User): Promise<void> {
-    throw new Error('Method not implemented.' + user.id);
+  async edit(userId: string, input: UserUpdateInput): Promise<void> {
+    const user = await this.repository.findOne({
+      where: { id: userId },
+    });
+
+    user.active = input.active;
+    user.address = input.address;
+    user.avatarUrl = input.avatarUrl;
+    user.city = input.city;
+    user.country = input.country;
+    user.documentNumber = input.documentNumber;
+    user.documentType = input.documentType;
+    user.firstName = input.firstName;
+    user.lastName = input.lastName;
+    user.phone = input.phone;
+
+    await this.repository.save(user);
+
+    return;
   }
 
   async delete(id: string): Promise<void> {

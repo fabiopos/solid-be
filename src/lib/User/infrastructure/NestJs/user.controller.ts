@@ -3,15 +3,23 @@ import {
   Controller,
   Inject,
   NotFoundException,
+  Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 
 import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { UserValidate } from '../../application/UserValidate';
-import { NewUserValidatePayload } from './ValidateNewUser';
+import {
+  NewUserValidatePayload,
+  UpdateUserFindParams,
+  UpdateUserPayload,
+} from './UserRequestPayload';
 import { CreateUserPayload } from './CreateUserPayload';
 import { UserCreate } from '../../application/UserCreate';
 import { UserAlreadyExistsError } from '../../domain/UserAlreadyExistsError';
+import { UserUpdate } from '../../application/UserUpdate';
+import { UserUpdateInput } from '../../domain/UserSchema';
 
 @ApiTags('user')
 @Controller('user')
@@ -25,6 +33,8 @@ export class UserController {
     private readonly userValidate: UserValidate,
     @Inject('UserCreate')
     private readonly userCreate: UserCreate,
+    @Inject('UserUpdate')
+    private readonly userUpdate: UserUpdate,
   ) {}
 
   @Post('/validate')
@@ -52,5 +62,18 @@ export class UserController {
         throw new NotFoundException(error.message);
       return error;
     }
+  }
+
+  @ApiCreatedResponse({ status: '3XX', description: 'Creates a new user' })
+  @Patch(':id')
+  async updateUser(
+    @Param() params: UpdateUserFindParams,
+    @Body() payload: UpdateUserPayload,
+  ) {
+    const { id } = params;
+
+    const input = UserUpdateInput.make(payload);
+
+    return this.userUpdate.run(id, input);
   }
 }

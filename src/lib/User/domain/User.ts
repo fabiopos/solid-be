@@ -1,5 +1,6 @@
 import { CreateUserDto } from '@/shared/dto/CreateUserDto';
 import { DocumentType } from '@/shared/enums/playerEnums';
+import { RoleEnum } from '@/shared/enums/roleEnum';
 
 export class User {
   id?: string;
@@ -7,7 +8,7 @@ export class User {
   password: string;
   firstName: string;
   lastName: string;
-  roleId: string;
+  roleId: RoleEnum;
   documentNumber: string;
   documentType: DocumentType;
   active: boolean;

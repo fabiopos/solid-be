@@ -16,7 +16,7 @@ export class TypeOrmUserEntity extends PersonAbstract {
   policy: boolean;
 
   @Column({ enum: RoleEnum, default: RoleEnum.USER })
-  roleId: string;
+  roleId: RoleEnum;
 
   @ManyToOne(
     () => TypeOrmSubscriptionEntity,

@@ -1,6 +1,7 @@
 import { User } from '@/lib/User/domain/User';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
 import { DocumentType } from '@/shared/enums/playerEnums';
+import { RoleEnum } from '@/shared/enums/roleEnum';
 
 export class UserRepositoryMock implements UserRepository {
   async create(payload: any) {
@@ -40,7 +41,7 @@ export class UserRepositoryMock implements UserRepository {
       lastName: 'Last',
       password: '122345',
       policy: true,
-      roleId: 'user',
+      roleId: RoleEnum.USER,
     });
     return { ...baseUser, id: '123' };
   }
