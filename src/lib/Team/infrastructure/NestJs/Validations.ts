@@ -4,6 +4,7 @@ import {
   IsHexColor,
   IsOptional,
   IsString,
+  IsUUID,
   IsUrl,
   Length,
 } from 'class-validator';
@@ -51,4 +52,35 @@ export class CreateTeamPayload {
 export class ValidateTeamPayload {
   @IsString()
   name: string;
+}
+
+export class UpdateTeamParams {
+  @IsUUID()
+  id: string;
+}
+
+export class UpdateTeamPayload {
+  @IsString()
+  @IsOptional()
+  name?: string;
+
+  @IsString()
+  @IsHexColor()
+  @IsOptional()
+  primaryColor?: string;
+
+  @IsString()
+  @IsHexColor()
+  @IsOptional()
+  secondaryColor?: string;
+
+  @IsString()
+  @IsUrl()
+  @IsOptional()
+  logoUrl?: string;
+
+  @IsString()
+  @IsUrl()
+  @IsOptional()
+  shieldUrl?: string;
 }

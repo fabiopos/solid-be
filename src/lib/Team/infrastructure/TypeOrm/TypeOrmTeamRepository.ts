@@ -5,7 +5,7 @@ import { Team } from '../../domain/Team';
 import { TeamRepository } from '../../domain/TeamRepository';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { NotFoundException } from '@nestjs/common';
-import { FulfilledTeam } from '../../domain/TeamSchema';
+import { FulfilledTeam, TeamType } from '../../domain/TeamSchema';
 
 export class TypeOrmTeamRepository implements TeamRepository {
   constructor(
@@ -78,7 +78,7 @@ export class TypeOrmTeamRepository implements TeamRepository {
     return createdTeam;
   }
 
-  async edit(team: Team): Promise<void> {
+  async edit(team: TeamType): Promise<void> {
     await this.repository.update(team.id, {
       name: team.name,
       active: team.active,

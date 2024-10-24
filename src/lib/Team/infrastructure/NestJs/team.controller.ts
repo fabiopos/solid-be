@@ -1,11 +1,25 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
-import { CreateTeamPayload, ValidateTeamPayload } from './Validations';
+import {
+  CreateTeamPayload,
+  UpdateTeamParams,
+  UpdateTeamPayload,
+  ValidateTeamPayload,
+} from './Validations';
 import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
 import { ApiTags } from '@nestjs/swagger';
 import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
 import { TeamFind } from '../../application/TeamFind/TeamFind';
 import { TeamResponse } from '../../domain/TeamSchema';
+import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
 
 @ApiTags('team')
 @Controller('team')
@@ -15,6 +29,7 @@ export class TeamController {
     @Inject('TeamValidate') private readonly teamValidate: TeamValidate,
     @Inject('TeamGetAll') private readonly teamGetAll: TeamGetAll,
     @Inject('TeamFind') private readonly teamFind: TeamFind,
+    @Inject('TeamUpdate') private readonly teamUpdate: TeamUpdate,
   ) {}
 
   @Get()
@@ -45,6 +60,21 @@ export class TeamController {
       logoUrl: team.logoUrl,
       shieldUrl: team.shieldUrl,
       hasSubscription: team.hasSubscription,
+    });
+  }
+
+  @Patch(':id')
+  async update(
+    @Param() params: UpdateTeamParams,
+    @Body() team: UpdateTeamPayload,
+  ) {
+    return this.teamUpdate.run({
+      id: params.id,
+      logoUrl: team.logoUrl,
+      name: team.name,
+      primaryColor: team.primaryColor,
+      secondaryColor: team.secondaryColor,
+      shieldUrl: team.shieldUrl,
     });
   }
 }
