@@ -16,7 +16,10 @@ export class TypeOrmUserRepository implements UserRepository {
   ) {}
 
   async getOneByEmail(email: string): Promise<User | null> {
-    const user = await this.repository.findOne({ where: { email } });
+    const user = await this.repository.findOne({
+      where: { email },
+      relations: { subscription: true },
+    });
     return user ? User.fromPrimitives(user) : null;
   }
 

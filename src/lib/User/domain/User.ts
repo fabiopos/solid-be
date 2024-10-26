@@ -60,7 +60,7 @@ export class User {
     user.city = data.city;
     user.country = data.country;
     user.policy = data.policy;
-    user.subscriptionId = data.subscriptionId;
+    user.subscriptionId = data.subscription?.id;
     user.createdAt = data.createdAt;
     user.updatedAt = data.updatedAt;
     return user;
