@@ -61,6 +61,7 @@ export class PlayerCreate {
       Effect.flatMap(this.mapTeam),
       Effect.flatMap(this.mapFieldPositions),
       Effect.flatMap(this.mapPlayerPositions),
+      Effect.flatMap(this.mapFavPosition),
     );
   }
 
@@ -291,4 +292,21 @@ export class PlayerCreate {
       }),
     );
   };
+
+  mapFavPosition = (dto: EmptyPlayer) =>
+    pipe(
+      Effect.promise(() =>
+        this.fieldPositionRepository.getOneById(dto.favPositionId),
+      ),
+      Effect.flatMap((a) =>
+        a === null
+          ? Effect.fail(new PlayerInvalidError('Fav position does not exists'))
+          : Effect.succeed(
+              EmptyPlayer.make({
+                ...dto,
+                favPosition: { id: a.id },
+              }),
+            ),
+      ),
+    );
 }

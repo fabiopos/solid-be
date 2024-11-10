@@ -5,4 +5,10 @@ export const authLoginSchema = S.Struct({
   password: S.String,
 });
 
+export interface Token {
+  email: string;
+  name: string;
+  subscriptionId: string;
+}
+
 export type AuthSchemaType = S.Schema.Type<typeof authLoginSchema>;

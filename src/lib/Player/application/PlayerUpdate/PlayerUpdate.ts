@@ -16,7 +16,6 @@ export class PlayerUpdate {
   ) {}
 
   async run(playerId: string, payload: PartialPlayer) {
-    //
     const player = await this.repository.getOneById(playerId);
     if (!player) throw new PlayerNotFoundError();
 

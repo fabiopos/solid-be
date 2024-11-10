@@ -1,5 +1,5 @@
 import { comparePassword } from '@/utils/encription';
-import { AuthSchemaType } from '../../domain/AuthLoginSchema';
+import { AuthSchemaType, Token } from '../../domain/AuthLoginSchema';
 import { JwtService } from '@nestjs/jwt';
 import { UserFindBy } from '@/lib/User/application/UserFindBy';
 import { InvalidCredentialsError } from '../../domain/InvalidCredentialsError';
@@ -20,13 +20,10 @@ export class AuthLogin {
 
     const payload = {
       email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
+      name: `${user.firstName} ${user.lastName}`,
       subscriptionId: user.subscriptionId,
-    };
+    } as Token;
     const token = this.jwtService.sign(payload);
-
-    console.log(payload);
 
     const data = {
       user: payload,

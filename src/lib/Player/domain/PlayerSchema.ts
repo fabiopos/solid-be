@@ -14,6 +14,7 @@ const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 export const playerSchema = S.Struct({
   id: S.optional(S.String),
   teamId: S.optional(S.String),
+  bornDate: S.optional(S.NullOr(S.Date)),
   firstName: S.optional(S.String),
   lastName: S.optional(S.String),
   documentNumber: S.optional(S.String),
@@ -34,7 +35,18 @@ export const playerSchema = S.Struct({
   ),
   dominantFoot: S.optional(S.Enums(DominantFoot)),
   // team: S.optional(teamSchema),
-  favPositionId: S.optional(S.String),
+  favPositionId: S.optional(S.NullOr(S.String)),
+  favPosition: S.optional(
+    S.NullishOr(
+      S.Struct({
+        id: S.optional(S.String),
+        name: S.optional(S.NullOr(S.String)),
+        category: S.optional(S.Enums(FieldPositionCategoryEnum)),
+        order: S.optional(S.NullOr(S.Number)),
+        fieldPosition: S.optional(fieldPositionSchema),
+      }),
+    ),
+  ),
   address: S.optional(S.NullishOr(S.String)),
   avatarUrl: S.optional(S.NullishOr(S.String)),
   phone: S.optional(S.NullishOr(S.String)),
@@ -98,6 +110,7 @@ export const updatePlayerSchema = playerSchema.pick(
   'shirtSize',
   'weight',
   'status',
+  'bornDate',
 );
 
 export type UpdatePlayerType = S.Schema.Type<typeof updatePlayerSchema>;
@@ -114,6 +127,7 @@ export class EmptyPlayer extends S.TaggedClass<EmptyPlayer>()('EmptyPlayer', {
   shirtName: playerSchema.fields.shirtName,
   dominantFoot: playerSchema.fields.dominantFoot,
   favPositionId: playerSchema.fields.favPositionId,
+  favPosition: playerSchema.fields.favPosition,
   address: playerSchema.fields.address,
   avatarUrl: playerSchema.fields.avatarUrl,
   phone: playerSchema.fields.phone,

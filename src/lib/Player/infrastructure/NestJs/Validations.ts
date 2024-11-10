@@ -8,6 +8,7 @@ import {
   IsArray,
   IsBoolean,
   IsDate,
+  IsDateString,
   IsEmail,
   IsEnum,
   IsNumber,
@@ -195,9 +196,9 @@ export class UpdatePlayerPayload {
   phone: string;
 
   @ApiProperty({ required: false })
-  @IsDate()
+  @IsDateString()
   @IsOptional()
-  bornDate: Date;
+  bornDate: string;
 
   @ApiProperty({ required: false })
   @IsDate()
@@ -227,6 +228,11 @@ export class UpdatePlayerPayload {
   @IsString()
   @IsOptional()
   eps: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  favPositionId: string;
 
   // @ApiProperty()
   // @IsArray()

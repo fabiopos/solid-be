@@ -149,7 +149,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     });
     return new FulfilledSubscription({
       ...subscription,
-      planId: subscription.plan.id,
+      planId: subscription?.plan?.id,
       teams: subscription.teams.map((team) =>
         teamSchema.make({
           ...team,

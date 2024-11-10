@@ -2,10 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
   ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -18,6 +16,7 @@ import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/TypeOrm/TypeOrmPlayerInjuryEntity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
 
 @Entity('player')
 export class TypeOrmPlayerEntity extends PersonAbstract {
@@ -27,9 +26,8 @@ export class TypeOrmPlayerEntity extends PersonAbstract {
   @ManyToOne(() => TypeOrmTeamEntity)
   team: TypeOrmTeamEntity;
 
-  @OneToOne(() => TypeOrmPlayerPositionEntity, { nullable: true })
-  @JoinColumn()
-  favPosition: TypeOrmPlayerPositionEntity;
+  @ManyToOne(() => TypeOrmFieldPositionEntity, { nullable: true })
+  favPosition: TypeOrmFieldPositionEntity;
 
   @Column({ type: 'enum', enum: DominantFoot, default: DominantFoot.RIGHT })
   dominantFoot: DominantFoot;

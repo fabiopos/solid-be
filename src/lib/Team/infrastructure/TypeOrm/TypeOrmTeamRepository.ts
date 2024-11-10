@@ -25,8 +25,9 @@ export class TypeOrmTeamRepository implements TeamRepository {
     return t;
   }
 
-  async getAll(): Promise<FulfilledTeam[]> {
+  async getAll(subscriptionId: string): Promise<FulfilledTeam[]> {
     const teams = await this.repository.find({
+      where: { subscription: { id: subscriptionId } },
       relations: {
         subscription: true,
       },

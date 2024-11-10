@@ -6,6 +6,8 @@ import {
   Param,
   Patch,
   Post,
+  Req,
+  UseGuards,
 } from '@nestjs/common';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import {
@@ -20,6 +22,8 @@ import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
 import { TeamFind } from '../../application/TeamFind/TeamFind';
 import { TeamResponse } from '../../domain/TeamSchema';
 import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
+import { Token } from '@/lib/Auth/domain/AuthLoginSchema';
+import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
 
 @ApiTags('team')
 @Controller('team')
@@ -33,8 +37,10 @@ export class TeamController {
   ) {}
 
   @Get()
-  async getAll() {
-    const teams = await this.teamGetAll.run();
+  @UseGuards(JwtAuthGuard)
+  async getAll(@Req() request: Request & { user: Token }) {
+    const subscriptionId = request.user.subscriptionId;
+    const teams = await this.teamGetAll.run(subscriptionId);
     return teams;
   }
 

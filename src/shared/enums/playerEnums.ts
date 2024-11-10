@@ -23,4 +23,5 @@ export enum DominantFoot {
 export enum PlayerStatus {
   OK = 'OK',
   INJURIED = 'INJURIED',
+  DOWN = 'DOWN',
 }

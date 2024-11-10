@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { PlayerGetAll } from '../../application/PlayerGetAll/PlayerGetAll';
 import { PlayerCreate } from '../../application/PlayerCreate/PlayerCreate';
@@ -23,6 +24,8 @@ import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
 import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
 import { PartialPlayer } from '../../domain/PlayerSchema';
 import { ParseError } from '@effect/schema/ParseResult';
+import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
+import { isValid, toDate } from 'date-fns';
 
 @ApiTags('player')
 @Controller('player')
@@ -36,6 +39,7 @@ export class PlayerController {
 
   @ApiParam({ name: 'teamId' })
   @Get(':teamId')
+  @UseGuards(JwtAuthGuard)
   async getAll(@Param() params: PlayerGetAllParams) {
     const { teamId } = params;
     return this.playerGetAll.run(teamId);
@@ -63,10 +67,15 @@ export class PlayerController {
     try {
       const { id } = params;
 
+      console.log('bornDate', payload.bornDate, toDate(payload.bornDate));
+
       return this.playerUpdate.run(
         id,
         PartialPlayer.make({
           ...payload,
+          bornDate: isValid(payload.bornDate)
+            ? toDate(payload.bornDate)
+            : undefined,
         }),
       );
     } catch (error) {

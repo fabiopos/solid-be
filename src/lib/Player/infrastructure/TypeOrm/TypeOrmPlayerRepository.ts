@@ -27,7 +27,11 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   async getAll(teamId: string): Promise<FulfilledPlayer[]> {
     const allPlayers = await this.repository.find({
       where: { team: { id: teamId } },
-      relations: { team: true, playerPositions: { fieldPosition: true } },
+      relations: {
+        team: true,
+        favPosition: true,
+        playerPositions: { fieldPosition: true },
+      },
     });
     const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
     return mappedPlayers;
@@ -58,8 +62,12 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     player.weight = payload.weight;
     player.shirtNumber = payload.shirtNumber;
     player.phone = payload.phone;
+    player.bornDate = payload.bornDate;
 
-    await this.repository.save(player);
+    await this.repository.save({
+      ...player,
+      favPosition: { id: payload.favPositionId },
+    });
 
     return this.mapToFulfilledPlayer(player);
   }
@@ -98,6 +106,8 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
 
   mapToFulfilledPlayer(entity: TypeOrmPlayerEntity) {
     if (!entity) return null;
+
+    console.log('entity borndate', entity.bornDate);
     return new FulfilledPlayer({
       ...entity,
     });
