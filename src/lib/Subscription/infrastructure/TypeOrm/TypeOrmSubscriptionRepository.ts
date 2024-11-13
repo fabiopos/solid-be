@@ -145,7 +145,11 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
   async getOneById(id: string): Promise<FulfilledSubscription | null> {
     const subscription = await this.repository.findOne({
       where: { id },
-      relations: { plan: true, teams: { players: true }, features: true },
+      relations: {
+        plan: true,
+        teams: { players: true },
+        features: { feature: true },
+      },
     });
     return new FulfilledSubscription({
       ...subscription,

@@ -4,6 +4,7 @@ import { SubscriptionModule } from '@/lib/Subscription/infrastructure/NestJs/sub
 import { UserModule } from '@/lib/User/infrastructure/NestJs/user.module';
 import { AuthModule } from '@/lib/Auth/infraestructure/NestJs/auth.module';
 import { FieldPositionModule } from '@/lib/FieldPosition/infrastructure/NestJs/fieldPosition.module';
+import { SeasonModule } from '@/lib/Season/infrastructure/NestJs/season.module';
 
 export default [
   PlayerModule,
@@ -12,4 +13,5 @@ export default [
   UserModule,
   AuthModule,
   FieldPositionModule,
+  SeasonModule,
 ];

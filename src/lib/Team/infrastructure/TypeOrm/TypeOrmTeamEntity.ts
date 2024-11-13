@@ -4,6 +4,7 @@ import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrm
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TeamAbstract } from '@/shared/abstracts/TeamAbstract';
 import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
+import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 
 @Entity('team')
 export class TypeOrmTeamEntity extends TeamAbstract {
@@ -24,6 +25,9 @@ export class TypeOrmTeamEntity extends TeamAbstract {
 
   @OneToMany(() => TypeOrmMatchEntity, (match) => match.awayTeam)
   awayMatches: TypeOrmMatchEntity[];
+
+  @OneToMany(() => TypeOrmSeasonEntity, (season) => season.team)
+  seasons: TypeOrmSeasonEntity[];
 
   // relations to
   // seasons

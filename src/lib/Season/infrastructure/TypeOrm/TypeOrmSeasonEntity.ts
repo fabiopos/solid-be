@@ -2,9 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
+  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -17,8 +16,7 @@ export class TypeOrmSeasonEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => TypeOrmTeamEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmTeamEntity, (team) => team.seasons)
   team: TypeOrmTeamEntity;
 
   @Column()
@@ -32,6 +30,12 @@ export class TypeOrmSeasonEntity {
 
   @Column()
   description: string;
+
+  @Column({ nullable: true })
+  startDate: Date;
+
+  @Column({ nullable: true })
+  endDate: Date;
 
   @CreateDateColumn()
   createdAt: Date;
