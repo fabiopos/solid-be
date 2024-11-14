@@ -15,4 +15,5 @@ export interface PlayerRepository {
     teamId: string,
     positionId: string,
   ): Promise<FulfilledPlayer[]>;
+  searchByName(teamId: string, name: string): Promise<FulfilledPlayer[]>;
 }

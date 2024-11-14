@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { PlayerGetAll } from '../../application/PlayerGetAll/PlayerGetAll';
@@ -16,6 +17,7 @@ import {
   CreatePlayerPayload,
   PlayerFindParams,
   PlayerGetAllParams,
+  PlayerQueryParams,
   UpdatePlayerPayload,
 } from './Validations';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
@@ -45,6 +47,17 @@ export class PlayerController {
     return this.playerGetAll.run(teamId);
   }
 
+  // /player/{teamId}/search?name=pedro
+  @Get(':teamId/search')
+  async searchByName(
+    @Param() params: PlayerGetAllParams,
+    @Query() query: PlayerQueryParams,
+  ) {
+    const { name } = query;
+    const { teamId } = params;
+    return this.playerGetAll.searchByName(teamId, name);
+  }
+
   @Post()
   async create(@Body() player: CreatePlayerPayload) {
     try {
@@ -66,8 +79,6 @@ export class PlayerController {
   ) {
     try {
       const { id } = params;
-
-      console.log('bornDate', payload.bornDate, toDate(payload.bornDate));
 
       return this.playerUpdate.run(
         id,

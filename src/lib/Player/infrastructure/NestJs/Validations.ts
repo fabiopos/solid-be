@@ -24,6 +24,11 @@ export class PlayerGetAllParams {
   teamId: string;
 }
 
+export class PlayerQueryParams {
+  @IsString()
+  name: string;
+}
+
 export class PlayerFindParams {
   @IsUUID()
   id: string;

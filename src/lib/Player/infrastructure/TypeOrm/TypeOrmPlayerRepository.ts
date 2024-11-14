@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 
 import { PlayerRepository } from '@/lib/Player/domain/PlayerRepository';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
@@ -104,11 +104,32 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     return mappedPlayers;
   }
 
+  async searchByName(teamId: string, name: string): Promise<FulfilledPlayer[]> {
+    const players = await this.repository.find({
+      where: [
+        {
+          firstName: ILike(`%${name}%`),
+          team: { id: teamId },
+          active: true,
+        },
+        {
+          lastName: ILike(`%${name}%`),
+          team: { id: teamId },
+          active: true,
+        },
+        { shirtName: ILike(`%${name}%`), team: { id: teamId }, active: true },
+      ],
+      order: { firstName: 'ASC', lastName: 'ASC' },
+    });
+
+    return players.map(this.mapToFulfilledPlayer);
+  }
+
   mapToFulfilledPlayer(entity: TypeOrmPlayerEntity) {
     if (!entity) return null;
 
     console.log('entity borndate', entity.bornDate);
-    return new FulfilledPlayer({
+    return FulfilledPlayer.make({
       ...entity,
     });
   }

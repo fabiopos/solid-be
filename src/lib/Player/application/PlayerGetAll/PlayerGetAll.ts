@@ -7,4 +7,8 @@ export class PlayerGetAll {
   async run(teamId: string): Promise<FulfilledPlayer[]> {
     return this.repository.getAll(teamId);
   }
+
+  async searchByName(teamId: string, name: string): Promise<FulfilledPlayer[]> {
+    return this.repository.searchByName(teamId, name);
+  }
 }
