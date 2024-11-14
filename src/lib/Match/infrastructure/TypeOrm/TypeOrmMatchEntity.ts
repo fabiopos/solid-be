@@ -2,9 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
+  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -23,12 +22,10 @@ export class TypeOrmMatchEntity {
   @Column()
   title: string;
 
-  @OneToOne(() => TypeOrmTeamEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmTeamEntity)
   homeTeam: TypeOrmTeamEntity;
 
-  @OneToOne(() => TypeOrmTeamEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmTeamEntity)
   awayTeam: TypeOrmTeamEntity;
 
   @Column({ nullable: true })
@@ -52,8 +49,7 @@ export class TypeOrmMatchEntity {
   @Column()
   completed: boolean;
 
-  @OneToOne(() => TypeOrmCompetitionEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmCompetitionEntity, (e) => e.matches)
   competition: TypeOrmCompetitionEntity;
 
   @OneToMany(
