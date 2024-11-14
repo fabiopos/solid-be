@@ -5,7 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../domain/User';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { NotFoundException } from '@nestjs/common';
-import { UserUpdateInput } from '../../domain/UserSchema';
+import { FulfilledUser, UserUpdateInput } from '../../domain/UserSchema';
 
 export class TypeOrmUserRepository implements UserRepository {
   constructor(
@@ -55,8 +55,11 @@ export class TypeOrmUserRepository implements UserRepository {
     return user;
   }
 
-  async getAll(): Promise<User[]> {
-    return (await this.repository.find()).map((u) => User.fromPrimitives(u));
+  async getAll(subscriptionId: string): Promise<FulfilledUser[]> {
+    const users = await this.repository.find({
+      where: { subscription: { id: subscriptionId } },
+    });
+    return users.map(this.mapEntityToDomain);
   }
 
   async getOneById(id: string): Promise<User | null> {
@@ -90,5 +93,25 @@ export class TypeOrmUserRepository implements UserRepository {
     if (!user) throw new NotFoundException('User not found');
 
     await this.repository.remove(user);
+  }
+
+  mapEntityToDomain(entity: TypeOrmUserEntity): FulfilledUser {
+    return FulfilledUser.make({
+      active: entity.active,
+      address: entity.address,
+      avatarUrl: entity.avatarUrl,
+      city: entity.city,
+      country: entity.country,
+      createdAt: entity.createdAt,
+      documentNumber: entity.documentNumber,
+      documentType: entity.documentType,
+      email: entity.email,
+      firstName: entity.firstName,
+      id: entity.id,
+      lastName: entity.lastName,
+      phone: entity.phone,
+      policy: entity.policy,
+      roleId: entity.roleId,
+    });
   }
 }

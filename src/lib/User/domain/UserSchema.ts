@@ -13,11 +13,11 @@ export const userSchema = S.Struct({
   email: S.optional(S.String),
   password: S.optional(S.String),
   active: S.optional(S.Boolean),
-  avatarUrl: S.optional(S.String),
-  phone: S.optional(S.String),
-  address: S.optional(S.String),
-  city: S.optional(S.String),
-  country: S.optional(S.String),
+  avatarUrl: S.optional(S.NullishOr(S.String)),
+  phone: S.optional(S.NullishOr(S.String)),
+  address: S.optional(S.NullishOr(S.String)),
+  city: S.optional(S.NullishOr(S.String)),
+  country: S.optional(S.NullishOr(S.String)),
   createdAt: S.optional(S.Union(S.Date, S.String)),
 });
 
@@ -36,5 +36,12 @@ export class UserUpdateInput extends S.TaggedClass<UserUpdateInput>()(
     address: userSchema.fields.address,
     city: userSchema.fields.city,
     country: userSchema.fields.country,
+  },
+) {}
+
+export class FulfilledUser extends S.TaggedClass<FulfilledUser>()(
+  'FulfilledUser',
+  {
+    ...userSchema.omit('password').fields,
   },
 ) {}

@@ -18,6 +18,10 @@ export interface UpdateUserFindParams {
   id: string;
 }
 
+export interface DeleteUserFindParams {
+  id: string;
+}
+
 export class UpdateUserPayload {
   @IsOptional()
   @IsString()

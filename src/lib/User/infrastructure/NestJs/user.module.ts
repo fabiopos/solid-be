@@ -14,6 +14,8 @@ import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrm
 import { UserCreate } from '../../application/UserCreate';
 import { UserFindBy } from '../../application/UserFindBy';
 import { UserUpdate } from '../../application/UserUpdate';
+import { UserDelete } from '../../application/UserDelete';
+import { UserGetAll } from '../../application/UserGetAll';
 
 @Module({
   imports: [
@@ -58,6 +60,18 @@ import { UserUpdate } from '../../application/UserUpdate';
       provide: 'UserUpdate',
       useFactory: (userRepository: TypeOrmUserRepository) =>
         new UserUpdate(userRepository),
+      inject: ['UserRepository'],
+    },
+    {
+      provide: 'UserDelete',
+      useFactory: (userRepository: TypeOrmUserRepository) =>
+        new UserDelete(userRepository),
+      inject: ['UserRepository'],
+    },
+    {
+      provide: 'UserGetAll',
+      useFactory: (userRepository: TypeOrmUserRepository) =>
+        new UserGetAll(userRepository),
       inject: ['UserRepository'],
     },
     {
