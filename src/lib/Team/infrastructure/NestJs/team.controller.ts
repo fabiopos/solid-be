@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Inject,
   Param,
@@ -13,6 +14,7 @@ import {
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import {
   CreateTeamPayload,
+  DeleteTeamParams,
   TeamSearchParams,
   UpdateTeamParams,
   UpdateTeamPayload,
@@ -26,6 +28,7 @@ import { TeamResponse } from '../../domain/TeamSchema';
 import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
 import { Token } from '@/lib/Auth/domain/AuthLoginSchema';
 import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
+import { TeamDelete } from '../../application/TeamDelete/TeamDelete';
 
 @ApiTags('team')
 @Controller('team')
@@ -36,6 +39,7 @@ export class TeamController {
     @Inject('TeamGetAll') private readonly teamGetAll: TeamGetAll,
     @Inject('TeamFind') private readonly teamFind: TeamFind,
     @Inject('TeamUpdate') private readonly teamUpdate: TeamUpdate,
+    @Inject('TeamDelete') private readonly teamDelete: TeamDelete,
   ) {}
 
   @Get()
@@ -92,5 +96,11 @@ export class TeamController {
       secondaryColor: team.secondaryColor,
       shieldUrl: team.shieldUrl,
     });
+  }
+
+  @Delete(':id')
+  async deleteTeam(@Param() params: DeleteTeamParams) {
+    const { id } = params;
+    return this.teamDelete.run(id);
   }
 }

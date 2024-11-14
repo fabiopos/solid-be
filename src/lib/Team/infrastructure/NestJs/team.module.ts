@@ -9,6 +9,7 @@ import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/Typ
 import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
 import { TeamFind } from '../../application/TeamFind/TeamFind';
 import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
+import { TeamDelete } from '../../application/TeamDelete/TeamDelete';
 
 @Module({
   imports: [
@@ -47,6 +48,12 @@ import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
       provide: 'TeamUpdate',
       useFactory: (repository: TypeOrmTeamRepository) =>
         new TeamUpdate(repository),
+      inject: ['TeamRepository'],
+    },
+    {
+      provide: 'TeamDelete',
+      useFactory: (repository: TypeOrmTeamRepository) =>
+        new TeamDelete(repository),
       inject: ['TeamRepository'],
     },
     {

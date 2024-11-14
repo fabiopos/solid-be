@@ -63,6 +63,11 @@ export class UpdateTeamParams {
   id: string;
 }
 
+export class DeleteTeamParams {
+  @IsUUID()
+  id: string;
+}
+
 export class UpdateTeamPayload {
   @IsString()
   @IsOptional()
