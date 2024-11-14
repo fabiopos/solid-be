@@ -48,6 +48,7 @@ export class PlayerController {
   }
 
   // /player/{teamId}/search?name=pedro
+  @ApiParam({ name: 'teamId' })
   @Get(':teamId/search')
   async searchByName(
     @Param() params: PlayerGetAllParams,
