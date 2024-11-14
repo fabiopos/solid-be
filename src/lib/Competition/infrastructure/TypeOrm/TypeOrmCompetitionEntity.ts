@@ -2,9 +2,8 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinColumn,
+  ManyToOne,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
@@ -38,8 +37,7 @@ export class TypeOrmCompetitionEntity {
   @Column({ nullable: true })
   description: string | null;
 
-  @OneToOne(() => TypeOrmSeasonEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmSeasonEntity, (e) => e.competitions)
   season: TypeOrmSeasonEntity;
 
   @OneToMany(() => TypeOrmMatchEntity, (match) => match.competition)
