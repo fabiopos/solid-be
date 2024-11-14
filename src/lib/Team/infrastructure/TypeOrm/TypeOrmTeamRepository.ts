@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { TypeOrmTeamEntity } from './TypeOrmTeamEntity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from '../../domain/Team';
@@ -18,6 +18,14 @@ export class TypeOrmTeamRepository implements TeamRepository {
   async getOneByName(name: string): Promise<FulfilledTeam> {
     const team = await this.repository.findOneBy({ name });
     return this.mapToDomain(team);
+  }
+
+  async searchByName(name: string): Promise<FulfilledTeam[]> {
+    const teams = await this.repository.find({
+      where: [{ name: ILike(`%${name}%`), active: true }],
+      order: { name: 'ASC' },
+    });
+    return teams.map(this.mapToDomain);
   }
 
   private mapToDomain(u: TypeOrmTeamEntity): FulfilledTeam {

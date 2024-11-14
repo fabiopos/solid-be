@@ -6,12 +6,14 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import {
   CreateTeamPayload,
+  TeamSearchParams,
   UpdateTeamParams,
   UpdateTeamPayload,
   ValidateTeamPayload,
@@ -41,6 +43,14 @@ export class TeamController {
   async getAll(@Req() request: Request & { user: Token }) {
     const subscriptionId = request.user.subscriptionId;
     const teams = await this.teamGetAll.run(subscriptionId);
+    return teams;
+  }
+
+  @Get('/search')
+  @UseGuards(JwtAuthGuard)
+  async searchByName(@Query() params: TeamSearchParams) {
+    const { name } = params;
+    const teams = await this.teamGetAll.searchByName(name);
     return teams;
   }
 

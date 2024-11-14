@@ -13,6 +13,16 @@ export class TeamRepositoryMock implements TeamRepository {
       }),
     );
   }
+  searchByName(name: string): Promise<FulfilledTeam[]> {
+    return Promise.resolve([
+      FulfilledTeam.make({
+        active: true,
+        hasSubscription: true,
+        name: name,
+        createdAt: new Date(),
+      }),
+    ]);
+  }
   async create(payload: Team) {
     const baseTeam = FulfilledTeam.make({
       active: true,

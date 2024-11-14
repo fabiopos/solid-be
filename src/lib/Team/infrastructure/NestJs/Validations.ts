@@ -9,6 +9,10 @@ import {
   Length,
 } from 'class-validator';
 
+export class TeamSearchParams {
+  @IsString()
+  name: string;
+}
 export class CreateTeamPayload {
   @ApiProperty()
   @IsString()

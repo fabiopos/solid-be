@@ -8,4 +8,5 @@ export interface TeamRepository {
   edit(player: TeamType): Promise<void>;
   delete(id: string): Promise<void>;
   getOneByName(name: string): Promise<FulfilledTeam>;
+  searchByName(name: string): Promise<FulfilledTeam[]>;
 }

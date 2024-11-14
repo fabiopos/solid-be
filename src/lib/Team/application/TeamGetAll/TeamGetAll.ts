@@ -8,4 +8,9 @@ export class TeamGetAll {
     const teams = await this.repository.getAll(subscriptionId);
     return teams;
   }
+
+  async searchByName(name: string): Promise<FulfilledTeam[]> {
+    const teams = await this.repository.searchByName(name);
+    return teams;
+  }
 }
