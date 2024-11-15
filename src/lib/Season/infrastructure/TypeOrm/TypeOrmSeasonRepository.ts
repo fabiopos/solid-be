@@ -1,6 +1,10 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { SeasonRepository } from '../../domain/SeasonRepository';
-import { EmptySeason, FulfilledSeason } from '../../domain/SeasonSchema';
+import {
+  EmptySeason,
+  FulfilledSeason,
+  PartialSeason,
+} from '../../domain/SeasonSchema';
 import { TypeOrmSeasonEntity } from './TypeOrmSeasonEntity';
 import { Repository } from 'typeorm';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
@@ -15,6 +19,19 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
   ) {}
+
+  async update(seasonId: string, partialSeason: PartialSeason) {
+    const seasonToUpdate = await this.repository.findOne({
+      where: { id: seasonId },
+    });
+
+    const seasonUpdated = await this.repository.save({
+      ...seasonToUpdate,
+      ...partialSeason,
+    });
+
+    return this.mapEntityToDomain(seasonUpdated);
+  }
 
   async create(emptySeason: EmptySeason): Promise<FulfilledSeason> {
     const team = await this.teamRepository.findOne({
@@ -37,6 +54,10 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
     return seasons.map(this.mapEntityToDomain);
   }
 
+  async deleteSeason(seasonId: string) {
+    await this.repository.delete({ id: seasonId });
+  }
+
   mapEntityToDomain(entity: TypeOrmSeasonEntity): FulfilledSeason {
     return FulfilledSeason.make({
       active: entity.active,
@@ -53,7 +74,7 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
       name: entity.name,
       status: entity.status,
       team: entity.team,
-      teamId: entity.team.id,
+      teamId: entity.team?.id,
       endDate: entity.endDate,
       startDate: entity.startDate,
     });

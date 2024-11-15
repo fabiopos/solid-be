@@ -9,6 +9,7 @@ import { SeasonUpdate } from '../../application/SeasonUpdate';
 import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
+import { SeasonDelete } from '../../application/SeasonDelete';
 
 @Module({
   imports: [
@@ -43,6 +44,12 @@ import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/Typ
       provide: 'SeasonUpdate',
       useFactory: (repository: TypeOrmSeasonRepository) =>
         new SeasonUpdate(repository),
+      inject: ['SeasonRepository'],
+    },
+    {
+      provide: 'SeasonDelete',
+      useFactory: (repository: TypeOrmSeasonRepository) =>
+        new SeasonDelete(repository),
       inject: ['SeasonRepository'],
     },
   ],

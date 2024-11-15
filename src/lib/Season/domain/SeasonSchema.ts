@@ -49,3 +49,7 @@ export class EmptySeason extends S.TaggedClass<EmptySeason>()('EmptySeason', {
   active: seasonSchema.fields.active,
   description: seasonSchema.fields.description,
 }) {}
+
+export class PartialSeason extends S.TaggedClass<EmptySeason>()('EmptySeason', {
+  ...seasonSchema.omit('createdAt', 'id', 'team', 'teamId').fields,
+}) {}

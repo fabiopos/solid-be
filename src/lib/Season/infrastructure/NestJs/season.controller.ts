@@ -1,11 +1,27 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SeasonCreate } from '../../application/SeasonCreate';
 import { SeasonGet } from '../../application/SeasonGet';
 import { SeasonUpdate } from '../../application/SeasonUpdate';
-import { SeasonCreatePayload, SeasonParams } from './Validations';
-import { EmptySeason } from '../../domain/SeasonSchema';
+import {
+  SeasonCreatePayload,
+  SeasonDeleteParams,
+  SeasonParams,
+  SeasonUpdateParams,
+  SeasonUpdatePayload,
+} from './Validations';
+import { EmptySeason, PartialSeason } from '../../domain/SeasonSchema';
 import { toDate } from 'date-fns';
+import { SeasonDelete } from '../../application/SeasonDelete';
 
 @ApiTags('season')
 @Controller('season')
@@ -17,6 +33,8 @@ export class SeasonController {
     private readonly seasonGet: SeasonGet,
     @Inject('SeasonUpdate')
     private readonly seasonUpdate: SeasonUpdate,
+    @Inject('SeasonDelete')
+    private readonly seasonDelete: SeasonDelete,
   ) {}
 
   @Get(':id')
@@ -48,5 +66,27 @@ export class SeasonController {
     } catch (error) {
       throw error;
     }
+  }
+
+  @Patch(':seasonId')
+  async updateSeason(
+    @Body() payload: SeasonUpdatePayload,
+    @Param() params: SeasonUpdateParams,
+  ) {
+    const { seasonId } = params;
+    return this.seasonUpdate.run(
+      seasonId,
+      PartialSeason.make({
+        ...payload,
+        startDate: payload.startDate ? toDate(payload.startDate) : undefined,
+        endDate: payload.endDate ? toDate(payload.endDate) : undefined,
+      }),
+    );
+  }
+
+  @Delete(':seasonId')
+  async deleteSeason(@Param() params: SeasonDeleteParams) {
+    const { seasonId } = params;
+    return this.seasonDelete.run(seasonId);
   }
 }
