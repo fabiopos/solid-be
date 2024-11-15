@@ -9,17 +9,19 @@ import { CompetitionModule } from '@/lib/Competition/infrastructure/NestJs/compe
 import { MatchModule } from '@/lib/Match/infrastructure/NestJs/match.module';
 import { SettingsModule } from '@/lib/Settings/infraestructure/NestJs/settings.module';
 import { MatchAparitionModule } from '@/lib/MatchAparition/infrastructure/NestJs/matchAparition.module';
+import { PlayerInjuryModule } from '@/lib/PlayerInjury/infrastructure/NestJs/playerInjury.module';
 
 export default [
-  PlayerModule,
-  TeamModule,
-  SubscriptionModule,
-  UserModule,
   AuthModule,
-  FieldPositionModule,
+  PlayerModule,
+  PlayerInjuryModule,
+  TeamModule,
   SeasonModule,
   CompetitionModule,
+  SubscriptionModule,
+  UserModule,
   MatchModule,
-  SettingsModule,
   MatchAparitionModule,
+  SettingsModule,
+  FieldPositionModule,
 ];
