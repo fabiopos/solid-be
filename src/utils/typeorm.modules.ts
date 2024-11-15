@@ -7,6 +7,7 @@ import { FieldPositionModule } from '@/lib/FieldPosition/infrastructure/NestJs/f
 import { SeasonModule } from '@/lib/Season/infrastructure/NestJs/season.module';
 import { CompetitionModule } from '@/lib/Competition/infrastructure/NestJs/competition.module';
 import { MatchModule } from '@/lib/Match/infrastructure/NestJs/match.module';
+import { SettingsModule } from '@/lib/Settings/infraestructure/NestJs/settings.module';
 
 export default [
   PlayerModule,
@@ -18,4 +19,5 @@ export default [
   SeasonModule,
   CompetitionModule,
   MatchModule,
+  SettingsModule,
 ];

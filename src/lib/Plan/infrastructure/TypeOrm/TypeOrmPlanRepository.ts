@@ -14,7 +14,7 @@ export class TypeOrmPlanRepository implements PlanRepository {
   }
 
   async getAll(): Promise<Plan[]> {
-    throw new Error('Method not implemented.');
+    return this.repository.find();
   }
 
   async getOneById(id: string): Promise<Plan | null> {
