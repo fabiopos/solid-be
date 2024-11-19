@@ -7,4 +7,8 @@ export class PlayerPositionCreate {
   async run(payload: EmptyPlayerPosition) {
     return this.repository.create(payload);
   }
+
+  async upsert(playerId: string, positions: string[]) {
+    return this.repository.updatePlayerPositions(playerId, positions);
+  }
 }

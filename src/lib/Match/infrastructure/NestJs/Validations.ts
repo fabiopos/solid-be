@@ -15,6 +15,10 @@ export class MatchCompetitionIdParams {
   @IsUUID()
   competitionId: string;
 }
+export class MatchSeasonIdParams {
+  @IsUUID()
+  seasonId: string;
+}
 
 export class MatchCreatePayload {
   @IsString()

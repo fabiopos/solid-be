@@ -14,6 +14,14 @@ export class TypeOrmMatchRepository implements MatchRepository {
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
   ) {}
+  async getAllBySeason(seasonId: string): Promise<FulfilledMatch[]> {
+    const matches = await this.repository.find({
+      where: { competition: { season: { id: seasonId } } },
+      relations: { awayTeam: true, homeTeam: true, competition: true },
+    });
+
+    return matches.map(this.mapEntityToDomain);
+  }
 
   async findById(matchId: string): Promise<FulfilledMatch> {
     const match = await this.repository.findOne({ where: { id: matchId } });

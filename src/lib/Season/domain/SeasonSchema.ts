@@ -1,3 +1,4 @@
+import { matchSchema } from '@/lib/Match/domain/MatchSchema';
 import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
 import { SeasonStatusEnum } from '@/shared/enums/seasonStatusEnum';
 import * as S from '@effect/schema/Schema';
@@ -35,6 +36,7 @@ export class FulfilledSeason extends S.TaggedClass<FulfilledSeason>()(
           startDate: S.optional(S.Date),
           endDate: S.optional(S.Date),
           status: S.optional(S.Enums(CompetitionStatusEnum)),
+          matches: S.optional(S.Array(matchSchema)),
         }),
       ),
     ),

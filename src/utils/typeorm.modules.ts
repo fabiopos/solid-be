@@ -10,11 +10,13 @@ import { MatchModule } from '@/lib/Match/infrastructure/NestJs/match.module';
 import { SettingsModule } from '@/lib/Settings/infraestructure/NestJs/settings.module';
 import { MatchAparitionModule } from '@/lib/MatchAparition/infrastructure/NestJs/matchAparition.module';
 import { PlayerInjuryModule } from '@/lib/PlayerInjury/infrastructure/NestJs/playerInjury.module';
+import { PlayerPositionModule } from '@/lib/PlayerPosition/infrastructure/NestJs/playerPosition.module';
 
 export default [
   AuthModule,
   PlayerModule,
   PlayerInjuryModule,
+  PlayerPositionModule,
   TeamModule,
   SeasonModule,
   CompetitionModule,

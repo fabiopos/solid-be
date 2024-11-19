@@ -47,6 +47,26 @@ export class SeasonController {
     return this.seasonGet.run(id);
   }
 
+  @Get(':id/details')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Find season details',
+  })
+  async findSeason(@Param() params: SeasonParams) {
+    const { id } = params;
+    return this.seasonGet.findSeason(id);
+  }
+
+  @Get(':id/subscription')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Get all seasons by team',
+  })
+  async getAllSeasonBySubscription(@Param() params: SeasonParams) {
+    const { id } = params;
+    return this.seasonGet.bySubscription(id);
+  }
+
   @Post(':id')
   async createSeason(
     @Param() params: SeasonParams,

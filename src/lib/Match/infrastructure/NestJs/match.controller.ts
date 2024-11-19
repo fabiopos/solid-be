@@ -17,6 +17,7 @@ import {
   MatchCompetitionIdParams,
   MatchCreatePayload,
   MatchIdParams,
+  MatchSeasonIdParams,
 } from './Validations';
 import { EmptyMatch } from '../../domain/MatchSchema';
 import { toDate } from 'date-fns';
@@ -50,9 +51,19 @@ export class MatchController {
     status: '2XX',
     description: 'Get all matches by competition',
   })
-  async getAllSeason(@Param() params: MatchCompetitionIdParams) {
+  async getByCompetition(@Param() params: MatchCompetitionIdParams) {
     const { competitionId } = params;
     return this.matchGet.getAllByCompetitionId(competitionId);
+  }
+
+  @Get(':seasonId/season')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Get all matches by competition',
+  })
+  async getBySeason(@Param() params: MatchSeasonIdParams) {
+    const { seasonId } = params;
+    return this.matchGet.getBySeason(seasonId);
   }
 
   @Post()

@@ -2,8 +2,8 @@ import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
 import * as S from '@effect/schema/Schema';
 
 const matchTeam = S.Struct({
-  id: S.NullishOr(S.String),
-  name: S.NullishOr(S.String),
+  id: S.optional(S.NullishOr(S.String)),
+  name: S.optional(S.NullishOr(S.String)),
 });
 
 const matchCompetition = S.Struct({
@@ -23,14 +23,14 @@ export const matchSchema = S.Struct({
   competitionId: S.optional(S.String),
   createdAt: S.optional(S.Date),
   title: S.optional(S.String),
-  homeTeam: S.optional(matchTeam),
-  awayTeam: S.optional(matchTeam),
+  homeTeam: S.optional(S.NullishOr(matchTeam)),
+  awayTeam: S.optional(S.NullishOr(matchTeam)),
   awayScore: S.optional(S.NullishOr(S.Number)),
   homeScore: S.optional(S.NullishOr(S.Number)),
-  matchDay: S.optional(S.Date),
-  matchHour: S.optional(S.Date),
+  matchDay: S.optional(S.NullishOr(S.Date)),
+  matchHour: S.optional(S.NullishOr(S.Date)),
   wo: S.optional(S.Boolean),
-  location: S.optional(S.String),
+  location: S.optional(S.NullishOr(S.String)),
   completed: S.optional(S.Boolean),
   competition: S.optional(matchCompetition),
   matchAparitions: S.optional(S.Array(matchAparition)),

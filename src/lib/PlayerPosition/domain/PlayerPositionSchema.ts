@@ -5,8 +5,17 @@ import { Schema as S } from '@effect/schema';
 export const playerPositionSchema = S.Struct({
   id: S.optional(S.String),
   createdAt: S.optional(S.Date),
-  player: S.optional(playerSchema),
-  fieldPosition: S.optional(fieldPositionSchema),
+  player: S.optional(
+    playerSchema.pick(
+      'id',
+      'firstName',
+      'lastName',
+      'active',
+      'shirtNumber',
+      'shirtName',
+    ),
+  ),
+  fieldPosition: S.optional(fieldPositionSchema.omit('createdAt')),
 });
 
 export type PlayerPositionType = S.Schema.Type<typeof playerPositionSchema>;

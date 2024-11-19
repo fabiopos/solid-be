@@ -5,6 +5,7 @@ export class SeasonUpdate {
   constructor(private repository: SeasonRepository) {}
 
   async run(seasonId: string, partialSeason: PartialSeason) {
-    return this.repository.update(seasonId, partialSeason);
+    await this.repository.update(seasonId, partialSeason);
+    return this.repository.find(seasonId);
   }
 }

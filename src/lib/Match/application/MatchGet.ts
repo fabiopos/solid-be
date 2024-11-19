@@ -23,4 +23,8 @@ export class MatchGet {
       teamId,
     );
   }
+
+  getBySeason(seasonId: string) {
+    return this.repository.getAllBySeason(seasonId);
+  }
 }

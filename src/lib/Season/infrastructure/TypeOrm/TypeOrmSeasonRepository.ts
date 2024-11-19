@@ -19,6 +19,24 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
   ) {}
+  async find(seasonId: string): Promise<FulfilledSeason> {
+    const season = await this.repository.findOne({
+      where: { id: seasonId },
+      relations: { competitions: { matches: true }, team: true },
+    });
+    return this.mapEntityToDomain(season);
+  }
+
+  async getAllBySubscription(
+    subscriptionId: string,
+  ): Promise<FulfilledSeason[]> {
+    const seasons = await this.repository.find({
+      where: { team: { subscription: { id: subscriptionId } } },
+      relations: { competitions: true },
+    });
+
+    return seasons.map(this.mapEntityToDomain);
+  }
 
   async update(seasonId: string, partialSeason: PartialSeason) {
     const seasonToUpdate = await this.repository.findOne({
@@ -67,6 +85,7 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
         startDate: toDate(x.startDate),
         endDate: toDate(x.endDate),
         status: x.status,
+        matches: x.matches,
       })),
       createdAt: entity.createdAt,
       description: entity.description,

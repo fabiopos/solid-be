@@ -21,6 +21,20 @@ export class TypeOrmPlayerPositionRepository
     private readonly fieldRepository: Repository<TypeOrmFieldPositionEntity>,
   ) {}
 
+  async updatePlayerPositions(
+    playerId: string,
+    positions: string[],
+  ): Promise<FulfilledPlayerPosition[]> {
+    await this.repository.delete({ player: { id: playerId } });
+
+    const positionsToAddPayload = positions.map((p) => ({
+      fieldPosition: { id: p },
+      player: { id: playerId },
+    }));
+    const result = await this.repository.save(positionsToAddPayload);
+    return result.map(this.mapToFulfilled);
+  }
+
   async create(item: EmptyPlayerPosition): Promise<FulfilledPlayerPosition> {
     const player = await this.playerRepository.findOneBy({
       id: item.player.id,
@@ -70,6 +84,7 @@ export class TypeOrmPlayerPositionRepository
   ): Promise<FulfilledPlayerPosition[]> {
     const results = await this.repository.find({
       where: { player: { id: playerId } },
+      relations: { fieldPosition: true, player: true },
     });
     return results.map(this.mapToFulfilled);
   }
