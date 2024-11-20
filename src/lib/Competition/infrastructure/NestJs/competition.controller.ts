@@ -18,6 +18,7 @@ import {
   CompetitionBySeasonParams,
   CompetitionByTeamParams,
   CompetitionCreatePayload,
+  CompetitionUpdatePayload,
 } from './Validations';
 import { EmptyCompetition } from '../../domain/CompetitionSchema';
 import { toDate } from 'date-fns';
@@ -80,7 +81,7 @@ export class CompetitionController {
   @Patch(':competitionId')
   async updateCompetition(
     @Param() params: CompetitionByIdParams,
-    @Body() payload: CompetitionCreatePayload,
+    @Body() payload: CompetitionUpdatePayload,
   ) {
     const { competitionId } = params;
     return this.competitionUpdate.run(
@@ -88,8 +89,8 @@ export class CompetitionController {
       EmptyCompetition.make({
         description: payload.description,
         name: payload.name,
-        startDate: toDate(payload.startDate),
-        endDate: toDate(payload.endDate),
+        startDate: payload.startDate ? toDate(payload.startDate) : undefined,
+        endDate: payload.endDate ? toDate(payload.endDate) : undefined,
         status: payload.status,
       }),
     );

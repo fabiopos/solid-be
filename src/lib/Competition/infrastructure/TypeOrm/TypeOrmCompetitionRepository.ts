@@ -74,7 +74,11 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
     competition.startDate = emptySeason.startDate;
     competition.endDate = emptySeason.endDate;
 
-    const updatedCompetition = await this.repository.save(competition);
+    await this.repository.save(competition);
+    const updatedCompetition = await this.repository.findOne({
+      where: { id: competitionId },
+      relations: { matches: true },
+    });
     return this.mapEntityToDomain(updatedCompetition);
   }
 
@@ -91,8 +95,8 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
       description: entity.description,
       name: entity.name,
       seasonId: entity.season?.id,
-      startDate: toDate(entity.startDate),
-      endDate: toDate(entity.endDate),
+      startDate: entity.startDate ? toDate(entity.startDate) : undefined,
+      endDate: entity.endDate ? toDate(entity.endDate) : undefined,
       status: entity.status,
       createdAt: entity.createdAt,
       matches: entity.matches,

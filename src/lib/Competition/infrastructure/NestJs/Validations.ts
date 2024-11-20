@@ -25,6 +25,28 @@ export class CompetitionCreatePayload {
   description: string;
 }
 
+export class CompetitionUpdatePayload {
+  @IsOptional()
+  @IsString()
+  name: string;
+
+  @IsOptional()
+  @IsDateString()
+  startDate: string;
+
+  @IsOptional()
+  @IsDateString()
+  endDate: string;
+
+  @IsOptional()
+  @IsEnum(CompetitionStatusEnum)
+  status: CompetitionStatusEnum;
+
+  @IsOptional()
+  @IsString()
+  description: string;
+}
+
 export class CompetitionByIdParams {
   @IsUUID()
   competitionId: string;
