@@ -18,6 +18,7 @@ import {
   MatchCreatePayload,
   MatchIdParams,
   MatchSeasonIdParams,
+  MatchUpdatePayload,
 } from './Validations';
 import { EmptyMatch } from '../../domain/MatchSchema';
 import { toDate } from 'date-fns';
@@ -94,7 +95,7 @@ export class MatchController {
   })
   async updateMatch(
     @Param() params: MatchIdParams,
-    @Body() payload: MatchCreatePayload,
+    @Body() payload: MatchUpdatePayload,
   ) {
     const { matchId } = params;
     return this.matchUpdate.run(
@@ -108,6 +109,7 @@ export class MatchController {
         matchHour: toDate(payload.matchHour),
         title: payload.title,
         wo: payload.wo,
+        completed: payload.completed,
       }),
     );
   }

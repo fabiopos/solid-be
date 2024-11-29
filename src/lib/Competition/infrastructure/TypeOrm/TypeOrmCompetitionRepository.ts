@@ -40,6 +40,7 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
   async findById(competitionId: string): Promise<FulfilledCompetition> {
     const competition = await this.repository.findOne({
       where: { id: competitionId },
+      relations: { matches: { awayTeam: true, homeTeam: true }, season: true },
     });
 
     return this.mapEntityToDomain(competition);
@@ -86,32 +87,33 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
     const competition = await this.repository.findOne({
       where: { id: competitionId },
     });
-    this.repository.remove(competition);
+
+    if (competition) this.repository.remove(competition);
   }
 
   mapEntityToDomain(entity: TypeOrmCompetitionEntity): FulfilledCompetition {
     return FulfilledCompetition.make({
-      id: entity.id,
-      description: entity.description,
-      name: entity.name,
-      seasonId: entity.season?.id,
-      startDate: entity.startDate ? toDate(entity.startDate) : undefined,
-      endDate: entity.endDate ? toDate(entity.endDate) : undefined,
-      status: entity.status,
-      createdAt: entity.createdAt,
-      matches: entity.matches,
-      season: entity.season
+      id: entity?.id,
+      description: entity?.description,
+      name: entity?.name,
+      seasonId: entity?.season?.id,
+      startDate: entity?.startDate ? toDate(entity.startDate) : undefined,
+      endDate: entity?.endDate ? toDate(entity.endDate) : undefined,
+      status: entity?.status,
+      createdAt: entity?.createdAt,
+      matches: entity?.matches,
+      season: entity?.season
         ? FulfilledSeason.make({
-            active: entity.season.active,
-            createdAt: entity.season.createdAt,
-            description: entity.season.description,
-            endDate: entity.season.endDate,
-            startDate: entity.season.startDate,
-            id: entity.season.id,
+            active: entity?.season.active,
+            createdAt: entity?.season.createdAt,
+            description: entity?.season.description,
+            endDate: entity?.season.endDate,
+            startDate: entity?.season.startDate,
+            id: entity?.season.id,
             name: entity.season.name,
-            status: entity.season.status,
-            team: entity.season.team,
-            teamId: entity.season.team?.id,
+            status: entity?.season.status,
+            team: entity?.season.team,
+            teamId: entity?.season.team?.id,
           })
         : undefined,
     });

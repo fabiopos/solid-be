@@ -17,6 +17,7 @@ import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure
 import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/TypeOrm/TypeOrmPlayerInjuryEntity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 @Entity('player')
 export class TypeOrmPlayerEntity extends PersonAbstract {
@@ -73,4 +74,10 @@ export class TypeOrmPlayerEntity extends PersonAbstract {
 
   @OneToMany(() => TypeOrmPlayerInjuryEntity, (injury) => injury.player)
   injuries: TypeOrmPlayerInjuryEntity[];
+
+  @OneToMany(
+    () => TypeOrmMatchAparitionEntity,
+    (matchAparition) => matchAparition.player,
+  )
+  matchAparitions: TypeOrmMatchAparitionEntity[];
 }

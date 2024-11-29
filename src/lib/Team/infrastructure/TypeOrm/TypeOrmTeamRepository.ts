@@ -20,9 +20,18 @@ export class TypeOrmTeamRepository implements TeamRepository {
     return this.mapToDomain(team);
   }
 
-  async searchByName(name: string): Promise<FulfilledTeam[]> {
+  async searchByName(
+    name: string,
+    subscriptionId: string,
+  ): Promise<FulfilledTeam[]> {
     const teams = await this.repository.find({
-      where: [{ name: ILike(`%${name}%`), active: true }],
+      where: [
+        {
+          name: ILike(`%${name}%`),
+          active: true,
+          subscription: { id: subscriptionId },
+        },
+      ],
       order: { name: 'ASC' },
     });
     return teams.map(this.mapToDomain);

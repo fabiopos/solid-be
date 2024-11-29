@@ -9,8 +9,11 @@ export class TeamGetAll {
     return teams;
   }
 
-  async searchByName(name: string): Promise<FulfilledTeam[]> {
-    const teams = await this.repository.searchByName(name);
+  async searchByName(
+    name: string,
+    subscriptionId: string,
+  ): Promise<FulfilledTeam[]> {
+    const teams = await this.repository.searchByName(name, subscriptionId);
     return teams;
   }
 }

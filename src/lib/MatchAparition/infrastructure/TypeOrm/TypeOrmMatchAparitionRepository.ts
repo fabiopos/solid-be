@@ -23,6 +23,8 @@ export class TypeOrmMatchAparitionRepository
   async getByMatchId(matchId: string): Promise<FulfilledMatchAparition[]> {
     const aparitions = await this.repository.find({
       where: { match: { id: matchId } },
+      relations: { player: true },
+      order: { player: { firstName: 'ASC' } },
     });
     return aparitions.map(this.mapEntityToDomain);
   }
@@ -30,7 +32,11 @@ export class TypeOrmMatchAparitionRepository
   async create(
     emptyMatchAparition: EmptyMatchAparition,
   ): Promise<FulfilledMatchAparition> {
-    const createdAparition = await this.repository.save(emptyMatchAparition);
+    const createdAparition = await this.repository.save({
+      ...emptyMatchAparition,
+      player: { id: emptyMatchAparition.playerId },
+      match: { id: emptyMatchAparition.matchId },
+    });
     return this.mapEntityToDomain(createdAparition);
   }
   async update(
@@ -55,6 +61,16 @@ export class TypeOrmMatchAparitionRepository
   mapEntityToDomain(
     entity: TypeOrmMatchAparitionEntity,
   ): FulfilledMatchAparition {
-    return FulfilledMatchAparition.make(entity);
+    return FulfilledMatchAparition.make({
+      ...entity,
+      player: {
+        favPosition: entity.player?.favPosition,
+        firstName: entity.player?.firstName,
+        id: entity.player?.id,
+        lastName: entity.player?.lastName,
+        shirtName: entity.player?.shirtName,
+        shirtNumber: entity.player?.shirtNumber,
+      },
+    });
   }
 }

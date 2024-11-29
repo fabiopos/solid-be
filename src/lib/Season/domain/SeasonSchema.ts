@@ -33,6 +33,7 @@ export class FulfilledSeason extends S.TaggedClass<FulfilledSeason>()(
         S.Struct({
           id: S.optional(S.String),
           name: S.optional(S.String),
+          description: S.optional(S.String),
           startDate: S.optional(S.Date),
           endDate: S.optional(S.Date),
           status: S.optional(S.Enums(CompetitionStatusEnum)),

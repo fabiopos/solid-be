@@ -151,6 +151,8 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
         features: { feature: true },
       },
     });
+
+    console.log(subscription);
     return new FulfilledSubscription({
       ...subscription,
       planId: subscription?.plan?.id,

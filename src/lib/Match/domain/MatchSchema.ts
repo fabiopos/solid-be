@@ -1,9 +1,11 @@
+import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
 import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
 import * as S from '@effect/schema/Schema';
 
 const matchTeam = S.Struct({
   id: S.optional(S.NullishOr(S.String)),
   name: S.optional(S.NullishOr(S.String)),
+  players: S.optional(S.Array(playerSchema)),
 });
 
 const matchCompetition = S.Struct({

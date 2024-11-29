@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 
@@ -34,7 +28,7 @@ export class TypeOrmMatchAparitionEntity {
   @Column()
   manOfTheMatch: boolean;
 
-  @Column()
+  @Column({ type: 'float', nullable: true })
   rating: number;
 
   @Column()
@@ -43,11 +37,9 @@ export class TypeOrmMatchAparitionEntity {
   @Column()
   confirmed: boolean;
 
-  @OneToOne(() => TypeOrmMatchEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmMatchEntity)
   match: TypeOrmMatchEntity;
 
-  @OneToOne(() => TypeOrmPlayerEntity)
-  @JoinColumn()
+  @ManyToOne(() => TypeOrmPlayerEntity)
   player: TypeOrmPlayerEntity;
 }

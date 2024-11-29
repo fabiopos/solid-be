@@ -50,3 +50,41 @@ export class MatchCreatePayload {
   @IsString()
   location: string;
 }
+
+export class MatchUpdatePayload {
+  @IsOptional()
+  @IsString()
+  title: string;
+
+  @IsOptional()
+  @IsUUID()
+  homeTeamId: string;
+
+  @IsOptional()
+  @IsUUID()
+  awayTeamId: string;
+
+  @IsOptional()
+  @IsUUID()
+  competitionId: string;
+
+  @IsOptional()
+  @IsDateString()
+  matchDay: string;
+
+  @IsOptional()
+  @IsDateString()
+  matchHour: string;
+
+  @IsBoolean()
+  @IsOptional()
+  wo: boolean;
+
+  @IsBoolean()
+  @IsOptional()
+  completed: boolean;
+
+  @IsOptional()
+  @IsString()
+  location: string;
+}

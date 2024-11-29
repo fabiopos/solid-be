@@ -40,6 +40,16 @@ export class CompetitionController {
     private readonly competitionDelete: CompetitionDelete,
   ) {}
 
+  @Get(':id')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Get all competitions by season',
+  })
+  async findCompetitionVyId(@Param() params: { id: string }) {
+    const { id } = params;
+    return this.competitionGet.findById(id);
+  }
+
   @Get(':seasonId/season')
   @ApiOkResponse({
     status: '2XX',
@@ -50,7 +60,7 @@ export class CompetitionController {
     return this.competitionGet.getAllBySeason(seasonId);
   }
 
-  @Get(':seasonId/team')
+  @Get(':teamId/team')
   @ApiOkResponse({
     status: '2XX',
     description: 'Get all competitions by team',

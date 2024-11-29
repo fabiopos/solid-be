@@ -22,7 +22,10 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
   async find(seasonId: string): Promise<FulfilledSeason> {
     const season = await this.repository.findOne({
       where: { id: seasonId },
-      relations: { competitions: { matches: true }, team: true },
+      relations: {
+        competitions: { matches: true },
+        team: true,
+      },
     });
     return this.mapEntityToDomain(season);
   }
@@ -78,12 +81,13 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
 
   mapEntityToDomain(entity: TypeOrmSeasonEntity): FulfilledSeason {
     return FulfilledSeason.make({
-      active: entity.active,
+      active: entity?.active,
       competitions: (entity.competitions ?? []).map((x) => ({
         name: x.name,
         id: x.id,
         startDate: toDate(x.startDate),
         endDate: toDate(x.endDate),
+        description: x.description,
         status: x.status,
         matches: x.matches,
       })),

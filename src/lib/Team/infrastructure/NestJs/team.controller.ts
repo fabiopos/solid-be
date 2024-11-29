@@ -52,9 +52,13 @@ export class TeamController {
 
   @Get('/search')
   @UseGuards(JwtAuthGuard)
-  async searchByName(@Query() params: TeamSearchParams) {
+  async searchByName(
+    @Query() params: TeamSearchParams,
+    @Req() request: Request & { user: Token },
+  ) {
     const { name } = params;
-    const teams = await this.teamGetAll.searchByName(name);
+    const subscriptionId = request.user.subscriptionId;
+    const teams = await this.teamGetAll.searchByName(name, subscriptionId);
     return teams;
   }
 
@@ -70,8 +74,13 @@ export class TeamController {
     return this.teamValidate.run({ teamName: team.name });
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Body() team: CreateTeamPayload) {
+  async create(
+    @Body() team: CreateTeamPayload,
+    @Req() request: Request & { user: Token },
+  ) {
+    const subscriptionId = request.user.subscriptionId;
     return this.teamCreate.run({
       active: team.active,
       name: team.name,
@@ -80,6 +89,7 @@ export class TeamController {
       logoUrl: team.logoUrl,
       shieldUrl: team.shieldUrl,
       hasSubscription: team.hasSubscription,
+      subscriptionId,
     });
   }
 
