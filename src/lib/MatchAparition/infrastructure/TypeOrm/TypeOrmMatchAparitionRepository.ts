@@ -20,6 +20,82 @@ export class TypeOrmMatchAparitionRepository
     return aparitions.map(this.mapEntityToDomain);
   }
 
+  async getAllByTeam(teamId: string): Promise<FulfilledMatchAparition[]> {
+    const aparitions = await this.repository.find({
+      where: {
+        player: { team: { id: teamId } },
+      },
+      relations: { match: true },
+    });
+    return aparitions.map(this.mapEntityToDomain);
+  }
+
+  async getAllSortTopScorers(
+    teamId: string,
+  ): Promise<FulfilledMatchAparition[]> {
+    const aparitions = await this.repository
+      .createQueryBuilder('ap')
+      .leftJoinAndSelect('ap.player', 'pl')
+      .leftJoinAndSelect('ap.match', 'ma')
+      .leftJoinAndSelect('pl.team', 'te')
+      .where('ma.completed=true')
+      .where(`te.id='${teamId}'`)
+      .where(`ap.goals > 0`)
+      .groupBy('pl.id')
+      .addGroupBy('ap.id')
+      .addGroupBy('ma.id')
+      .addGroupBy('te.id')
+      .select([
+        'ap.id',
+        'pl.id',
+        'pl.shirtNumber',
+        'pl.shirtName',
+        'pl.favPositionId',
+        'pl.firstName',
+        'pl.lastName',
+        'pl.avatarUrl',
+        'ap.goals',
+      ])
+      .limit(10)
+      .orderBy('ap.goals', 'DESC')
+      .getMany();
+
+    return aparitions.map(this.mapEntityToDomain);
+  }
+
+  async getAllSortTopAsists(
+    teamId: string,
+  ): Promise<FulfilledMatchAparition[]> {
+    const aparitions = await this.repository
+      .createQueryBuilder('ap')
+      .leftJoinAndSelect('ap.player', 'pl')
+      .leftJoinAndSelect('ap.match', 'ma')
+      .leftJoinAndSelect('pl.team', 'te')
+      .where('ma.completed=true')
+      .where(`te.id='${teamId}'`)
+      .where(`ap.assists > 0`)
+      .groupBy('pl.id')
+      .addGroupBy('ap.id')
+      .addGroupBy('ma.id')
+      .addGroupBy('te.id')
+      .select([
+        'ap.id',
+        'pl.id',
+        'pl.shirtNumber',
+        'pl.shirtName',
+        'pl.favPositionId',
+        'pl.firstName',
+        'pl.lastName',
+        'pl.avatarUrl',
+        'ap.assists',
+      ])
+      .limit(10)
+      .orderBy('ap.assists', 'DESC')
+      .getMany();
+
+    return aparitions.map(this.mapEntityToDomain);
+  }
+
   async getByMatchId(matchId: string): Promise<FulfilledMatchAparition[]> {
     const aparitions = await this.repository.find({
       where: { match: { id: matchId } },
@@ -70,6 +146,7 @@ export class TypeOrmMatchAparitionRepository
         lastName: entity.player?.lastName,
         shirtName: entity.player?.shirtName,
         shirtNumber: entity.player?.shirtNumber,
+        avatarUrl: entity.player?.avatarUrl,
       },
     });
   }

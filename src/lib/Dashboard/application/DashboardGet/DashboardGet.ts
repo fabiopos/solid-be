@@ -4,6 +4,7 @@ import { TypeOrmCompetitionRepository } from '@/lib/Competition/infrastructure/T
 import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchRepository';
 import { FulfilledMatch } from '@/lib/Match/domain/MatchSchema';
 import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
+import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
 
 export class DashboardGet {
   constructor(
@@ -11,6 +12,7 @@ export class DashboardGet {
     private readonly competitionRepository: TypeOrmCompetitionRepository,
     private readonly matchRepository: TypeOrmMatchRepository,
     private readonly playerRepository: TypeOrmPlayerRepository,
+    private readonly aparitionsRepository: TypeOrmMatchAparitionRepository,
   ) {}
 
   async getTeamStats(teamId: string): Promise<FulfilledTeamStats> {
@@ -37,9 +39,17 @@ export class DashboardGet {
     return allPlayers;
   }
 
+  async getTopScorers(teamId: string) {
+    const aparitions =
+      await this.aparitionsRepository.getAllSortTopScorers(teamId);
+    return aparitions;
+  }
+  async getTopAsists(teamId: string) {
+    const aparitions =
+      await this.aparitionsRepository.getAllSortTopAsists(teamId);
+    return aparitions;
+  }
   getLastMatches() {}
-  getTopScorers() {}
-  getAsists() {}
   getCalendar() {}
 
   private getMatchesSummary(matches: FulfilledMatch[], teamId: string) {

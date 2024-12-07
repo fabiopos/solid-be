@@ -11,6 +11,8 @@ import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeO
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
 
 @Module({
   imports: [
@@ -19,6 +21,7 @@ import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrm
     TypeOrmModule.forFeature([TypeOrmMatchEntity]),
     TypeOrmModule.forFeature([TypeOrmTeamEntity]),
     TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
+    TypeOrmModule.forFeature([TypeOrmMatchAparitionEntity]),
   ],
   controllers: [DashboardController],
   providers: [
@@ -39,18 +42,24 @@ import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrm
       useClass: TypeOrmPlayerRepository,
     },
     {
+      provide: 'AparitionsRepository',
+      useClass: TypeOrmMatchAparitionRepository,
+    },
+    {
       provide: 'DashboardGet',
       useFactory: (
         sr: TypeOrmSeasonRepository,
         cr: TypeOrmCompetitionRepository,
         mr: TypeOrmMatchRepository,
         pr: TypeOrmPlayerRepository,
-      ) => new DashboardGet(sr, cr, mr, pr),
+        ar: TypeOrmMatchAparitionRepository,
+      ) => new DashboardGet(sr, cr, mr, pr, ar),
       inject: [
         'SeasonRepository',
         'CompetitionRepository',
         'MatchRepository',
         'PlayerRepository',
+        'AparitionsRepository',
       ],
     },
   ],

@@ -33,14 +33,19 @@ export class DashboardController {
     return {};
   }
 
-  @Get('top-scorers')
-  async getTopScorers() {
-    return {};
+  @Get('top-scorers/:id')
+  async getTopScorers(
+    @Param() params: { id: string },
+    //@Query() query: { limit?: number },
+  ) {
+    const topScorers = await this.dashboardGet.getTopScorers(params.id);
+    return topScorers;
   }
 
-  @Get('top-asists')
-  async getAsists() {
-    return {};
+  @Get('top-asists/:id')
+  async getAsists(@Param() params: { id: string }) {
+    const topAssists = await this.dashboardGet.getTopAsists(params.id);
+    return topAssists;
   }
 
   @Get('calendar')
