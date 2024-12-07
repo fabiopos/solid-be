@@ -14,6 +14,7 @@ const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 export const playerSchema = S.Struct({
   id: S.optional(S.String),
   teamId: S.optional(S.String),
+  createdAt: S.optional(S.Union(S.String, S.Date, S.Null)),
   bornDate: S.optional(S.NullOr(S.Date)),
   firstName: S.optional(S.String),
   lastName: S.optional(S.String),

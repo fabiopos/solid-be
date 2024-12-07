@@ -24,14 +24,34 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     return this.mapToFulfilledPlayer(result);
   }
 
+  // exclude inactive players
   async getAll(teamId: string): Promise<FulfilledPlayer[]> {
+    const allPlayers = await this.repository.find({
+      where: { team: { id: teamId }, active: true },
+      relations: {
+        team: true,
+        favPosition: true,
+        playerPositions: { fieldPosition: true },
+      },
+    });
+    const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
+    return mappedPlayers;
+  }
+
+  async getAllByTeam(
+    teamId: string,
+    limit?: number,
+  ): Promise<FulfilledPlayer[]> {
     const allPlayers = await this.repository.find({
       where: { team: { id: teamId } },
       relations: {
         team: true,
         favPosition: true,
         playerPositions: { fieldPosition: true },
+        matchAparitions: true,
       },
+      order: { createdAt: 'DESC' },
+      take: limit,
     });
     const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
     return mappedPlayers;

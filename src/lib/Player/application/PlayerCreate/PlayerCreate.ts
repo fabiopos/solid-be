@@ -53,7 +53,7 @@ export class PlayerCreate {
       // validate shirtNumber
       Effect.flatMap(this.hasDominantFoot),
       Effect.flatMap(this.documentAlreadyExists),
-      Effect.flatMap(this.hasAtLeastOneFieldPosition),
+      //Effect.flatMap(this.hasAtLeastOneFieldPosition),
       //Effect.flatMap(this.validateFavPosition),
       Effect.flatMap(this.validateTeam),
       Effect.flatMap(this.validateSubscription),

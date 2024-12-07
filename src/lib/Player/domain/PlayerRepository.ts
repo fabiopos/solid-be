@@ -3,6 +3,7 @@ import { EmptyPlayer, FulfilledPlayer, UpdatePlayerType } from './PlayerSchema';
 export interface PlayerRepository {
   create(player: EmptyPlayer): Promise<FulfilledPlayer>;
   getAll(teamId: string): Promise<FulfilledPlayer[]>;
+  getAllByTeam(teamId: string, limit?: number): Promise<FulfilledPlayer[]>;
   getOneById(id: string): Promise<FulfilledPlayer>;
   edit(id: string, player: UpdatePlayerType): Promise<FulfilledPlayer>;
   delete(id: string): Promise<void>;

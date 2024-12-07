@@ -4,6 +4,7 @@ import { EmptyMatch, FulfilledMatch } from './MatchSchema';
 export interface MatchRepository {
   findById(matchId: string): Promise<FulfilledMatch>;
   getAllBySeason(seasonId: string): Promise<FulfilledMatch[]>;
+  getAllByTeam(teamId: string): Promise<FulfilledMatch[]>;
   getAllByCompetitionId(competitionId: string): Promise<FulfilledMatch[]>;
   getGamesByResultCompetition(
     competitionId: string,

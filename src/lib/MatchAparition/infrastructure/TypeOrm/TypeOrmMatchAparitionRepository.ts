@@ -23,7 +23,7 @@ export class TypeOrmMatchAparitionRepository
   async getByMatchId(matchId: string): Promise<FulfilledMatchAparition[]> {
     const aparitions = await this.repository.find({
       where: { match: { id: matchId } },
-      relations: { player: true },
+      relations: { player: { favPosition: true } },
       order: { player: { firstName: 'ASC' } },
     });
     return aparitions.map(this.mapEntityToDomain);

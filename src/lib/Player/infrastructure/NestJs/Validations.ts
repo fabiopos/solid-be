@@ -48,6 +48,7 @@ export class CreatePlayerPayload {
 
   @ApiProperty()
   @IsArray()
+  @IsOptional()
   fieldPositions: string[];
 
   @ApiProperty()

@@ -11,6 +11,7 @@ import { SettingsModule } from '@/lib/Settings/infraestructure/NestJs/settings.m
 import { MatchAparitionModule } from '@/lib/MatchAparition/infrastructure/NestJs/matchAparition.module';
 import { PlayerInjuryModule } from '@/lib/PlayerInjury/infrastructure/NestJs/playerInjury.module';
 import { PlayerPositionModule } from '@/lib/PlayerPosition/infrastructure/NestJs/playerPosition.module';
+import { DashboardModule } from '@/lib/Dashboard/infraestructure/NestJs/dashboard.module';
 
 export default [
   AuthModule,
@@ -26,4 +27,5 @@ export default [
   MatchAparitionModule,
   SettingsModule,
   FieldPositionModule,
+  DashboardModule,
 ];

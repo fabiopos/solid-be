@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmMatchEntity } from './TypeOrmMatchEntity';
-import { Repository } from 'typeorm';
+import { IsNull, Not, Repository } from 'typeorm';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { MatchRepository } from '../../domain/MatchRepository';
 import { MatchResultEnum } from '@/shared/enums/matchEnum';
@@ -40,6 +40,30 @@ export class TypeOrmMatchRepository implements MatchRepository {
   ): Promise<FulfilledMatch[]> {
     const matches = await this.repository.find({
       where: { competition: { id: competitionId } },
+    });
+
+    return matches.map(this.mapEntityToDomain);
+  }
+
+  async getAllByTeam(teamId: string): Promise<FulfilledMatch[]> {
+    const matches = await this.repository.find({
+      where: [
+        {
+          awayTeam: { id: teamId },
+          completed: true,
+          awayScore: Not(IsNull()),
+          homeScore: Not(IsNull()),
+        },
+        {
+          homeTeam: { id: teamId },
+          completed: true,
+          awayScore: Not(IsNull()),
+          homeScore: Not(IsNull()),
+        },
+      ],
+      order: {
+        matchDay: 'DESC',
+      },
     });
 
     return matches.map(this.mapEntityToDomain);
