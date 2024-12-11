@@ -49,8 +49,25 @@ export class DashboardGet {
       await this.aparitionsRepository.getAllSortTopAsists(teamId);
     return aparitions;
   }
-  getLastMatches() {}
-  getCalendar() {}
+  async getLastMatches(teamId: string, limit?: number) {
+    const matches = await this.matchRepository.getLastMatchesByTeam(
+      teamId,
+      limit,
+    );
+    return matches;
+  }
+
+  async getNextMatches(teamId: string, limit?: number) {
+    const matches = await this.matchRepository.getNextMatchesByTeam(
+      teamId,
+      limit,
+    );
+    return matches;
+  }
+  async getCalendar(teamId: string) {
+    const allMatches = await this.matchRepository.getAllByTeamCalendar(teamId);
+    return allMatches;
+  }
 
   private getMatchesSummary(matches: FulfilledMatch[], teamId: string) {
     return matches.map((p) => {

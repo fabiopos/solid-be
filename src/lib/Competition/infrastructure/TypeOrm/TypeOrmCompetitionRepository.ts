@@ -30,6 +30,7 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
 
   async getAllByTeam(teamId: string): Promise<FulfilledCompetition[]> {
     const competitions = await this.repository.find({
+      relations: { matches: true },
       where: { season: { team: { id: teamId } } },
       order: { startDate: 'ASC' },
     });

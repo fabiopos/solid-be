@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmMatchEntity } from './TypeOrmMatchEntity';
-import { IsNull, Not, Repository } from 'typeorm';
+import { IsNull, Not, Raw, Repository } from 'typeorm';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { MatchRepository } from '../../domain/MatchRepository';
 import { MatchResultEnum } from '@/shared/enums/matchEnum';
@@ -61,6 +61,89 @@ export class TypeOrmMatchRepository implements MatchRepository {
           homeScore: Not(IsNull()),
         },
       ],
+      order: {
+        matchDay: 'DESC',
+      },
+    });
+
+    return matches.map(this.mapEntityToDomain);
+  }
+
+  async getLastMatchesByTeam(
+    teamId: string,
+    limit?: number,
+  ): Promise<FulfilledMatch[]> {
+    const matches = await this.repository.find({
+      where: [
+        {
+          awayTeam: { id: teamId },
+          completed: true,
+          awayScore: Not(IsNull()),
+          homeScore: Not(IsNull()),
+          matchDay: Raw((alias) => `${alias} < NOW()`),
+        },
+        {
+          homeTeam: { id: teamId },
+          completed: true,
+          awayScore: Not(IsNull()),
+          homeScore: Not(IsNull()),
+          matchDay: Raw((alias) => `${alias} < NOW()`),
+        },
+      ],
+      relations: {
+        homeTeam: true,
+        awayTeam: true,
+      },
+      order: {
+        matchDay: 'DESC',
+      },
+      take: limit,
+    });
+
+    return matches.map(this.mapEntityToDomain);
+  }
+
+  async getNextMatchesByTeam(
+    teamId: string,
+    limit?: number,
+  ): Promise<FulfilledMatch[]> {
+    const matches = await this.repository.find({
+      where: [
+        {
+          awayTeam: { id: teamId },
+          matchDay: Raw((alias) => `${alias} > NOW()`),
+        },
+        {
+          homeTeam: { id: teamId },
+          matchDay: Raw((alias) => `${alias} > NOW()`),
+        },
+      ],
+      relations: {
+        homeTeam: true,
+        awayTeam: true,
+      },
+      order: {
+        matchDay: 'DESC',
+      },
+      take: limit,
+    });
+
+    return matches.map(this.mapEntityToDomain);
+  }
+
+  async getAllByTeamCalendar(teamId: string): Promise<FulfilledMatch[]> {
+    const matches = await this.repository.find({
+      where: [
+        {
+          awayTeam: { id: teamId },
+        },
+        {
+          homeTeam: { id: teamId },
+        },
+      ],
+      relations: {
+        competition: true,
+      },
       order: {
         matchDay: 'DESC',
       },

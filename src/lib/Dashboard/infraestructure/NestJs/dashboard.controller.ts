@@ -28,9 +28,28 @@ export class DashboardController {
     return lastPlayersAdded;
   }
 
-  @Get('last-matches')
-  async getLastMatches() {
-    return {};
+  @Get('last-matches/:id')
+  async getLastMatches(
+    @Param() params: { id: string },
+    @Query() query: { limit?: number },
+  ) {
+    const lastMatches = await this.dashboardGet.getLastMatches(
+      params.id,
+      query.limit,
+    );
+    return lastMatches;
+  }
+
+  @Get('next-matches/:id')
+  async getNextMatches(
+    @Param() params: { id: string },
+    @Query() query: { limit?: number },
+  ) {
+    const nextMatches = await this.dashboardGet.getNextMatches(
+      params.id,
+      query.limit,
+    );
+    return nextMatches;
   }
 
   @Get('top-scorers/:id')
@@ -48,8 +67,9 @@ export class DashboardController {
     return topAssists;
   }
 
-  @Get('calendar')
-  async getCalendar() {
-    return {};
+  @Get('calendar/:id')
+  async getCalendar(@Param() params: { id: string }) {
+    const allMatches = await this.dashboardGet.getCalendar(params.id);
+    return allMatches;
   }
 }
