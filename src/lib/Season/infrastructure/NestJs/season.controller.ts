@@ -16,6 +16,7 @@ import {
   SeasonCreatePayload,
   SeasonDeleteParams,
   SeasonParams,
+  SeasonTreeByTeamParams,
   SeasonUpdateParams,
   SeasonUpdatePayload,
 } from './Validations';
@@ -55,6 +56,16 @@ export class SeasonController {
   async findSeason(@Param() params: SeasonParams) {
     const { id } = params;
     return this.seasonGet.findSeason(id);
+  }
+
+  @Get(':id/tree')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Find season tree',
+  })
+  async getSeasonTree(@Param() params: SeasonTreeByTeamParams) {
+    const { id } = params;
+    return this.seasonGet.getSeasonTree(id);
   }
 
   @Get(':id/subscription')

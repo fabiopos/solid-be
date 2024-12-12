@@ -5,6 +5,11 @@ export class SeasonParams {
   id: string;
 }
 
+export class SeasonTreeByTeamParams {
+  @IsUUID('all', { each: true })
+  id: string;
+}
+
 export class SeasonUpdateParams {
   @IsUUID('all', { each: true })
   seasonId: string;

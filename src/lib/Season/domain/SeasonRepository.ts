@@ -10,4 +10,5 @@ export interface SeasonRepository {
     seasonToUpdate: PartialSeason,
   ): Promise<FulfilledSeason>;
   deleteSeason(seasonId: string): Promise<void>;
+  getSeasonTreeByTeam(teamId: string): Promise<FulfilledSeason[]>;
 }

@@ -22,7 +22,7 @@ export class PlayerCreate {
   async run(dto: CreatePlayerDto) {
     const emptyPlayer = await Effect.runPromise(this.makeEmptyPlayer(dto));
     const createdPlayer = await this.repository.create(emptyPlayer);
-    const positionsToAdd = emptyPlayer.playerPositions.map((p) =>
+    const positionsToAdd = (emptyPlayer.playerPositions ?? []).map((p) =>
       EmptyPlayerPosition.make({
         player: createdPlayer,
         fieldPosition: { id: p.fieldPosition.id },
@@ -259,7 +259,7 @@ export class PlayerCreate {
 
   mapFieldPositions = (emptyPlayer: EmptyPlayer) => {
     return pipe(
-      emptyPlayer.fieldPositions,
+      emptyPlayer.fieldPositions ?? [],
       this.fetchAllFieldPositions,
       Effect.matchEffect({
         onFailure: () => Effect.fail(new Error('Cannot map field positions')),

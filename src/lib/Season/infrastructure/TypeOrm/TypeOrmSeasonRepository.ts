@@ -30,6 +30,34 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
     return this.mapEntityToDomain(season);
   }
 
+  async getSeasonTreeByTeam(teamId: string): Promise<FulfilledSeason[]> {
+    const seasons = await this.repository.find({
+      where: [
+        {
+          team: { id: teamId },
+          competitions: {
+            matches: {
+              awayTeam: { id: teamId },
+            },
+          },
+        },
+        //or
+        {
+          team: { id: teamId },
+          competitions: {
+            matches: {
+              homeTeam: { id: teamId },
+            },
+          },
+        },
+      ],
+      relations: {
+        competitions: { matches: { homeTeam: true, awayTeam: true } },
+      },
+    });
+    return seasons.map(this.mapEntityToDomain);
+  }
+
   async getAllBySubscription(
     subscriptionId: string,
   ): Promise<FulfilledSeason[]> {
