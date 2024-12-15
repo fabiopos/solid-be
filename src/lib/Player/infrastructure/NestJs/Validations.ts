@@ -19,6 +19,12 @@ import {
   Max,
   Min,
 } from 'class-validator';
+
+export class PlayerDetailsParams {
+  @IsUUID()
+  pid: string;
+}
+
 export class PlayerGetAllParams {
   @IsUUID()
   teamId: string;

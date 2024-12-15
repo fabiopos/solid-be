@@ -22,6 +22,7 @@ import { FeatureT } from '@/lib/Feature/domain/FeatureSchema';
 import { encryptPassword } from '@/utils/encription';
 import { UserEncryptError } from '@/lib/User/domain/UserEncryptError';
 import { SubscriptionMapError } from '../../domain/SubscriptionMapError';
+import { Logger } from '@nestjs/common';
 
 export class SubscriptionCreate {
   constructor(
@@ -32,6 +33,8 @@ export class SubscriptionCreate {
     private subFeatureRepository: SubscriptionFeatureRepository,
     private featureRepository: FeatureRepository,
   ) {}
+
+  private readonly logger = new Logger(SubscriptionCreate.name);
 
   async run(dto: CreateSubscriptionDto): Promise<SubscriptionCreateResponse> {
     try {
@@ -65,7 +68,7 @@ export class SubscriptionCreate {
       case 'Failure':
         if (res.cause._tag === 'Fail') throw res.cause.error;
       default:
-        console.log(res);
+        this.logger.error(res);
         throw new Error('Unknown error validating subscription');
     }
   }

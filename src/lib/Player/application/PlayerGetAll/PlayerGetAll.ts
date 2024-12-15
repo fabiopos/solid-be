@@ -11,4 +11,8 @@ export class PlayerGetAll {
   async searchByName(teamId: string, name: string): Promise<FulfilledPlayer[]> {
     return this.repository.searchByName(teamId, name);
   }
+
+  async find(pid: string) {
+    return this.repository.getOneById(pid);
+  }
 }

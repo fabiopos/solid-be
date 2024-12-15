@@ -3,7 +3,7 @@ import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 import { TypeOrmSubscriptionEntity } from './TypeOrmSubscriptionEntity';
 import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Subscription } from '../../domain/Subscription';
-import { NotFoundException } from '@nestjs/common';
+import { Logger, NotFoundException } from '@nestjs/common';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import {
@@ -36,6 +36,8 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
     @InjectRepository(TypeOrmUserEntity)
     private readonly userRepository: Repository<TypeOrmUserEntity>,
   ) {}
+
+  private readonly logger = new Logger(TypeOrmSubscriptionRepository.name);
 
   async create(payload: EmptySubscription): Promise<FulfilledSubscription> {
     const queryRunner = this.dataSource.createQueryRunner();
@@ -85,7 +87,7 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
       });
     } catch (error) {
       await queryRunner.rollbackTransaction();
-      console.log('rollback subscription');
+      this.logger.error('rollback subscription', error);
 
       throw error;
     } finally {
@@ -152,7 +154,6 @@ export class TypeOrmSubscriptionRepository implements SubscriptionRepository {
       },
     });
 
-    console.log(subscription);
     return new FulfilledSubscription({
       ...subscription,
       planId: subscription?.plan?.id,

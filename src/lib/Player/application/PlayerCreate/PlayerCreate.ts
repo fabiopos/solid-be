@@ -8,6 +8,7 @@ import { EmptyPlayer, FulfilledPlayer } from '../../domain/PlayerSchema';
 import { Effect, pipe } from 'effect';
 import { PlayerPositionRepository } from '@/lib/PlayerPosition/domain/PlayerPositionRepository';
 import { EmptyPlayerPosition } from '@/lib/PlayerPosition/domain/PlayerPositionSchema';
+import { Logger } from '@nestjs/common';
 
 export class PlayerCreate {
   currentTeamPlayers: FulfilledPlayer[];
@@ -18,6 +19,8 @@ export class PlayerCreate {
     private fieldPositionRepository: FieldPositionRepository,
     private playerPositionRepository: PlayerPositionRepository,
   ) {}
+
+  private readonly logger = new Logger(PlayerCreate.name);
 
   async run(dto: CreatePlayerDto) {
     const emptyPlayer = await Effect.runPromise(this.makeEmptyPlayer(dto));
@@ -184,7 +187,7 @@ export class PlayerCreate {
             new PlayerInvalidError(`Cannot get shirt numbers of team`),
           ),
       }), // player | null or error
-      Effect.tap((a) => console.log(a)),
+      Effect.tap((a) => this.logger.log(a)),
       Effect.flatMap((player) =>
         !player
           ? Effect.succeed(dto)

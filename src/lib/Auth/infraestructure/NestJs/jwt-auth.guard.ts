@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -12,6 +13,8 @@ import { Token } from '../../domain/AuthLoginSchema';
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
   constructor(private jwtService: JwtService) {}
+
+  private readonly logger = new Logger(JwtAuthGuard.name);
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -28,7 +31,7 @@ export class JwtAuthGuard implements CanActivate {
       // so that we can access it in our route handlers
       request['user'] = payload;
     } catch (ex) {
-      console.log(ex);
+      this.logger.error(ex);
       throw new UnauthorizedException();
     }
     return true;

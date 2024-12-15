@@ -8,12 +8,15 @@ import {
   FulfilledPlayer,
   UpdatePlayerType,
 } from '../../domain/PlayerSchema';
+import { Logger } from '@nestjs/common';
 
 export class TypeOrmPlayerRepository implements PlayerRepository {
   constructor(
     @InjectRepository(TypeOrmPlayerEntity)
     private readonly repository: Repository<TypeOrmPlayerEntity>,
   ) {}
+
+  private readonly logger = new Logger(TypeOrmPlayerRepository.name);
 
   async create(player: EmptyPlayer): Promise<FulfilledPlayer> {
     const result = await this.repository.save({
@@ -58,7 +61,15 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   }
 
   async getOneById(id: string): Promise<FulfilledPlayer> {
-    const player = await this.repository.findOne({ where: { id } });
+    const player = await this.repository.findOne({
+      where: { id },
+      relations: {
+        team: true,
+        favPosition: true,
+        injuries: true,
+        matchAparitions: true,
+      },
+    });
     return this.mapToFulfilledPlayer(player);
   }
 
@@ -70,7 +81,10 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     player.lastName = payload.lastName;
     player.address = payload.address;
     player.arl = payload.arl;
-    player.avatarUrl = payload.avatarUrl;
+
+    if (player.avatarUrl) {
+      player.avatarUrl = payload.avatarUrl;
+    }
     player.city = payload.city;
     player.country = payload.country;
     player.dominantFoot = payload.dominantFoot;
@@ -84,9 +98,16 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     player.phone = payload.phone;
     player.bornDate = payload.bornDate;
 
+    let favPosition = undefined;
+
+    if (payload.favPositionId) {
+      favPosition = { id: payload.favPositionId };
+    }
+    this.logger.log(player);
+
     await this.repository.save({
       ...player,
-      favPosition: { id: payload.favPositionId },
+      favPosition,
     });
 
     return this.mapToFulfilledPlayer(player);
@@ -148,8 +169,8 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   mapToFulfilledPlayer(entity: TypeOrmPlayerEntity) {
     if (!entity) return null;
 
-    console.log('entity borndate', entity.bornDate);
     return FulfilledPlayer.make({
+      favPositionId: entity.favPosition?.id,
       ...entity,
     });
   }

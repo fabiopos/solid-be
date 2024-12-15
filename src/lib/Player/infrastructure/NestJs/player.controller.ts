@@ -15,6 +15,7 @@ import { PlayerGetAll } from '../../application/PlayerGetAll/PlayerGetAll';
 import { PlayerCreate } from '../../application/PlayerCreate/PlayerCreate';
 import {
   CreatePlayerPayload,
+  PlayerDetailsParams,
   PlayerFindParams,
   PlayerGetAllParams,
   PlayerQueryParams,
@@ -45,6 +46,14 @@ export class PlayerController {
   async getAll(@Param() params: PlayerGetAllParams) {
     const { teamId } = params;
     return this.playerGetAll.run(teamId);
+  }
+
+  @ApiParam({ name: 'playerId' })
+  @Get(':pid/details')
+  @UseGuards(JwtAuthGuard)
+  async getPlayerDetails(@Param() params: PlayerDetailsParams) {
+    const { pid } = params;
+    return this.playerGetAll.find(pid);
   }
 
   // /player/{teamId}/search?name=pedro
