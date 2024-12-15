@@ -5,6 +5,7 @@ import {
   Delete,
   Get,
   Inject,
+  Logger,
   Param,
   Patch,
   Post,
@@ -28,7 +29,7 @@ import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
 import { PartialPlayer } from '../../domain/PlayerSchema';
 import { ParseError } from '@effect/schema/ParseResult';
 import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
-import { isValid, toDate } from 'date-fns';
+import { toDate } from 'date-fns';
 
 @ApiTags('player')
 @Controller('player')
@@ -39,6 +40,8 @@ export class PlayerController {
     @Inject('PlayerDelete') private readonly playerDelete: PlayerDelete,
     @Inject('PlayerUpdate') private readonly playerUpdate: PlayerUpdate,
   ) {}
+
+  private readonly logger = new Logger(PlayerController.name);
 
   @ApiParam({ name: 'teamId' })
   @Get(':teamId')
@@ -90,13 +93,19 @@ export class PlayerController {
     try {
       const { id } = params;
 
+      const dated = payload.bornDate;
+
+      let birthDate: Date | undefined = undefined;
+      if (payload.bornDate) {
+        birthDate = toDate(payload.bornDate);
+      }
+      this.logger.log('patch player', 'update player', dated, birthDate);
+
       return this.playerUpdate.run(
         id,
         PartialPlayer.make({
           ...payload,
-          bornDate: isValid(payload.bornDate)
-            ? toDate(payload.bornDate)
-            : undefined,
+          bornDate: birthDate,
         }),
       );
     } catch (error) {

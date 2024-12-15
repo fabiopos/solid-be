@@ -12,7 +12,7 @@ import modules from './utils/typeorm.modules';
       url: process.env.DATABASE_URL,
       entities,
       synchronize: true,
-      logging: true,
+      logging: false,
     }),
     ...modules,
   ],

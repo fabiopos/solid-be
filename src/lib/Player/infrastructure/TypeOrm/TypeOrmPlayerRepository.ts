@@ -103,7 +103,7 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     if (payload.favPositionId) {
       favPosition = { id: payload.favPositionId };
     }
-    this.logger.log(player);
+    this.logger.log('updating player', player.id, player.bornDate);
 
     await this.repository.save({
       ...player,
