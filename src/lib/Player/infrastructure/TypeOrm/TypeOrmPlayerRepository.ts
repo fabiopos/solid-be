@@ -82,8 +82,9 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     player.address = payload.address;
     player.arl = payload.arl;
 
-    if (player.avatarUrl) {
+    if (payload.avatarUrl) {
       player.avatarUrl = payload.avatarUrl;
+      this.logger.log('edit repo', 'avatarUrl', payload.avatarUrl);
     }
     player.city = payload.city;
     player.country = payload.country;

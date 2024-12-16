@@ -98,9 +98,10 @@ export class PlayerController {
       let birthDate: Date | undefined = undefined;
       if (payload.bornDate) {
         birthDate = toDate(payload.bornDate);
+        this.logger.log('patch player', 'update player', dated, birthDate);
       }
-      this.logger.log('patch player', 'update player', dated, birthDate);
 
+      this.logger.log('patch player', 'avatar', payload.avatarUrl);
       return this.playerUpdate.run(
         id,
         PartialPlayer.make({

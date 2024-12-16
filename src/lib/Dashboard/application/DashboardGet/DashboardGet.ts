@@ -5,6 +5,7 @@ import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeO
 import { FulfilledMatch } from '@/lib/Match/domain/MatchSchema';
 import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
+import { Logger } from '@nestjs/common';
 
 export class DashboardGet {
   constructor(
@@ -15,11 +16,15 @@ export class DashboardGet {
     private readonly aparitionsRepository: TypeOrmMatchAparitionRepository,
   ) {}
 
+  private readonly logger = new Logger(DashboardGet.name);
+
   async getTeamStats(teamId: string): Promise<FulfilledTeamStats> {
     const seasons = await this.seasonRepository.getAll(teamId);
     const competitions = await this.competitionRepository.getAllByTeam(teamId);
     const matches = await this.matchRepository.getAllByTeam(teamId);
     const matchesSummary = this.getMatchesSummary(matches, teamId);
+
+    this.logger.log('TeamStats', '', matches.length);
     const machesWon = matchesSummary.filter((x) => x.isWon);
     const machesDrawn = matchesSummary.filter((x) => x.isDrawn);
     const machesLost = matchesSummary.filter((x) => x.isLost);
