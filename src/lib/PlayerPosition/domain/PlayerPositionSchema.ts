@@ -15,7 +15,7 @@ export const playerPositionSchema = S.Struct({
       'shirtName',
     ),
   ),
-  fieldPosition: S.optional(fieldPositionSchema.omit('createdAt')),
+  fieldPosition: S.optional(fieldPositionSchema.omit('createdAt', 'category')),
 });
 
 export type PlayerPositionType = S.Schema.Type<typeof playerPositionSchema>;

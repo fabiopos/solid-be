@@ -14,7 +14,9 @@ export class TypeOrmFieldPositionRepository implements FieldPositionRepository {
     await this.repository.save(fieldPosition);
   }
   async getAll(): Promise<FulfilledFieldPosition[]> {
-    const result = await this.repository.find({ order: { order: 'ASC' } });
+    const result = await this.repository.find({
+      order: { order: 'ASC' },
+    });
     return result.map((u) => this.mapToDomain(u));
   }
   async getOneById(id: string): Promise<FulfilledFieldPosition> {

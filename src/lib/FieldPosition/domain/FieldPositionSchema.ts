@@ -5,6 +5,7 @@ export const fieldPositionSchema = S.Struct({
   createdAt: S.optional(S.Date),
   name: S.optional(S.String),
   description: S.optional(S.NullishOr(S.String)),
+  category: S.optional(S.NullishOr(S.String)),
   order: S.optional(S.Number),
 });
 
