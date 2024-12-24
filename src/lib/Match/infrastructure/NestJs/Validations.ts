@@ -1,6 +1,7 @@
 import {
   IsBoolean,
   IsDateString,
+  IsNumber,
   IsOptional,
   IsString,
   IsUUID,
@@ -14,6 +15,11 @@ export class MatchIdParams {
 export class MatchCompetitionIdParams {
   @IsUUID()
   competitionId: string;
+}
+
+export class MatchTeamIdParams {
+  @IsUUID()
+  teamId: string;
 }
 export class MatchSeasonIdParams {
   @IsUUID()
@@ -87,4 +93,12 @@ export class MatchUpdatePayload {
   @IsOptional()
   @IsString()
   location: string;
+
+  @IsOptional()
+  @IsNumber()
+  homeScore: number;
+
+  @IsOptional()
+  @IsNumber()
+  awayScore: number;
 }

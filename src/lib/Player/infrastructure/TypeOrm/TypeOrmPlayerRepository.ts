@@ -18,6 +18,25 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
 
   private readonly logger = new Logger(TypeOrmPlayerRepository.name);
 
+  async updatePlayerPositions(pid: string, favPosition: string): Promise<void> {
+    const player = await this.repository.findOne({ where: { id: pid } });
+
+    if (!player) {
+      throw new Error('Player not found');
+    }
+
+    if (favPosition) {
+      this.logger.log('updating fav position', pid, favPosition);
+
+      await this.repository.save({
+        ...player,
+        favPosition: { id: favPosition },
+      });
+    }
+
+    return;
+  }
+
   async create(player: EmptyPlayer): Promise<FulfilledPlayer> {
     const result = await this.repository.save({
       ...player,
@@ -36,6 +55,7 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
         favPosition: true,
         playerPositions: { fieldPosition: true },
       },
+      order: { favPosition: { order: 'ASC' }, shirtNumber: 'ASC' },
     });
     const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
     return mappedPlayers;

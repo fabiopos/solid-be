@@ -61,6 +61,7 @@ export class TypeOrmMatchRepository implements MatchRepository {
           homeScore: Not(IsNull()),
         },
       ],
+      relations: { homeTeam: true, awayTeam: true },
       order: {
         matchDay: 'DESC',
       },
@@ -180,13 +181,47 @@ export class TypeOrmMatchRepository implements MatchRepository {
     matchId: string,
     emptyMatch: EmptyMatch,
   ): Promise<FulfilledMatch> {
-    await this.repository.update(matchId, {
-      completed: emptyMatch.completed,
-      location: emptyMatch.location,
-      title: emptyMatch.title,
-      matchDay: emptyMatch.matchDay,
-      matchHour: emptyMatch.matchHour,
-    });
+    if (emptyMatch.completed !== undefined) {
+      await this.repository.update(matchId, {
+        completed: emptyMatch.completed,
+      });
+    }
+
+    if (emptyMatch.location !== undefined) {
+      await this.repository.update(matchId, {
+        location: emptyMatch.location,
+      });
+    }
+
+    if (emptyMatch.matchDay !== undefined) {
+      await this.repository.update(matchId, {
+        matchDay: emptyMatch.matchDay,
+      });
+    }
+
+    if (emptyMatch.title !== undefined) {
+      await this.repository.update(matchId, {
+        title: emptyMatch.title,
+      });
+    }
+
+    if (emptyMatch.matchHour !== undefined) {
+      await this.repository.update(matchId, {
+        matchHour: emptyMatch.matchHour,
+      });
+    }
+
+    if (emptyMatch.awayScore !== undefined) {
+      await this.repository.update(matchId, {
+        awayScore: emptyMatch.awayScore,
+      });
+    }
+
+    if (emptyMatch.homeScore !== undefined) {
+      await this.repository.update(matchId, {
+        homeScore: emptyMatch.homeScore,
+      });
+    }
 
     if (emptyMatch.homeTeamId) {
       await this.repository.update(matchId, {

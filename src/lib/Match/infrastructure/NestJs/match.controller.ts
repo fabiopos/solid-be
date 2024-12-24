@@ -18,6 +18,7 @@ import {
   MatchCreatePayload,
   MatchIdParams,
   MatchSeasonIdParams,
+  MatchTeamIdParams,
   MatchUpdatePayload,
 } from './Validations';
 import { EmptyMatch } from '../../domain/MatchSchema';
@@ -55,6 +56,16 @@ export class MatchController {
   async getByCompetition(@Param() params: MatchCompetitionIdParams) {
     const { competitionId } = params;
     return this.matchGet.getAllByCompetitionId(competitionId);
+  }
+
+  @Get(':teamId/team')
+  @ApiOkResponse({
+    status: '2XX',
+    description: 'Get all matches by competition',
+  })
+  async getByTeam(@Param() params: MatchTeamIdParams) {
+    const { teamId } = params;
+    return this.matchGet.getAllByTeam(teamId);
   }
 
   @Get(':seasonId/season')
@@ -105,11 +116,13 @@ export class MatchController {
         competitionId: payload.competitionId,
         homeTeamId: payload.homeTeamId,
         location: payload.location,
-        matchDay: toDate(payload.matchDay),
-        matchHour: toDate(payload.matchHour),
+        matchDay: payload.matchDay ? toDate(payload.matchDay) : undefined,
+        matchHour: payload.matchHour ? toDate(payload.matchHour) : undefined,
         title: payload.title,
         wo: payload.wo,
         completed: payload.completed,
+        homeScore: payload.homeScore,
+        awayScore: payload.awayScore,
       }),
     );
   }

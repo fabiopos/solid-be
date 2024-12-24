@@ -250,3 +250,14 @@ export class UpdatePlayerPayload {
   // @IsArray()
   // fieldPositions: string[];
 }
+
+export class UpdatePlayerPositionsPayload {
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  favPositionId: string;
+
+  @ApiProperty()
+  @IsArray()
+  fieldPositions: string[];
+}

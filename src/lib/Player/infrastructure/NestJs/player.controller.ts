@@ -21,6 +21,7 @@ import {
   PlayerGetAllParams,
   PlayerQueryParams,
   UpdatePlayerPayload,
+  UpdatePlayerPositionsPayload,
 } from './Validations';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { isFiberFailure } from 'effect/Runtime';
@@ -80,6 +81,35 @@ export class PlayerController {
       return result;
     } catch (error) {
       if (isFiberFailure(error)) throw new BadRequestException(error.message);
+
+      throw error;
+    }
+  }
+
+  @Patch(':id/field-positions')
+  async updateFieldPositions(
+    @Param() params: PlayerFindParams,
+    @Body() payload: UpdatePlayerPositionsPayload,
+  ) {
+    try {
+      const { id } = params;
+
+      this.logger.log(
+        'patch player field positions',
+        payload.favPositionId,
+        payload.fieldPositions,
+      );
+
+      return this.playerUpdate.updatePlayerPositions(
+        id,
+        payload.favPositionId,
+        payload.fieldPositions,
+      );
+    } catch (error) {
+      // console.log(error._id === 'ParseError', error instanceof ParseError);
+      if (error instanceof ParseError) {
+        throw new BadRequestException(error.message);
+      }
 
       throw error;
     }

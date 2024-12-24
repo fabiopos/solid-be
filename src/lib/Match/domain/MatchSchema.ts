@@ -50,6 +50,8 @@ export class EmptyMatch extends S.TaggedClass<EmptyMatch>()('EmptyMatch', {
   wo: matchSchema.fields.wo,
   location: matchSchema.fields.location,
   completed: matchSchema.fields.completed,
+  homeScore: matchSchema.fields.homeScore,
+  awayScore: matchSchema.fields.awayScore,
 }) {}
 
 export class FulfilledMatch extends S.TaggedClass<FulfilledMatch>()(
