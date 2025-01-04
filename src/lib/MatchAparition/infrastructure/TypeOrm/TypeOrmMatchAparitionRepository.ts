@@ -2,6 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import {
   EmptyMatchAparition,
   FulfilledMatchAparition,
+  FulfilledScorer,
 } from '../../domain/matchAparition.schema';
 import { MatchAparitionRepository } from '../../domain/MatchAparitionRepository';
 import { TypeOrmMatchAparitionEntity } from './TypeOrmMatchAparitionEntity';
@@ -30,37 +31,33 @@ export class TypeOrmMatchAparitionRepository
     return aparitions.map(this.mapEntityToDomain);
   }
 
-  async getAllSortTopScorers(
-    teamId: string,
-  ): Promise<FulfilledMatchAparition[]> {
-    const aparitions = await this.repository
+  async getAllSortTopScorers(teamId: string): Promise<FulfilledScorer[]> {
+    const scorers = await this.repository
       .createQueryBuilder('ap')
       .leftJoinAndSelect('ap.player', 'pl')
       .leftJoinAndSelect('ap.match', 'ma')
       .leftJoinAndSelect('pl.team', 'te')
-      .where('ma.completed=true')
+      .select(['ap.playerId'])
+      .addSelect('SUM(ap.goals)', 'goals')
+      .groupBy('ap.playerId')
+      .addGroupBy('ap.goals')
+      .where(`goals > 0`)
       .where(`te.id='${teamId}'`)
-      .where(`ap.goals > 0`)
-      .groupBy('pl.id')
-      .addGroupBy('ap.id')
-      .addGroupBy('ma.id')
-      .addGroupBy('te.id')
-      .select([
-        'ap.id',
-        'pl.id',
-        'pl.shirtNumber',
-        'pl.shirtName',
-        'pl.favPositionId',
-        'pl.firstName',
-        'pl.lastName',
-        'pl.avatarUrl',
-        'ap.goals',
-      ])
-      .limit(10)
-      .orderBy('ap.goals', 'DESC')
-      .getMany();
+      .where('ma.completed=true')
+      .having('SUM(ap.goals) > 0')
+      .limit(5)
+      .orderBy('goals', 'DESC')
+      .getRawMany();
 
-    return aparitions.map(this.mapEntityToDomain);
+    return scorers.map((r) =>
+      FulfilledScorer.make({
+        goals: Number(r.goals),
+        id: r.playerId,
+        name: '',
+        avatarUrl: '',
+        shirtNumber: 0,
+      }),
+    );
   }
 
   async getAllSortTopAsists(

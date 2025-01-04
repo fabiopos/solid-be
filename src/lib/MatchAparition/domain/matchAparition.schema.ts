@@ -45,3 +45,14 @@ export class EmptyMatchAparition extends S.TaggedClass<EmptyMatchAparition>()(
     ...matchAparitionSchema.omit('id', 'player', 'match').fields,
   },
 ) {}
+
+export class FulfilledScorer extends S.TaggedClass<FulfilledScorer>()(
+  'FulfilledScorer',
+  {
+    id: S.String,
+    name: S.String,
+    goals: S.Number,
+    avatarUrl: S.String,
+    shirtNumber: S.optional(S.Number),
+  },
+) {}

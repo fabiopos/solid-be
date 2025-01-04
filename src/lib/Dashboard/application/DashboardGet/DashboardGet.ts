@@ -45,9 +45,22 @@ export class DashboardGet {
   }
 
   async getTopScorers(teamId: string) {
-    const aparitions =
+    const rawScorers =
       await this.aparitionsRepository.getAllSortTopScorers(teamId);
-    return aparitions;
+
+    const allPlayers = await this.playerRepository.getAllByTeam(teamId);
+    const mappedScorers = rawScorers.map((r) => {
+      const player = allPlayers.find((p) => p.id === r.id);
+      return {
+        id: r.id,
+        name: `${player?.firstName} ${player?.lastName}`,
+        goals: r.goals,
+        avatarUrl: player?.avatarUrl,
+        shirtNumber: player?.shirtNumber,
+      };
+    });
+
+    return mappedScorers;
   }
   async getTopAsists(teamId: string) {
     const aparitions =
