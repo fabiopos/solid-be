@@ -32,7 +32,7 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
     const competitions = await this.repository.find({
       relations: { matches: true, season: true },
       where: { season: { team: { id: teamId } } },
-      order: { startDate: 'ASC' },
+      order: { startDate: 'DESC', matches: { matchDay: 'DESC' } },
     });
 
     return competitions.map(this.mapEntityToDomain);
@@ -42,6 +42,7 @@ export class TypeOrmCompetitionRepository implements CompetitionRepository {
     const competition = await this.repository.findOne({
       where: { id: competitionId },
       relations: { matches: { awayTeam: true, homeTeam: true }, season: true },
+      order: { matches: { matchDay: 'DESC' } },
     });
 
     return this.mapEntityToDomain(competition);

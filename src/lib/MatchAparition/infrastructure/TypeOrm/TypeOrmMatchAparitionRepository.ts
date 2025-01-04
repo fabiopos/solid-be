@@ -40,7 +40,6 @@ export class TypeOrmMatchAparitionRepository
       .select(['ap.playerId'])
       .addSelect('SUM(ap.goals)', 'goals')
       .groupBy('ap.playerId')
-      .addGroupBy('ap.goals')
       .where(`goals > 0`)
       .where(`te.id='${teamId}'`)
       .where('ma.completed=true')
