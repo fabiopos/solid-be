@@ -61,7 +61,7 @@ export class TypeOrmMatchRepository implements MatchRepository {
           homeScore: Not(IsNull()),
         },
       ],
-      relations: { homeTeam: true, awayTeam: true },
+      relations: { homeTeam: true, awayTeam: true, competition: true },
       order: {
         matchDay: 'DESC',
       },

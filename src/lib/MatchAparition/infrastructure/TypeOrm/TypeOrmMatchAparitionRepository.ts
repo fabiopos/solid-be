@@ -17,7 +17,10 @@ export class TypeOrmMatchAparitionRepository
   ) {}
 
   async getAll(): Promise<FulfilledMatchAparition[]> {
-    const aparitions = await this.repository.find();
+    const aparitions = await this.repository.find({
+      relations: { player: true, match: true },
+      order: { player: { firstName: 'ASC' } },
+    });
     return aparitions.map(this.mapEntityToDomain);
   }
 
@@ -26,7 +29,8 @@ export class TypeOrmMatchAparitionRepository
       where: {
         player: { team: { id: teamId } },
       },
-      relations: { match: true },
+      order: { player: { firstName: 'ASC' } },
+      relations: { match: true, player: true },
     });
     return aparitions.map(this.mapEntityToDomain);
   }
@@ -53,6 +57,7 @@ export class TypeOrmMatchAparitionRepository
         goals: Number(r.goals),
         id: r.playerId,
         name: '',
+        shirtName: '',
         avatarUrl: '',
         shirtNumber: 0,
       }),

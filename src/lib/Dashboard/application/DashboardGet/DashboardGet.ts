@@ -54,6 +54,7 @@ export class DashboardGet {
       return {
         id: r.id,
         name: `${player?.firstName} ${player?.lastName}`,
+        shirtName: player.shirtName,
         goals: r.goals,
         avatarUrl: player?.avatarUrl,
         shirtNumber: player?.shirtNumber,

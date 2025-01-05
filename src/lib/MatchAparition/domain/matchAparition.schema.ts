@@ -51,6 +51,7 @@ export class FulfilledScorer extends S.TaggedClass<FulfilledScorer>()(
   {
     id: S.String,
     name: S.String,
+    shirtName: S.String,
     goals: S.Number,
     avatarUrl: S.String,
     shirtNumber: S.optional(S.Number),
