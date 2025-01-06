@@ -4,6 +4,11 @@ export interface PlayerRepository {
   create(player: EmptyPlayer): Promise<FulfilledPlayer>;
   getAll(teamId: string): Promise<FulfilledPlayer[]>;
   getAllByTeam(teamId: string, limit?: number): Promise<FulfilledPlayer[]>;
+  getAllByTeamWithFilters(
+    teamId: string,
+    limit?: number,
+    active?: boolean,
+  ): Promise<FulfilledPlayer[]>;
   getOneById(id: string): Promise<FulfilledPlayer>;
   edit(id: string, player: UpdatePlayerType): Promise<FulfilledPlayer>;
   delete(id: string): Promise<void>;

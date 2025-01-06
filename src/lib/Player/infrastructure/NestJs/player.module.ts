@@ -20,6 +20,8 @@ import { TypeOrmPlayerPositionRepository } from '@/lib/PlayerPosition/infrastruc
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
 import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
+import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchRepository';
+import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
     TypeOrmModule.forFeature([TypeOrmPlanEntity]),
     TypeOrmModule.forFeature([TypeOrmUserEntity]),
     TypeOrmModule.forFeature([TypeOrmPlayerPositionEntity]),
+    TypeOrmModule.forFeature([TypeOrmMatchEntity]),
   ],
   controllers: [PlayerController],
   providers: [
@@ -62,10 +65,16 @@ import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
       useClass: TypeOrmPlayerPositionRepository,
     },
     {
+      provide: 'MatchRepository',
+      useClass: TypeOrmMatchRepository,
+    },
+    {
       provide: 'PlayerGetAll',
-      useFactory: (repository: TypeOrmPlayerRepository) =>
-        new PlayerGetAll(repository),
-      inject: ['PlayerRepository'],
+      useFactory: (
+        repository: TypeOrmPlayerRepository,
+        matchRepo: TypeOrmMatchRepository,
+      ) => new PlayerGetAll(repository, matchRepo),
+      inject: ['PlayerRepository', 'MatchRepository'],
     },
     {
       provide: 'PlayerCreate',

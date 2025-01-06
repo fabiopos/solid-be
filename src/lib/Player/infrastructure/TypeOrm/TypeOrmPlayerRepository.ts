@@ -80,6 +80,26 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
     return mappedPlayers;
   }
 
+  async getAllByTeamWithFilters(
+    teamId: string,
+    limit?: number,
+    active?: boolean,
+  ): Promise<FulfilledPlayer[]> {
+    const allPlayers = await this.repository.find({
+      where: { team: { id: teamId }, active },
+      relations: {
+        team: true,
+        favPosition: true,
+        playerPositions: { fieldPosition: true },
+        matchAparitions: true,
+      },
+      order: { shirtName: 'ASC' },
+      take: limit,
+    });
+    const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
+    return mappedPlayers;
+  }
+
   async getOneById(id: string): Promise<FulfilledPlayer> {
     const player = await this.repository.findOne({
       where: { id },
@@ -87,7 +107,12 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
         team: true,
         favPosition: true,
         injuries: true,
-        matchAparitions: true,
+        matchAparitions: {
+          match: { competition: true, homeTeam: true, awayTeam: true },
+        },
+      },
+      order: {
+        matchAparitions: { match: { matchDay: 'DESC' } },
       },
     });
     return this.mapToFulfilledPlayer(player);
@@ -192,6 +217,7 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
 
     return FulfilledPlayer.make({
       favPositionId: entity.favPosition?.id,
+      matchAparitions: entity.matchAparitions,
       ...entity,
     });
   }

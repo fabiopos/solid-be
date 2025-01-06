@@ -52,6 +52,14 @@ export class PlayerController {
     return this.playerGetAll.run(teamId);
   }
 
+  @ApiParam({ name: 'teamId' })
+  @Get(':teamId/with-stats')
+  //@UseGuards(JwtAuthGuard)
+  async getAllWithStats(@Param() params: PlayerGetAllParams) {
+    const { teamId } = params;
+    return this.playerGetAll.getAllWithStats(teamId);
+  }
+
   @ApiParam({ name: 'playerId' })
   @Get(':pid/details')
   @UseGuards(JwtAuthGuard)

@@ -11,6 +11,16 @@ import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryE
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
+const teamStruct = S.Struct({
+  id: S.optional(S.String),
+  name: S.optional(S.String),
+});
+
+const competitionStruct = S.Struct({
+  id: S.optional(S.String),
+  name: S.optional(S.String),
+});
+
 export const playerSchema = S.Struct({
   id: S.optional(S.String),
   teamId: S.optional(S.String),
@@ -82,11 +92,43 @@ export const playerSchema = S.Struct({
       }),
     ),
   ),
-  team: S.optional(
-    S.Struct({
-      id: S.optional(S.String),
-      name: S.optional(S.String),
-    }),
+  team: S.optional(teamStruct),
+  matchAparitions: S.optional(
+    S.Array(
+      S.Struct({
+        id: S.optional(S.NullishOr(S.String)),
+        minutes: S.optional(S.NullishOr(S.Number)),
+        goals: S.optional(S.NullishOr(S.Number)),
+        assists: S.optional(S.NullishOr(S.Number)),
+        yellowCards: S.optional(S.NullishOr(S.Number)),
+        redCards: S.optional(S.NullishOr(S.Number)),
+        injury: S.optional(S.NullishOr(S.Boolean)),
+        manOfTheMatch: S.optional(S.NullishOr(S.Boolean)),
+        rating: S.optional(S.NullishOr(S.Number)),
+        played: S.optional(S.NullishOr(S.Boolean)),
+        confirmed: S.optional(S.NullishOr(S.Boolean)),
+        match: S.optional(
+          S.Struct({
+            id: S.optional(S.String),
+            homeTeamId: S.optional(S.String),
+            awayTeamId: S.optional(S.String),
+            competitionId: S.optional(S.String),
+            createdAt: S.optional(S.Date),
+            title: S.optional(S.String),
+            homeTeam: S.optional(S.NullishOr(teamStruct)),
+            awayTeam: S.optional(S.NullishOr(teamStruct)),
+            awayScore: S.optional(S.NullishOr(S.Number)),
+            homeScore: S.optional(S.NullishOr(S.Number)),
+            matchDay: S.optional(S.NullishOr(S.Date)),
+            matchHour: S.optional(S.NullishOr(S.Date)),
+            wo: S.optional(S.Boolean),
+            location: S.optional(S.NullishOr(S.String)),
+            completed: S.optional(S.Boolean),
+            competition: S.optional(competitionStruct),
+          }),
+        ),
+      }),
+    ),
   ),
 });
 
@@ -157,6 +199,22 @@ export class PartialPlayer extends S.TaggedClass<PartialPlayer>()(
   },
 ) {}
 
-export const decodePartialPlayer = S.decodeUnknownEither(PartialPlayer, {
-  errors: 'all',
-});
+// export const decodePartialPlayer = S.decodeUnknownEither(PartialPlayer, {
+//   errors: 'all',
+// });
+
+export class FulfilledPlayerWithStats extends S.TaggedClass<FulfilledPlayerWithStats>()(
+  'FulfilledPlayerWithStats',
+  {
+    ...playerSchema.fields,
+    totalTeamMatches: S.Number,
+    playedMatches: S.Number,
+    goalsCount: S.Number,
+    minutesPlayed: S.Number,
+    assists: S.Number,
+    playedMatchesPerc: S.Number,
+    goalsAvg: S.Number,
+    assistsAvg: S.Number,
+    minutesPerc: S.Number,
+  },
+) {}
