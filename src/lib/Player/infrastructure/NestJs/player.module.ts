@@ -22,6 +22,7 @@ import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
 import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
 import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchRepository';
 import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMa
     TypeOrmModule.forFeature([TypeOrmUserEntity]),
     TypeOrmModule.forFeature([TypeOrmPlayerPositionEntity]),
     TypeOrmModule.forFeature([TypeOrmMatchEntity]),
+    TypeOrmModule.forFeature([TypeOrmMatchAparitionEntity]),
   ],
   controllers: [PlayerController],
   providers: [

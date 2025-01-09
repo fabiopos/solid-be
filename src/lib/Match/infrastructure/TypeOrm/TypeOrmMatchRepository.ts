@@ -5,6 +5,7 @@ import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeam
 import { MatchRepository } from '../../domain/MatchRepository';
 import { MatchResultEnum } from '@/shared/enums/matchEnum';
 import { EmptyMatch, FulfilledMatch } from '../../domain/MatchSchema';
+import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 export class TypeOrmMatchRepository implements MatchRepository {
   constructor(
@@ -13,6 +14,9 @@ export class TypeOrmMatchRepository implements MatchRepository {
 
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
+
+    @InjectRepository(TypeOrmMatchAparitionEntity)
+    private readonly matchAparitionRepository: Repository<TypeOrmMatchAparitionEntity>,
   ) {}
   async getAllBySeason(seasonId: string): Promise<FulfilledMatch[]> {
     const matches = await this.repository.find({
@@ -242,6 +246,10 @@ export class TypeOrmMatchRepository implements MatchRepository {
 
   async deleteMatch(matchId: string): Promise<void> {
     const match = await this.repository.findOne({ where: { id: matchId } });
+    const aparitions = await this.matchAparitionRepository.find({
+      where: { match: { id: matchId } },
+    });
+    await this.matchAparitionRepository.remove(aparitions);
     await this.repository.remove(match);
   }
 

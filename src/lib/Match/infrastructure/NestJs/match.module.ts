@@ -18,6 +18,8 @@ import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUser
 import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeO
     TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
     TypeOrmModule.forFeature([TypeOrmSubscriptionFeatureEntity]),
     TypeOrmModule.forFeature([TypeOrmFeatureEntity]),
+    TypeOrmModule.forFeature([TypeOrmMatchAparitionEntity]),
   ],
   controllers: [MatchController],
   providers: [
@@ -41,7 +44,10 @@ import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeO
       provide: 'MatchRepository',
       useClass: TypeOrmMatchRepository,
     },
-
+    {
+      provide: 'MatchAparitionRepository',
+      useClass: TypeOrmMatchAparitionRepository,
+    },
     {
       provide: 'TeamRepository',
       useClass: TypeOrmTeamRepository,
@@ -66,7 +72,7 @@ import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeO
       provide: 'MatchDelete',
       useFactory: (repository: TypeOrmMatchRepository) =>
         new MatchDelete(repository),
-      inject: ['MatchRepository'],
+      inject: ['MatchRepository', 'MatchAparitionRepository'],
     },
     {
       provide: 'MatchCreate',
