@@ -47,7 +47,9 @@ export const playerSchema = S.Struct({
   shirtName: S.optional(S.String),
   shirtNumber: S.optional(
     S.Int.pipe(
-      S.between(1, 99, { message: () => `Shirt number should be between` }),
+      S.between(1, 99, {
+        message: () => `Shirt number should be between 1-99`,
+      }),
     ),
   ),
   dominantFoot: S.optional(S.Enums(DominantFoot)),
@@ -176,15 +178,20 @@ export const updatePlayerSchema = playerSchema.pick(
 export type UpdatePlayerType = S.Schema.Type<typeof updatePlayerSchema>;
 
 export class EmptyPlayer extends S.TaggedClass<EmptyPlayer>()('EmptyPlayer', {
-  teamId: playerSchema.fields.teamId,
-  firstName: playerSchema.fields.firstName,
-  lastName: playerSchema.fields.lastName,
-  documentNumber: playerSchema.fields.documentNumber,
+  teamId: S.NonEmptyString,
+  firstName: S.NonEmptyString,
+  lastName: S.NonEmptyString,
+  documentNumber: S.NonEmptyString,
   documentType: playerSchema.fields.documentType,
-  email: playerSchema.fields.email,
+  email: S.NonEmptyString.pipe(
+    S.pattern(emailRegex, { message: () => 'Email is invalid' }),
+  ).annotations({
+    arbitrary: () => (fc) =>
+      fc.constant(null).map(() => faker.internet.email()),
+  }),
   shirtSize: playerSchema.fields.shirtSize,
-  shirtNumber: playerSchema.fields.shirtNumber,
-  shirtName: playerSchema.fields.shirtName,
+  shirtNumber: S.Int.pipe(S.between(1, 99)),
+  shirtName: S.NonEmptyString,
   dominantFoot: playerSchema.fields.dominantFoot,
   favPositionId: playerSchema.fields.favPositionId,
   favPosition: playerSchema.fields.favPosition,
