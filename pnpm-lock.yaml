@@ -64,6 +64,9 @@ dependencies:
     version: 0.3.20(pg@8.12.0)(ts-node@10.9.2)
 
 devDependencies:
+  '@faker-js/faker':
+    specifier: ^9.3.0
+    version: 9.3.0
   '@nestjs/cli':
     specifier: ^10.0.0
     version: 10.4.5
@@ -581,6 +584,11 @@ packages:
   /@eslint/js@8.57.0:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    dev: true
+
+  /@faker-js/faker@9.3.0:
+    resolution: {integrity: sha512-r0tJ3ZOkMd9xsu3VRfqlFR6cz0V/jFYRswAIpC+m/DIfAUXq7g8N7wTAlhSANySXYGKzGryfDXwtwsY8TxEIDw==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
     dev: true
 
   /@humanwhocodes/config-array@0.11.14:

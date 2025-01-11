@@ -8,6 +8,7 @@ import {
 } from '@/shared/enums/playerEnums';
 import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
 import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
+import { faker } from '@faker-js/faker';
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const urlRegex =
@@ -35,12 +36,17 @@ export const playerSchema = S.Struct({
   active: S.optional(S.Boolean),
   status: S.optional(S.Enums(PlayerStatus)),
   email: S.optional(
-    S.String.pipe(S.pattern(emailRegex, { message: () => 'Email is invalid' })),
+    S.String.pipe(
+      S.pattern(emailRegex, { message: () => 'Email is invalid' }),
+    ).annotations({
+      arbitrary: () => (fc) =>
+        fc.constant(null).map(() => faker.internet.email()),
+    }),
   ),
   shirtSize: S.optional(S.Enums(ShirtSize)),
   shirtName: S.optional(S.String),
   shirtNumber: S.optional(
-    S.Number.pipe(
+    S.Int.pipe(
       S.between(1, 99, { message: () => `Shirt number should be between` }),
     ),
   ),
@@ -63,7 +69,10 @@ export const playerSchema = S.Struct({
     S.NullishOr(
       S.String.pipe(
         S.pattern(urlRegex, { message: () => 'Avatar url is invalid' }),
-      ),
+      ).annotations({
+        arbitrary: () => (fc) =>
+          fc.constant(null).map(() => faker.internet.url()),
+      }),
     ),
   ),
   phone: S.optional(S.NullishOr(S.String)),
@@ -73,7 +82,7 @@ export const playerSchema = S.Struct({
   arl: S.optional(S.NullishOr(S.String)),
   weight: S.optional(
     S.NullishOr(
-      S.Number.pipe(
+      S.Int.pipe(
         S.between(35, 200, {
           message: () => `Not supported weight to create a player`,
         }),
@@ -82,11 +91,13 @@ export const playerSchema = S.Struct({
   ),
   height: S.optional(
     S.NullishOr(
-      S.Number.pipe(
+      S.Int.pipe(
         S.between(140, 210, {
           message: () => `Not supported height to create a player`,
         }),
-      ),
+      ).annotations({
+        arbitrary: () => (fc) => fc.constantFrom(140, 150, 160),
+      }),
     ),
   ),
   playerPositions: S.optional(
@@ -103,14 +114,14 @@ export const playerSchema = S.Struct({
     S.Array(
       S.Struct({
         id: S.optional(S.NullishOr(S.String)),
-        minutes: S.optional(S.NullishOr(S.Number)),
-        goals: S.optional(S.NullishOr(S.Number)),
-        assists: S.optional(S.NullishOr(S.Number)),
-        yellowCards: S.optional(S.NullishOr(S.Number)),
-        redCards: S.optional(S.NullishOr(S.Number)),
+        minutes: S.optional(S.NullishOr(S.Int)),
+        goals: S.optional(S.NullishOr(S.Int)),
+        assists: S.optional(S.NullishOr(S.Int)),
+        yellowCards: S.optional(S.NullishOr(S.Int)),
+        redCards: S.optional(S.NullishOr(S.Int)),
         injury: S.optional(S.NullishOr(S.Boolean)),
         manOfTheMatch: S.optional(S.NullishOr(S.Boolean)),
-        rating: S.optional(S.NullishOr(S.Number)),
+        rating: S.optional(S.NullishOr(S.Int)),
         played: S.optional(S.NullishOr(S.Boolean)),
         confirmed: S.optional(S.NullishOr(S.Boolean)),
         match: S.optional(
@@ -123,8 +134,8 @@ export const playerSchema = S.Struct({
             title: S.optional(S.String),
             homeTeam: S.optional(S.NullishOr(teamStruct)),
             awayTeam: S.optional(S.NullishOr(teamStruct)),
-            awayScore: S.optional(S.NullishOr(S.Number)),
-            homeScore: S.optional(S.NullishOr(S.Number)),
+            awayScore: S.optional(S.NullishOr(S.Int)),
+            homeScore: S.optional(S.NullishOr(S.Int)),
             matchDay: S.optional(S.NullishOr(S.Date)),
             matchHour: S.optional(S.NullishOr(S.Date)),
             wo: S.optional(S.Boolean),
