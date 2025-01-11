@@ -16,6 +16,7 @@ import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/
 import { SubscriptionFeatureRepositoryMock } from '@/mocks/SubscriptionFeatureRepository';
 import { FeatureRepository } from '@/lib/Feature/domain/FeatureRepository';
 import { FeatureRepositoryMock } from '@/mocks/FeatureRepository';
+import { RoleEnum } from '@/shared/enums/roleEnum';
 
 describe('SubscriptionCreate tests', () => {
   let subscriptionRepository: SubscriptionRepository;
@@ -63,7 +64,7 @@ describe('SubscriptionCreate tests', () => {
         password: '123456',
         firstName: 'Jonh',
         lastName: 'Doe',
-        roleId: '',
+        roleId: RoleEnum.USER,
         documentNumber: '',
         documentType: DocumentType.CC,
         policy: true,

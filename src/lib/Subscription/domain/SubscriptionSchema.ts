@@ -72,8 +72,8 @@ export class EmptySubscription extends S.TaggedClass<EmptySubscription>()(
   }
 
   get endDate(): Date {
-    if (this.plan) {
-      console.log(this.plan.interval, this.plan.intervalCount);
+    if (!this.plan) {
+      console.log('No plan');
     }
     return add(new Date(), { [this.plan.interval]: this.plan.intervalCount });
   }

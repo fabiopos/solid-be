@@ -10,6 +10,8 @@ import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSch
 import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+const urlRegex =
+  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/;
 
 const teamStruct = S.Struct({
   id: S.optional(S.String),
@@ -33,9 +35,7 @@ export const playerSchema = S.Struct({
   active: S.optional(S.Boolean),
   status: S.optional(S.Enums(PlayerStatus)),
   email: S.optional(
-    S.String.pipe(
-      S.pattern(emailRegex, { message: () => 'Player email is invalid' }),
-    ),
+    S.String.pipe(S.pattern(emailRegex, { message: () => 'Email is invalid' })),
   ),
   shirtSize: S.optional(S.Enums(ShirtSize)),
   shirtName: S.optional(S.String),
@@ -59,7 +59,13 @@ export const playerSchema = S.Struct({
     ),
   ),
   address: S.optional(S.NullishOr(S.String)),
-  avatarUrl: S.optional(S.NullishOr(S.String)),
+  avatarUrl: S.optional(
+    S.NullishOr(
+      S.String.pipe(
+        S.pattern(urlRegex, { message: () => 'Avatar url is invalid' }),
+      ),
+    ),
+  ),
   phone: S.optional(S.NullishOr(S.String)),
   city: S.optional(S.NullishOr(S.String)),
   country: S.optional(S.NullishOr(S.String)),
