@@ -123,7 +123,7 @@ export const playerSchema = S.Struct({
         redCards: S.optional(S.NullishOr(S.Int)),
         injury: S.optional(S.NullishOr(S.Boolean)),
         manOfTheMatch: S.optional(S.NullishOr(S.Boolean)),
-        rating: S.optional(S.NullishOr(S.Int)),
+        rating: S.optional(S.NullishOr(S.Number)),
         played: S.optional(S.NullishOr(S.Boolean)),
         confirmed: S.optional(S.NullishOr(S.Boolean)),
         match: S.optional(
