@@ -12,12 +12,12 @@ import {
   PlayerStatus,
   ShirtSize,
 } from '../../../../shared/enums/player.enum';
-import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
-import { TypeOrmPlayerPositionEntity } from '@/lib/player-position/infrastructure/type-orm/TypeOrmPlayerPositionEntity';
-import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/type-orm/type-orm-player-injury.entity';
-import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
-import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
+import { PersonAbstract } from '../../../..//shared/abstracts/PersonAbstract';
+import { TypeOrmPlayerPositionEntity } from '../../../..//lib/player-position/infrastructure/type-orm/TypeOrmPlayerPositionEntity';
+import { TypeOrmPlayerInjuryEntity } from '../../../..//lib/PlayerInjury/infrastructure/type-orm/type-orm-player-injury.entity';
+import { TypeOrmTeamEntity } from '../../../..//lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmFieldPositionEntity } from '../../../..//lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmMatchAparitionEntity } from '../../../..//lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
 
 @Entity('player')
 export class TypeOrmPlayerEntity extends PersonAbstract {
