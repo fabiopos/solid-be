@@ -1,4 +1,4 @@
-import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonRepository';
+import { TypeOrmSeasonRepository } from '@/lib/season/infrastructure/type-orm/type-orm-season.repository';
 import { FulfilledTeamStats } from '../../domain/team-stats.schema';
 import { TypeOrmCompetitionRepository } from '@/lib/competition/infrastructure/type-orm/type-orm-competition.repository';
 import { TypeOrmMatchRepository } from '@/lib/match/infrastructure/type-orm/type-orm-match.repository';

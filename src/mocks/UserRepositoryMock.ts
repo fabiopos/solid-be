@@ -1,5 +1,5 @@
-import { User } from '@/lib/User/domain/User';
-import { UserRepository } from '@/lib/User/domain/UserRepository';
+import { User } from '@/lib/user/domain/User';
+import { UserRepository } from '@/lib/user/domain/UserRepository';
 import { DocumentType } from '@/shared/enums/player.enum';
 import { RoleEnum } from '@/shared/enums/role.enum';
 

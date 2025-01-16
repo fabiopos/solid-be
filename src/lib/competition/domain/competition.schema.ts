@@ -1,5 +1,5 @@
 import { matchSchema } from '@/lib/match/domain/match.schema';
-import { seasonSchema } from '@/lib/Season/domain/SeasonSchema';
+import { seasonSchema } from '@/lib/season/domain/season.schema';
 import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import { Schema as S } from '@effect/schema';
 

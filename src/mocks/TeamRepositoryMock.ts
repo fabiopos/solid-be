@@ -1,6 +1,6 @@
-import { Team } from '@/lib/Team/domain/Team';
-import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
-import { FulfilledTeam } from '@/lib/Team/domain/TeamSchema';
+import { Team } from '@/lib/team/domain/Team';
+import { TeamRepository } from '@/lib/team/domain/TeamRepository';
+import { FulfilledTeam } from '@/lib/team/domain/TeamSchema';
 
 export class TeamRepositoryMock implements TeamRepository {
   getOneByName(name: string): Promise<FulfilledTeam> {

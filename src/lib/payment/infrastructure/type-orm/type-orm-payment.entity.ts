@@ -5,7 +5,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TypeOrmSubscriptionEntity } from '../../../Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
+import { TypeOrmSubscriptionEntity } from '../../../subscription/infrastructure/type-orm/type-orm-subscription.entity';
 
 @Entity('payment')
 export class TypeOrmPaymentEntity {

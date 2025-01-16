@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { TypeOrmPlayerPositionEntity } from '../../../player-position/infrastructure/type-orm/TypeOrmPlayerPositionEntity';
+import { TypeOrmPlayerPositionEntity } from '../../../player-position/infrastructure/type-orm/type-orm-player-position.entity';
 import { FieldPositionCategoryEnum } from '@/shared/enums/fieldpositioncategory.enum';
 
 @Entity('field_position')

@@ -6,8 +6,8 @@ import {
 } from '../../domain/competition.schema';
 import { TypeOrmCompetitionEntity } from './type-orm-competition.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
-import { FulfilledSeason } from '@/lib/Season/domain/SeasonSchema';
+import { TypeOrmSeasonEntity } from '@/lib/season/infrastructure/type-orm/type-orm-season.entity';
+import { FulfilledSeason } from '@/lib/season/domain/season.schema';
 import { toDate } from 'date-fns';
 
 export class TypeOrmCompetitionRepository implements CompetitionRepository {

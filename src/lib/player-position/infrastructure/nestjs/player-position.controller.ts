@@ -2,7 +2,7 @@ import { Body, Controller, Get, Inject, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PlayerPositionGet } from '../../application/player-position.get';
 import { PlayerPositionCreate } from '../../application/player-position.create';
-import { PlayerPositionUpsertPayload } from './Validations';
+import { PlayerPositionUpsertPayload } from './validations';
 
 @ApiTags('player-position')
 @Controller('player-position')

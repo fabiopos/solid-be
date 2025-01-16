@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { PlayerPositionController } from './player-position.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmPlayerPositionEntity } from '../type-orm/TypeOrmPlayerPositionEntity';
+import { TypeOrmPlayerPositionEntity } from '../type-orm/type-orm-player-position.entity';
 import { PlayerPositionGet } from '../../application/player-position.get';
-import { TypeOrmPlayerPositionRepository } from '../type-orm/TypeOrmPlayerPositionRepository';
+import { TypeOrmPlayerPositionRepository } from '../type-orm/type-orm-player-position.repository';
 import { PlayerPositionCreate } from '../../application/player-position.create';
 import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';

@@ -13,9 +13,9 @@ import {
   ShirtSize,
 } from '../../../../shared/enums/player.enum';
 import { PersonAbstract } from '../../../../shared/abstracts/person-abstract';
-import { TypeOrmPlayerPositionEntity } from '../../../..//lib/player-position/infrastructure/type-orm/TypeOrmPlayerPositionEntity';
-import { TypeOrmPlayerInjuryEntity } from '../../../..//lib/PlayerInjury/infrastructure/type-orm/type-orm-player-injury.entity';
-import { TypeOrmTeamEntity } from '../../../..//lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmPlayerPositionEntity } from '../../../player-position/infrastructure/type-orm/type-orm-player-position.entity';
+import { TypeOrmPlayerInjuryEntity } from '../../../player-injury/infrastructure/type-orm/type-orm-player-injury.entity';
+import { TypeOrmTeamEntity } from '../../../team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmFieldPositionEntity } from '../../../..//lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
 import { TypeOrmMatchAparitionEntity } from '../../../..//lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
 

@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { TypeOrmMatchEntity } from './type-orm-match.entity';
 import { IsNull, Not, Raw, Repository } from 'typeorm';
-import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { MatchRepository } from '../../domain/match.repository';
 import { MatchResultEnum } from '@/shared/enums/match.enum';
 import { EmptyMatch, FulfilledMatch } from '../../domain/match.schema';

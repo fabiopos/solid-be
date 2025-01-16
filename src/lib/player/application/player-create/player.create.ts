@@ -1,7 +1,7 @@
 import { CreatePlayerDto } from '@/shared/dto/create-player.dto';
 import { PlayerRepository } from '../../domain/player.repository';
-import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
-import { SubscriptionRepository } from '@/lib/Subscription/domain/SubscriptionRepository';
+import { TeamRepository } from '@/lib/team/domain/TeamRepository';
+import { SubscriptionRepository } from '@/lib/subscription/domain/subscription.repository';
 import { PlayerInvalidError } from '../../domain/player-invalid-error';
 import { FieldPositionRepository } from '@/lib/field-position/domain/field-position.repository';
 import { EmptyPlayer, FulfilledPlayer } from '../../domain/player.schema';

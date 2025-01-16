@@ -1,8 +1,8 @@
-import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureRepository';
+import { SubscriptionFeatureRepository } from '@/lib/subscription-feature/domain/subscription-feature-repository';
 import {
   SubscriptionFeatureCreateType,
   SubscriptionFeatureType,
-} from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
+} from '@/lib/subscription-feature/domain/subscription-feature.schema';
 
 export class SubscriptionFeatureRepositoryMock
   implements SubscriptionFeatureRepository
