@@ -1,4 +1,4 @@
-import { DocumentType } from '@/shared/enums/playerEnums';
+import { DocumentType } from '@/shared/enums/player.enum';
 import {
   IsBoolean,
   IsEmail,

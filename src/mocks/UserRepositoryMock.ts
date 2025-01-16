@@ -1,7 +1,7 @@
 import { User } from '@/lib/User/domain/User';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
-import { DocumentType } from '@/shared/enums/playerEnums';
-import { RoleEnum } from '@/shared/enums/roleEnum';
+import { DocumentType } from '@/shared/enums/player.enum';
+import { RoleEnum } from '@/shared/enums/role.enum';
 
 export class UserRepositoryMock implements UserRepository {
   async create(payload: any) {

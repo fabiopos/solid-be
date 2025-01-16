@@ -3,7 +3,7 @@ import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 import { SubscriptionCreate } from './SubscriptionCreate';
 import { PlanRepository } from '@/lib/Plan/domain/PlanRepository';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
-import { DocumentType } from '@/shared/enums/playerEnums';
+import { DocumentType } from '@/shared/enums/player.enum';
 import { Plan } from '@/lib/Plan/domain/Plan';
 import { PlanRepositoryMock } from '@/mocks/PlanRepositoryMock';
 import { UserRepositoryMock } from '@/mocks/UserRepositoryMock';
@@ -16,7 +16,7 @@ import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/
 import { SubscriptionFeatureRepositoryMock } from '@/mocks/SubscriptionFeatureRepository';
 import { FeatureRepository } from '@/lib/Feature/domain/FeatureRepository';
 import { FeatureRepositoryMock } from '@/mocks/FeatureRepository';
-import { RoleEnum } from '@/shared/enums/roleEnum';
+import { RoleEnum } from '@/shared/enums/role.enum';
 
 describe('SubscriptionCreate tests', () => {
   let subscriptionRepository: SubscriptionRepository;

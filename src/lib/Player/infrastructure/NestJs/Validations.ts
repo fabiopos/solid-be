@@ -2,7 +2,7 @@ import {
   DocumentType,
   DominantFoot,
   ShirtSize,
-} from '@/shared/enums/playerEnums';
+} from '@/shared/enums/player.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,

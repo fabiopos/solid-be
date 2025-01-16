@@ -1,5 +1,5 @@
-import { DocumentType } from '@/shared/enums/playerEnums';
-import { RoleEnum } from '@/shared/enums/roleEnum';
+import { DocumentType } from '@/shared/enums/player.enum';
+import { RoleEnum } from '@/shared/enums/role.enum';
 import * as S from '@effect/schema/Schema';
 
 export const userSchema = S.Struct({

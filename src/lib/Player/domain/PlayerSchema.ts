@@ -5,9 +5,9 @@ import {
   DominantFoot,
   PlayerStatus,
   ShirtSize,
-} from '@/shared/enums/playerEnums';
+} from '@/shared/enums/player.enum';
 import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
-import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
+import { FieldPositionCategoryEnum } from '@/shared/enums/fieldpositioncategory.enum';
 import { faker } from '@faker-js/faker';
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;

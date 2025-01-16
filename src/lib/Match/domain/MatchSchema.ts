@@ -1,5 +1,5 @@
 import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
-import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
+import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import * as S from '@effect/schema/Schema';
 
 const matchTeam = S.Struct({

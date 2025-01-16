@@ -1,4 +1,4 @@
-import { DocumentType, DominantFoot, ShirtSize } from '../enums/playerEnums';
+import { DocumentType, DominantFoot, ShirtSize } from '../enums/player.enum';
 
 export interface CreatePlayerDto {
   teamId: string;

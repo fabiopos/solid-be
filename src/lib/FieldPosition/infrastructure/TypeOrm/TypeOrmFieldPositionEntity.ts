@@ -6,7 +6,7 @@ import {
   PrimaryColumn,
 } from 'typeorm';
 import { TypeOrmPlayerPositionEntity } from '../../../PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
-import { FieldPositionCategoryEnum } from '@/shared/enums/fieldPositionCategoryEnum';
+import { FieldPositionCategoryEnum } from '@/shared/enums/fieldpositioncategory.enum';
 
 @Entity('field_position')
 export class TypeOrmFieldPositionEntity {

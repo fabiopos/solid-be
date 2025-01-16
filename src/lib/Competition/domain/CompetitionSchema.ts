@@ -1,6 +1,6 @@
 import { matchSchema } from '@/lib/Match/domain/MatchSchema';
 import { seasonSchema } from '@/lib/Season/domain/SeasonSchema';
-import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
+import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import { Schema as S } from '@effect/schema';
 
 export const competitionSchema = S.Struct({

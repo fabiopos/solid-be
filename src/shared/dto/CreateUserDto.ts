@@ -1,5 +1,5 @@
-import { DocumentType } from '../enums/playerEnums';
-import { RoleEnum } from '../enums/roleEnum';
+import { DocumentType } from '../enums/player.enum';
+import { RoleEnum } from '../enums/role.enum';
 
 export class CreateUserDto {
   email: string;

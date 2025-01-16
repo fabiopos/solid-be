@@ -9,7 +9,7 @@ import {
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 
 import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
-import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
+import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 
 @Entity('competition')
 export class TypeOrmCompetitionEntity {

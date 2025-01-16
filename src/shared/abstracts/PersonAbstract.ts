@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Unique } from 'typeorm';
-import { DocumentType } from '@/shared/enums/playerEnums';
+import { DocumentType } from '@/shared/enums/player.enum';
 
 export abstract class PersonAbstract {
   @Column()

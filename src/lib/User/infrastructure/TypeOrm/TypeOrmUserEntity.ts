@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { RoleEnum } from '@/shared/enums/roleEnum';
+import { RoleEnum } from '@/shared/enums/role.enum';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
 

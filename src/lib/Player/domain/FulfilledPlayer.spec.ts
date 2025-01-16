@@ -4,7 +4,7 @@ import {
   DocumentType,
   DominantFoot,
   ShirtSize,
-} from '@/shared/enums/playerEnums';
+} from '@/shared/enums/player.enum';
 import { FulfilledPlayer } from './PlayerSchema';
 import { Arbitrary, FastCheck } from '@effect/schema';
 

@@ -11,7 +11,7 @@ import {
   DominantFoot,
   PlayerStatus,
   ShirtSize,
-} from '@/shared/enums/playerEnums';
+} from '@/shared/enums/player.enum';
 import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/TypeOrm/TypeOrmPlayerInjuryEntity';

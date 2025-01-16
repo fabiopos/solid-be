@@ -1,4 +1,4 @@
-import { MatchResultEnum } from '@/shared/enums/matchEnum';
+import { MatchResultEnum } from '@/shared/enums/match.enum';
 import { EmptyMatch, FulfilledMatch } from './MatchSchema';
 
 export interface MatchRepository {

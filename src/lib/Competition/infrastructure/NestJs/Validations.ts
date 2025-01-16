@@ -1,4 +1,4 @@
-import { CompetitionStatusEnum } from '@/shared/enums/competitionStatusEnum';
+import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import {
   IsDateString,
   IsEnum,

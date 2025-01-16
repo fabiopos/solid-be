@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { TypeOrmCompetitionEntity } from '@/lib/Competition/infrastructure/TypeOrm/TypeOrmCompetitionEntity';
-import { SeasonStatusEnum } from '@/shared/enums/seasonStatusEnum';
+import { SeasonStatusEnum } from '@/shared/enums/season-status.enum';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 @Entity('season')
