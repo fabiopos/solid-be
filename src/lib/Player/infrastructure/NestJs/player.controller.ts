@@ -12,8 +12,8 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { PlayerGetAll } from '../../application/player-getall/PlayerGetAll';
-import { PlayerCreate } from '../../application/player-create/PlayerCreate';
+import { PlayerGetAll } from '../../application/player-getall/player.getall';
+import { PlayerCreate } from '../../application/player-create/player.create';
 import {
   CreatePlayerPayload,
   PlayerDetailsParams,
@@ -22,12 +22,12 @@ import {
   PlayerQueryParams,
   UpdatePlayerPayload,
   UpdatePlayerPositionsPayload,
-} from './Validations';
+} from './validations';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { isFiberFailure } from 'effect/Runtime';
-import { PlayerDelete } from '../../application/player-delete/PlayerDelete';
-import { PlayerUpdate } from '../../application/player-update/PlayerUpdate';
-import { PartialPlayer } from '../../domain/PlayerSchema';
+import { PlayerDelete } from '../../application/player-delete/player.delete';
+import { PlayerUpdate } from '../../application/player-update/player.update';
+import { PartialPlayer } from '../../domain/player.schema';
 import { ParseError } from '@effect/schema/ParseResult';
 import { JwtAuthGuard } from '@/lib/auth/infraestructure/nestjs/jwt-auth.guard';
 import { toDate } from 'date-fns';

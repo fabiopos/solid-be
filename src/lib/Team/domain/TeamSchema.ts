@@ -1,4 +1,4 @@
-import { playerSchema } from '@/lib/player/domain/PlayerSchema';
+import { playerSchema } from '@/lib/player/domain/player.schema';
 import * as S from '@effect/schema/Schema';
 
 export const teamSchema = S.Struct({

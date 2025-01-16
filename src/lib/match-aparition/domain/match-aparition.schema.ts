@@ -1,5 +1,5 @@
 import { matchSchema } from '@/lib/match/domain/match.schema';
-import { playerSchema } from '@/lib/player/domain/PlayerSchema';
+import { playerSchema } from '@/lib/player/domain/player.schema';
 import * as S from '@effect/schema/Schema';
 
 const matchItem = matchSchema.pick('id', 'title', 'completed');

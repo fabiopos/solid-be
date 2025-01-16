@@ -1,4 +1,4 @@
-import { PlayerModule } from '@/lib/player/infrastructure/NestJs/player.module';
+import { PlayerModule } from '@/lib/player/infrastructure/nestjs/player.module';
 import { TeamModule } from '@/lib/Team/infrastructure/NestJs/team.module';
 import { SubscriptionModule } from '@/lib/Subscription/infrastructure/NestJs/subscription.module';
 import { UserModule } from '@/lib/User/infrastructure/NestJs/user.module';
@@ -9,8 +9,8 @@ import { CompetitionModule } from '@/lib/competition/infrastructure/nestjs/compe
 import { MatchModule } from '@/lib/match/infrastructure/nestjs/match.module';
 import { SettingsModule } from '@/lib/Settings/infraestructure/NestJs/settings.module';
 import { MatchAparitionModule } from '@/lib/match-aparition/infrastructure/nestjs/match-aparition.module';
-import { PlayerInjuryModule } from '@/lib/PlayerInjury/infrastructure/NestJs/playerInjury.module';
-import { PlayerPositionModule } from '@/lib/PlayerPosition/infrastructure/NestJs/playerPosition.module';
+import { PlayerInjuryModule } from '@/lib/PlayerInjury/infrastructure/nestjs/player-injury.module';
+import { PlayerPositionModule } from '@/lib/player-position/infrastructure/nestjs/player-position.module';
 import { DashboardModule } from '@/lib/dashboard/infraestructure/nestjs/dashboard.module';
 
 export default [

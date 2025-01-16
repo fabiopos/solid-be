@@ -13,7 +13,7 @@ import {
   subscriptionToAddSchema,
 } from '../../domain/SubscriptionSchema';
 import { teamSchema } from '@/lib/Team/domain/TeamSchema';
-import { playerSchema } from '@/lib/player/domain/PlayerSchema';
+import { playerSchema } from '@/lib/player/domain/player.schema';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 import { subscriptionFeatureSchema } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureSchema';
