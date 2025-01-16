@@ -1,4 +1,4 @@
-import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
+import { CreateSubscriptionDto } from '@/shared/dto/create-subscription.dto';
 import { TypeOrmSubscriptionEntity } from '../infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { User } from '@/lib/User/domain/User';
 import { Team } from '@/lib/Team/domain/Team';

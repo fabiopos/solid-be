@@ -1,4 +1,4 @@
-import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
+import { CreateSubscriptionDto } from '@/shared/dto/create-subscription.dto';
 import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 // import { Subscription } from '../../domain/Subscription';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';

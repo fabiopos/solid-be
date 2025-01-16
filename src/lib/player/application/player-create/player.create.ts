@@ -1,4 +1,4 @@
-import { CreatePlayerDto } from '@/shared/dto/CreatePlayerDto';
+import { CreatePlayerDto } from '@/shared/dto/create-player.dto';
 import { PlayerRepository } from '../../domain/player.repository';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { SubscriptionRepository } from '@/lib/Subscription/domain/SubscriptionRepository';

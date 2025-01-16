@@ -1,4 +1,4 @@
-import { CreateUserDto } from '@/shared/dto/CreateUserDto';
+import { CreateUserDto } from '@/shared/dto/create-user.dto';
 import { DocumentType } from '@/shared/enums/player.enum';
 import { RoleEnum } from '@/shared/enums/role.enum';
 

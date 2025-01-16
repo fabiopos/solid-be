@@ -12,7 +12,7 @@ import {
   PlayerStatus,
   ShirtSize,
 } from '../../../../shared/enums/player.enum';
-import { PersonAbstract } from '../../../..//shared/abstracts/PersonAbstract';
+import { PersonAbstract } from '../../../../shared/abstracts/person-abstract';
 import { TypeOrmPlayerPositionEntity } from '../../../..//lib/player-position/infrastructure/type-orm/TypeOrmPlayerPositionEntity';
 import { TypeOrmPlayerInjuryEntity } from '../../../..//lib/PlayerInjury/infrastructure/type-orm/type-orm-player-injury.entity';
 import { TypeOrmTeamEntity } from '../../../..//lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';

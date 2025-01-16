@@ -1,6 +1,6 @@
 import { Plan } from '@/lib/plan/domain/plan';
-import { CreateTeamDto } from './CreateTeamDto';
-import { CreateUserDto } from './CreateUserDto';
+import { CreateTeamDto } from './create-team.dto';
+import { CreateUserDto } from './create-user.dto';
 
 export class CreateSubscriptionDto {
   teams: CreateTeamDto[];

@@ -11,7 +11,7 @@ import { TeamRepositoryMock } from '@/mocks/TeamRepositoryMock';
 import { SubscriptionRepositoryMock } from '@/mocks/SubscriptionRepositoryMock';
 import { add, format } from 'date-fns';
 import { SubscriptionCreateResponse } from '../../domain/SubscriptionSchema';
-import { CreateSubscriptionDto } from '@/shared/dto/CreateSubscriptionDto';
+import { CreateSubscriptionDto } from '@/shared/dto/create-subscription.dto';
 import { SubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/domain/SubscriptionFeatureRepository';
 import { SubscriptionFeatureRepositoryMock } from '@/mocks/SubscriptionFeatureRepository';
 import { FeatureRepository } from '@/lib/feature/domain/feature.repository';
