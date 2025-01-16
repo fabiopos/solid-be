@@ -1,4 +1,4 @@
-import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
+import { playerSchema } from '@/lib/player/domain/PlayerSchema';
 import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import * as S from '@effect/schema/Schema';
 

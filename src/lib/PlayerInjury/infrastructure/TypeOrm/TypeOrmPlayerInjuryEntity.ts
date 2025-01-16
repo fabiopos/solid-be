@@ -6,7 +6,7 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TypeOrmPlayerEntity } from '../../../Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerEntity } from '../../../player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 
 @Entity('player_injury')
 export class TypeOrmPlayerInjuryEntity {

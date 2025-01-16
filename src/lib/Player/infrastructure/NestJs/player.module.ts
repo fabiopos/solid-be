@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PlayerGetAll } from '@/lib/Player/application/PlayerGetAll/PlayerGetAll';
-import { PlayerController } from '@/lib/Player/infrastructure/NestJs/player.controller';
-import { TypeOrmPlayerEntity } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
-import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
+import { PlayerGetAll } from '@/lib/player/application/PlayerGetAll/PlayerGetAll';
+import { PlayerController } from '@/lib/player/infrastructure/NestJs/player.controller';
+import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { PlayerCreate } from '../../application/PlayerCreate/PlayerCreate';
 import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';

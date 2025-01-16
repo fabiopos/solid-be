@@ -1,5 +1,5 @@
 import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
-import { playerSchema } from '@/lib/Player/domain/PlayerSchema';
+import { playerSchema } from '@/lib/player/domain/PlayerSchema';
 import { Schema as S } from '@effect/schema';
 
 export const playerPositionSchema = S.Struct({

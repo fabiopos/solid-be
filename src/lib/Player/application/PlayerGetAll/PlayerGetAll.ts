@@ -1,4 +1,4 @@
-import { PlayerRepository } from '@/lib/Player/domain/PlayerRepository';
+import { PlayerRepository } from '@/lib/player/domain/PlayerRepository';
 import {
   FulfilledPlayer,
   FulfilledPlayerWithStats,

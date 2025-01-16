@@ -3,7 +3,7 @@ import { FulfilledTeamStats } from '../../domain/teamStats.schema';
 import { TypeOrmCompetitionRepository } from '@/lib/Competition/infrastructure/TypeOrm/TypeOrmCompetitionRepository';
 import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchRepository';
 import { FulfilledMatch } from '@/lib/Match/domain/MatchSchema';
-import { TypeOrmPlayerRepository } from '@/lib/Player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
+import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
 import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
 import { Logger } from '@nestjs/common';
 

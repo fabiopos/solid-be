@@ -1,4 +1,4 @@
-import { TypeOrmPlayerEntity } from '../lib/Player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerEntity } from '../lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 import { TypeOrmTeamEntity } from '../lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmSubscriptionEntity } from '../lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TypeOrmCompetitionEntity } from '../lib/Competition/infrastructure/TypeOrm/TypeOrmCompetitionEntity';
