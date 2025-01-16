@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Plan } from '../../domain/Plan';
-import { PlanRepository } from '../../domain/PlanRepository';
-import { TypeOrmPlanEntity } from './TypeOrmPlanEntity';
+import { Plan } from '../../domain/plan';
+import { PlanRepository } from '../../domain/plan.repository';
+import { TypeOrmPlanEntity } from './type-orm-plan.entity';
 import { Repository } from 'typeorm';
 
 export class TypeOrmPlanRepository implements PlanRepository {

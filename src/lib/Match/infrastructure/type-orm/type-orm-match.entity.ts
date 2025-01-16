@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 import { TypeOrmCompetitionEntity } from '../../../competition/infrastructure/type-orm/type-orm-competition.entity';
-import { TypeOrmMatchAparitionEntity } from '../../../match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchAparitionEntity } from '../../../match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 @Entity('match')

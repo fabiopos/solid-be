@@ -1,5 +1,5 @@
 import { FieldPositionRepository } from '@/lib/field-position/domain/field-position.repository';
-import { PlanRepository } from '@/lib/plan/domain/PlanRepository';
+import { PlanRepository } from '@/lib/plan/domain/plan.repository';
 
 export class SettingsGetAll {
   constructor(

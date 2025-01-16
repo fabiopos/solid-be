@@ -1,25 +1,25 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmMatchEntity } from '../TypeOrm/TypeOrmMatchEntity';
+import { TypeOrmMatchEntity } from '../type-orm/type-orm-match.entity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { MatchController } from './match.controller';
-import { TypeOrmMatchRepository } from '../TypeOrm/TypeOrmMatchRepository';
+import { TypeOrmMatchRepository } from '../type-orm/type-orm-match.repository';
 import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
-import { MatchGet } from '../../application/MatchGet';
-import { MatchUpdate } from '../../application/MatchUpdate';
-import { MatchDelete } from '../../application/MatchDelete';
-import { MatchCreate } from '../../application/MatchCreate';
+import { MatchGet } from '../../application/match.get';
+import { MatchUpdate } from '../../application/match.update';
+import { MatchDelete } from '../../application/match.delete';
+import { MatchCreate } from '../../application/match.create';
 import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonRepository';
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TypeOrmSubscriptionRepository } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionRepository';
-import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.entity';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
 import { TypeOrmFeatureEntity } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.entity';
-import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
-import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
+import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.repository';
 
 @Module({
   imports: [

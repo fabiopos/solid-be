@@ -3,7 +3,7 @@ import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 // import { Subscription } from '../../domain/Subscription';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { Team } from '@/lib/Team/domain/Team';
-import { PlanRepository } from '@/lib/plan/domain/PlanRepository';
+import { PlanRepository } from '@/lib/plan/domain/plan.repository';
 import { PlanNotFoundError } from '../../domain/PlanNotFoundError';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
 import { UserAlreadyExistsError } from '@/lib/User/domain/UserAlreadyExistsError';

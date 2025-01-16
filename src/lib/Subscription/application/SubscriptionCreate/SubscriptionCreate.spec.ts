@@ -1,10 +1,10 @@
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { SubscriptionRepository } from '../../domain/SubscriptionRepository';
 import { SubscriptionCreate } from './SubscriptionCreate';
-import { PlanRepository } from '@/lib/plan/domain/PlanRepository';
+import { PlanRepository } from '@/lib/plan/domain/plan.repository';
 import { UserRepository } from '@/lib/User/domain/UserRepository';
 import { DocumentType } from '@/shared/enums/player.enum';
-import { Plan } from '@/lib/plan/domain/Plan';
+import { Plan } from '@/lib/plan/domain/plan';
 import { PlanRepositoryMock } from '@/mocks/PlanRepositoryMock';
 import { UserRepositoryMock } from '@/mocks/UserRepositoryMock';
 import { TeamRepositoryMock } from '@/mocks/TeamRepositoryMock';

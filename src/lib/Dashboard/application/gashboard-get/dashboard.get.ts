@@ -1,10 +1,10 @@
 import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonRepository';
 import { FulfilledTeamStats } from '../../domain/team-stats.schema';
 import { TypeOrmCompetitionRepository } from '@/lib/competition/infrastructure/type-orm/type-orm-competition.repository';
-import { TypeOrmMatchRepository } from '@/lib/match/infrastructure/TypeOrm/TypeOrmMatchRepository';
-import { FulfilledMatch } from '@/lib/match/domain/MatchSchema';
+import { TypeOrmMatchRepository } from '@/lib/match/infrastructure/type-orm/type-orm-match.repository';
+import { FulfilledMatch } from '@/lib/match/domain/match.schema';
 import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
-import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
+import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.repository';
 import { Logger } from '@nestjs/common';
 
 export class DashboardGet {

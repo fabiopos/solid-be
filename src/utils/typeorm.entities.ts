@@ -3,10 +3,10 @@ import { TypeOrmTeamEntity } from '../lib/Team/infrastructure/TypeOrm/TypeOrmTea
 import { TypeOrmSubscriptionEntity } from '../lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TypeOrmCompetitionEntity } from '../lib/competition/infrastructure/type-orm/type-orm-competition.entity';
 import { TypeOrmFieldPositionEntity } from '../lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
-import { TypeOrmMatchAparitionEntity } from '../lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
-import { TypeOrmMatchEntity } from '../lib/match/infrastructure/TypeOrm/TypeOrmMatchEntity';
-import { TypeOrmPaymentEntity } from '../lib/payment/infrastructure/type-orm/TypeOrmPaymentEntity';
-import { TypeOrmPlanEntity } from '../lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmMatchAparitionEntity } from '../lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
+import { TypeOrmMatchEntity } from '../lib/match/infrastructure/type-orm/type-orm-match.entity';
+import { TypeOrmPaymentEntity } from '../lib/payment/infrastructure/type-orm/type-orm-payment.entity';
+import { TypeOrmPlanEntity } from '../lib/plan/infrastructure/type-orm/type-orm-plan.entity';
 import { TypeOrmPlayerPositionEntity } from '../lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { TypeOrmUserEntity } from '../lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmSeasonEntity } from '../lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';

@@ -3,7 +3,7 @@ import {
   FulfilledPlayer,
   FulfilledPlayerWithStats,
 } from '../../domain/PlayerSchema';
-import { MatchRepository } from '@/lib/match/domain/MatchRepository';
+import { MatchRepository } from '@/lib/match/domain/match.repository';
 
 export class PlayerGetAll {
   constructor(

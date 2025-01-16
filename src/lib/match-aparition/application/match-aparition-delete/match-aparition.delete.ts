@@ -1,4 +1,4 @@
-import { MatchAparitionRepository } from '../../domain/MatchAparitionRepository';
+import { MatchAparitionRepository } from '../../domain/match-aparition.repository';
 
 export class MatchAparitionDelete {
   constructor(private readonly repository: MatchAparitionRepository) {}

@@ -1,4 +1,4 @@
-import { matchSchema } from '@/lib/match/domain/MatchSchema';
+import { matchSchema } from '@/lib/match/domain/match.schema';
 import { seasonSchema } from '@/lib/Season/domain/SeasonSchema';
 import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import { Schema as S } from '@effect/schema';

@@ -1,5 +1,5 @@
-import { EmptyMatchAparition } from '../../domain/matchAparition.schema';
-import { MatchAparitionRepository } from '../../domain/MatchAparitionRepository';
+import { EmptyMatchAparition } from '../../domain/match-aparition.schema';
+import { MatchAparitionRepository } from '../../domain/match-aparition.repository';
 
 export class MatchAparitionCreate {
   constructor(private readonly repository: MatchAparitionRepository) {}

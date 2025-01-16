@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { MatchAparitionController } from './matchAparition.controller';
+import { MatchAparitionController } from './match-aparition.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmMatchAparitionEntity } from '../TypeOrm/TypeOrmMatchAparitionEntity';
-import { TypeOrmMatchAparitionRepository } from '../TypeOrm/TypeOrmMatchAparitionRepository';
-import { MatchAparitionGet } from '../../application/MatchAparitionGet/MatchAparitionGet';
-import { MatchAparitionCreate } from '../../application/MatchAparitionCreate/MatchAparitionCreate';
-import { MatchAparitionUpdate } from '../../application/MatchAparitionUpdate/MatchAparitionUpdate';
-import { MatchAparitionDelete } from '../../application/MatchAparitionDelete/MatchAparitionDelete';
+import { TypeOrmMatchAparitionEntity } from '../type-orm/type-orm-match-aparition.entity';
+import { TypeOrmMatchAparitionRepository } from '../type-orm/type-orm-match-aparition.repository';
+import { MatchAparitionGet } from '../../application/match-aparition-get/match-aparition.get';
+import { MatchAparitionCreate } from '../../application/match-aparition-create/match-aparition.create';
+import { MatchAparitionUpdate } from '../../application/match-aparition-update/match-aparition.update';
+import { MatchAparitionDelete } from '../../application/match-aparition-delete/match-aparition.delete';
 
 @Module({
   imports: [TypeOrmModule.forFeature([TypeOrmMatchAparitionEntity])],

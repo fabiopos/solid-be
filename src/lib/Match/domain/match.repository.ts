@@ -1,5 +1,5 @@
 import { MatchResultEnum } from '@/shared/enums/match.enum';
-import { EmptyMatch, FulfilledMatch } from './MatchSchema';
+import { EmptyMatch, FulfilledMatch } from './match.schema';
 
 export interface MatchRepository {
   findById(matchId: string): Promise<FulfilledMatch>;

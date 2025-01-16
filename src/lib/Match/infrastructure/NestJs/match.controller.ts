@@ -9,10 +9,10 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { MatchCreate } from '../../application/MatchCreate';
-import { MatchGet } from '../../application/MatchGet';
-import { MatchUpdate } from '../../application/MatchUpdate';
-import { MatchDelete } from '../../application/MatchDelete';
+import { MatchCreate } from '../../application/match.create';
+import { MatchGet } from '../../application/match.get';
+import { MatchUpdate } from '../../application/match.update';
+import { MatchDelete } from '../../application/match.delete';
 import {
   MatchCompetitionIdParams,
   MatchCreatePayload,
@@ -20,8 +20,8 @@ import {
   MatchSeasonIdParams,
   MatchTeamIdParams,
   MatchUpdatePayload,
-} from './Validations';
-import { EmptyMatch } from '../../domain/MatchSchema';
+} from './validations';
+import { EmptyMatch } from '../../domain/match.schema';
 import { toDate } from 'date-fns';
 
 @ApiTags('match')

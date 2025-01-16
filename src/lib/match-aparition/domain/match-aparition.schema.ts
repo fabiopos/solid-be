@@ -1,4 +1,4 @@
-import { matchSchema } from '@/lib/match/domain/MatchSchema';
+import { matchSchema } from '@/lib/match/domain/match.schema';
 import { playerSchema } from '@/lib/player/domain/PlayerSchema';
 import * as S from '@effect/schema/Schema';
 

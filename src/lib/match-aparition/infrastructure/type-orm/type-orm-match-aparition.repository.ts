@@ -3,9 +3,9 @@ import {
   EmptyMatchAparition,
   FulfilledMatchAparition,
   FulfilledScorer,
-} from '../../domain/matchAparition.schema';
-import { MatchAparitionRepository } from '../../domain/MatchAparitionRepository';
-import { TypeOrmMatchAparitionEntity } from './TypeOrmMatchAparitionEntity';
+} from '../../domain/match-aparition.schema';
+import { MatchAparitionRepository } from '../../domain/match-aparition.repository';
+import { TypeOrmMatchAparitionEntity } from './type-orm-match-aparition.entity';
 import { Repository } from 'typeorm';
 
 export class TypeOrmMatchAparitionRepository

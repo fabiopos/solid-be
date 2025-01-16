@@ -9,17 +9,17 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { MatchAparitionCreate } from '../../application/MatchAparitionCreate/MatchAparitionCreate';
-import { MatchAparitionGet } from '../../application/MatchAparitionGet/MatchAparitionGet';
-import { MatchAparitionUpdate } from '../../application/MatchAparitionUpdate/MatchAparitionUpdate';
-import { MatchAparitionDelete } from '../../application/MatchAparitionDelete/MatchAparitionDelete';
+import { MatchAparitionCreate } from '../../application/match-aparition-create/match-aparition.create';
+import { MatchAparitionGet } from '../../application/match-aparition-get/match-aparition.get';
+import { MatchAparitionUpdate } from '../../application/match-aparition-update/match-aparition.update';
+import { MatchAparitionDelete } from '../../application/match-aparition-delete/match-aparition.delete';
 import {
   MatchAparitionCreatePayload,
   MatchAparitionDeleteParams,
   MatchAparitionUpdateParams,
   MatchAparitionUpdatePayload,
-} from './Validations';
-import { EmptyMatchAparition } from '../../domain/matchAparition.schema';
+} from './validations';
+import { EmptyMatchAparition } from '../../domain/match-aparition.schema';
 
 @ApiTags('match-aparition')
 @Controller('match-aparition')

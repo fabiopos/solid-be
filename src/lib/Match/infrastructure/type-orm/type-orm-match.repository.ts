@@ -1,11 +1,11 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { TypeOrmMatchEntity } from './TypeOrmMatchEntity';
+import { TypeOrmMatchEntity } from './type-orm-match.entity';
 import { IsNull, Not, Raw, Repository } from 'typeorm';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { MatchRepository } from '../../domain/MatchRepository';
+import { MatchRepository } from '../../domain/match.repository';
 import { MatchResultEnum } from '@/shared/enums/match.enum';
-import { EmptyMatch, FulfilledMatch } from '../../domain/MatchSchema';
-import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { EmptyMatch, FulfilledMatch } from '../../domain/match.schema';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
 
 export class TypeOrmMatchRepository implements MatchRepository {
   constructor(

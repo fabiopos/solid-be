@@ -1,5 +1,5 @@
-import { MatchRepository } from '../domain/MatchRepository';
-import { EmptyMatch } from '../domain/MatchSchema';
+import { MatchRepository } from '../domain/match.repository';
+import { EmptyMatch } from '../domain/match.schema';
 
 export class MatchCreate {
   constructor(private readonly repository: MatchRepository) {}

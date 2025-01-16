@@ -5,7 +5,7 @@ import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Subscription } from '../../domain/Subscription';
 import { Logger, NotFoundException } from '@nestjs/common';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.entity';
 import {
   EmptySubscription,
   FulfilledSubscription,

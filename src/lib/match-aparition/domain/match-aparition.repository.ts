@@ -2,7 +2,7 @@ import {
   EmptyMatchAparition,
   FulfilledMatchAparition,
   FulfilledScorer,
-} from './matchAparition.schema';
+} from './match-aparition.schema';
 
 export interface MatchAparitionRepository {
   getAll(): Promise<FulfilledMatchAparition[]>;

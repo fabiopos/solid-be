@@ -1,4 +1,4 @@
-import { Plan } from '@/lib/plan/domain/Plan';
+import { Plan } from '@/lib/plan/domain/plan';
 import { CreateTeamDto } from './CreateTeamDto';
 import { CreateUserDto } from './CreateUserDto';
 
