@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { TypeOrmCompetitionEntity } from '../../../Competition/infrastructure/TypeOrm/TypeOrmCompetitionEntity';
-import { TypeOrmMatchAparitionEntity } from '../../../MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmCompetitionEntity } from '../../../competition/infrastructure/type-orm/type-orm-competition.entity';
+import { TypeOrmMatchAparitionEntity } from '../../../match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 @Entity('match')

@@ -26,8 +26,8 @@ import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
 import { TeamFind } from '../../application/TeamFind/TeamFind';
 import { TeamResponse } from '../../domain/TeamSchema';
 import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';
-import { Token } from '@/lib/Auth/domain/AuthLoginSchema';
-import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
+import { Token } from '@/lib/auth/domain/auth-login.schema';
+import { JwtAuthGuard } from '@/lib/auth/infraestructure/nestjs/jwt-auth.guard';
 import { TeamDelete } from '../../application/TeamDelete/TeamDelete';
 
 @ApiTags('team')

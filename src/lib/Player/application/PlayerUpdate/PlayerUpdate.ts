@@ -1,6 +1,6 @@
 import { PlayerPositionRepository } from '@/lib/PlayerPosition/domain/PlayerPositionRepository';
 import { PlayerRepository } from '../../domain/PlayerRepository';
-import { FieldPositionRepository } from '@/lib/FieldPosition/domain/FieldPositionRepository';
+import { FieldPositionRepository } from '@/lib/field-position/domain/field-position.repository';
 import { SubscriptionRepository } from '@/lib/Subscription/domain/SubscriptionRepository';
 import { TeamRepository } from '@/lib/Team/domain/TeamRepository';
 import { PartialPlayer } from '../../domain/PlayerSchema';

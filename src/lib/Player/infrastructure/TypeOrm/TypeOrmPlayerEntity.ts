@@ -16,8 +16,8 @@ import { PersonAbstract } from '@/shared/abstracts/PersonAbstract';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { TypeOrmPlayerInjuryEntity } from '@/lib/PlayerInjury/infrastructure/TypeOrm/TypeOrmPlayerInjuryEntity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
-import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 @Entity('player')
 export class TypeOrmPlayerEntity extends PersonAbstract {

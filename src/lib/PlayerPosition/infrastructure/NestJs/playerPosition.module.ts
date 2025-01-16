@@ -6,7 +6,7 @@ import { PlayerPositionGet } from '../../application/PlayerPositionGet';
 import { TypeOrmPlayerPositionRepository } from '../TypeOrm/TypeOrmPlayerPositionRepository';
 import { PlayerPositionCreate } from '../../application/PlayerPositionCreate';
 import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
-import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
+import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
 
 @Module({
   imports: [

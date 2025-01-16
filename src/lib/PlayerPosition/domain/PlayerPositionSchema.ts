@@ -1,4 +1,4 @@
-import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
+import { fieldPositionSchema } from '@/lib/field-position/domain/field-position.schema';
 import { playerSchema } from '@/lib/player/domain/PlayerSchema';
 import { Schema as S } from '@effect/schema';
 

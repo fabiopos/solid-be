@@ -3,7 +3,7 @@ import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrm
 
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TeamAbstract } from '@/shared/abstracts/TeamAbstract';
-import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
+import { TypeOrmMatchEntity } from '@/lib/match/infrastructure/TypeOrm/TypeOrmMatchEntity';
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 
 @Entity('team')

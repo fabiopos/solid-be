@@ -6,7 +6,7 @@ import {
   PlayerStatus,
   ShirtSize,
 } from '@/shared/enums/player.enum';
-import { fieldPositionSchema } from '@/lib/FieldPosition/domain/FieldPositionSchema';
+import { fieldPositionSchema } from '@/lib/field-position/domain/field-position.schema';
 import { FieldPositionCategoryEnum } from '@/shared/enums/fieldpositioncategory.enum';
 import { faker } from '@faker-js/faker';
 

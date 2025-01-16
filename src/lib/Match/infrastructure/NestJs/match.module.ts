@@ -13,13 +13,13 @@ import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/Typ
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TypeOrmSubscriptionRepository } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionRepository';
-import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
-import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
-import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
-import { TypeOrmMatchAparitionRepository } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
+import { TypeOrmFeatureEntity } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.entity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionRepository';
 
 @Module({
   imports: [

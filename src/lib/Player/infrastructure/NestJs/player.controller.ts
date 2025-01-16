@@ -29,7 +29,7 @@ import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
 import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
 import { PartialPlayer } from '../../domain/PlayerSchema';
 import { ParseError } from '@effect/schema/ParseResult';
-import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
+import { JwtAuthGuard } from '@/lib/auth/infraestructure/nestjs/jwt-auth.guard';
 import { toDate } from 'date-fns';
 
 @ApiTags('player')

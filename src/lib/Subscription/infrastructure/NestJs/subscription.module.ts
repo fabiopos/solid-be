@@ -6,8 +6,8 @@ import { TypeOrmSubscriptionRepository } from '../TypeOrm/TypeOrmSubscriptionRep
 import { SubscriptionCreate } from '../../application/SubscriptionCreate/SubscriptionCreate';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
-import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
-import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmPlanRepository } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
@@ -16,8 +16,8 @@ import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrm
 import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
 import { TypeOrmSubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureRepository';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';
-import { TypeOrmFeatureRepository } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureRepository';
-import { TypeOrmFeatureEntity } from '@/lib/Feature/infrastructure/TypeOrm/TypeOrmFeatureEntity';
+import { TypeOrmFeatureRepository } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.repository';
+import { TypeOrmFeatureEntity } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { JWT_OPTIONS } from '@/utils/constants';
 

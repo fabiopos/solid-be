@@ -27,9 +27,9 @@ import { UserUpdate } from '../../application/UserUpdate';
 import { UserUpdateInput } from '../../domain/UserSchema';
 import { UserDelete } from '../../application/UserDelete';
 import { UserGetAll } from '../../application/UserGetAll';
-import { Token } from '@/lib/Auth/domain/AuthLoginSchema';
+import { Token } from '@/lib/auth/domain/auth-login.schema';
 import { Request } from 'express';
-import { JwtAuthGuard } from '@/lib/Auth/infraestructure/NestJs/jwt-auth.guard';
+import { JwtAuthGuard } from '@/lib/auth/infraestructure/nestjs/jwt-auth.guard';
 
 @ApiTags('user')
 @Controller('user')

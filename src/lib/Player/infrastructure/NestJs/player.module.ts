@@ -10,19 +10,19 @@ import { TypeOrmTeamRepository } from '@/lib/Team/infrastructure/TypeOrm/TypeOrm
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 import { TypeOrmSubscriptionEntity } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionEntity';
 import { TypeOrmSubscriptionRepository } from '@/lib/Subscription/infrastructure/TypeOrm/TypeOrmSubscriptionRepository';
-import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
-import { TypeOrmFieldPositionRepository } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionRepository';
-import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
-import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmFieldPositionRepository } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.repository';
+import { TypeOrmPlanRepository } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 import { TypeOrmPlayerPositionRepository } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionRepository';
 import { TypeOrmPlayerPositionEntity } from '@/lib/PlayerPosition/infrastructure/TypeOrm/TypeOrmPlayerPositionEntity';
 import { PlayerDelete } from '../../application/PlayerDelete/PlayerDelete';
 import { PlayerUpdate } from '../../application/PlayerUpdate/PlayerUpdate';
-import { TypeOrmMatchRepository } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchRepository';
-import { TypeOrmMatchEntity } from '@/lib/Match/infrastructure/TypeOrm/TypeOrmMatchEntity';
-import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchRepository } from '@/lib/match/infrastructure/TypeOrm/TypeOrmMatchRepository';
+import { TypeOrmMatchEntity } from '@/lib/match/infrastructure/TypeOrm/TypeOrmMatchEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 @Module({
   imports: [

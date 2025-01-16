@@ -1,10 +1,10 @@
-import { TypeOrmFieldPositionEntity } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionEntity';
-import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SettingsController } from './settings.controller';
-import { TypeOrmFieldPositionRepository } from '@/lib/FieldPosition/infrastructure/TypeOrm/TypeOrmFieldPositionRepository';
-import { TypeOrmPlanRepository } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
+import { TypeOrmFieldPositionRepository } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.repository';
+import { TypeOrmPlanRepository } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanRepository';
 import { SettingsGetAll } from '../../application/SettingsGetAll';
 
 @Module({

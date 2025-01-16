@@ -9,18 +9,18 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { CompetitionGet } from '../../application/CompetitionGet';
-import { CompetitionCreate } from '../../application/CompetitionCreate';
-import { CompetitionUpdate } from '../../application/CompetitionUpdate';
-import { CompetitionDelete } from '../../application/CompetitionDelete';
+import { CompetitionGet } from '../../application/competition.get';
+import { CompetitionCreate } from '../../application/competition.create';
+import { CompetitionUpdate } from '../../application/competition.update';
+import { CompetitionDelete } from '../../application/competition.delete';
 import {
   CompetitionByIdParams,
   CompetitionBySeasonParams,
   CompetitionByTeamParams,
   CompetitionCreatePayload,
   CompetitionUpdatePayload,
-} from './Validations';
-import { EmptyCompetition } from '../../domain/CompetitionSchema';
+} from './validations';
+import { EmptyCompetition } from '../../domain/competition.schema';
 import { toDate } from 'date-fns';
 
 @ApiTags('competition')

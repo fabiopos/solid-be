@@ -9,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { TypeOrmPlanEntity } from '@/lib/Plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
-import { TypeOrmPaymentEntity } from '@/lib/Payment/infrastructure/TypeOrm/TypeOrmPaymentEntity';
+import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/TypeOrm/TypeOrmPlanEntity';
+import { TypeOrmPaymentEntity } from '@/lib/payment/infrastructure/type-orm/TypeOrmPaymentEntity';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';

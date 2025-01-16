@@ -1,4 +1,4 @@
-import { PlanRepository } from '@/lib/Plan/domain/PlanRepository';
+import { PlanRepository } from '@/lib/plan/domain/PlanRepository';
 
 export class PlanRepositoryMock implements PlanRepository {
   async getAll() {

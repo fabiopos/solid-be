@@ -5,7 +5,7 @@ import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeam
 import { MatchRepository } from '../../domain/MatchRepository';
 import { MatchResultEnum } from '@/shared/enums/match.enum';
 import { EmptyMatch, FulfilledMatch } from '../../domain/MatchSchema';
-import { TypeOrmMatchAparitionEntity } from '@/lib/MatchAparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
+import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/TypeOrm/TypeOrmMatchAparitionEntity';
 
 export class TypeOrmMatchRepository implements MatchRepository {
   constructor(

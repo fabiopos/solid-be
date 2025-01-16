@@ -1,7 +1,7 @@
 import { Body, Controller, Inject, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthLogin } from '../../application/Login/AuthLogin';
-import { AuthLoginPayload } from './AuthLoginPayload';
+import { AuthLogin } from '../../application/login/auth-login';
+import { AuthLoginPayload } from './auth-login-payload';
 
 @ApiTags('auth')
 @Controller('auth')

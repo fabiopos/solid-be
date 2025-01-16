@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmCompetitionEntity } from '../TypeOrm/TypeOrmCompetitionEntity';
+import { TypeOrmCompetitionEntity } from '../type-orm/type-orm-competition.entity';
 import { CompetitionController } from './competition.controller';
-import { TypeOrmCompetitionRepository } from '../TypeOrm/TypeOrmCompetitionRepository';
+import { TypeOrmCompetitionRepository } from '../type-orm/type-orm-competition.repository';
 import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonRepository';
-import { CompetitionGet } from '../../application/CompetitionGet';
-import { CompetitionCreate } from '../../application/CompetitionCreate';
-import { CompetitionUpdate } from '../../application/CompetitionUpdate';
-import { CompetitionDelete } from '../../application/CompetitionDelete';
+import { CompetitionGet } from '../../application/competition.get';
+import { CompetitionCreate } from '../../application/competition.create';
+import { CompetitionUpdate } from '../../application/competition.update';
+import { CompetitionDelete } from '../../application/competition.delete';
 import { TypeOrmSeasonEntity } from '@/lib/Season/infrastructure/TypeOrm/TypeOrmSeasonEntity';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
