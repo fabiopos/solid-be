@@ -11,8 +11,8 @@ import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-p
 import { TypeOrmUserRepository } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserRepository';
 import { TypeOrmUserEntity } from '@/lib/User/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { SubscriptionGetAll } from '../../application/SubscriptionGetAll/SubscriptionGetAll';
-import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/type-orm/type-orm-player.repository';
+import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 import { SubscriptionFind } from '../../application/SubscriptionFind/SubscriptionFind';
 import { TypeOrmSubscriptionFeatureRepository } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureRepository';
 import { TypeOrmSubscriptionFeatureEntity } from '@/lib/SubscriptionFeature/infrastructure/TypeOrm/TypeOrmSubscriptionFeatureEntity';

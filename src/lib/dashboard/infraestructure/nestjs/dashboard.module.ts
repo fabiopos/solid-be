@@ -9,8 +9,8 @@ import { TypeOrmSeasonRepository } from '@/lib/Season/infrastructure/TypeOrm/Typ
 import { TypeOrmCompetitionRepository } from '@/lib/competition/infrastructure/type-orm/type-orm-competition.repository';
 import { TypeOrmMatchRepository } from '@/lib/match/infrastructure/type-orm/type-orm-match.repository';
 import { TypeOrmTeamEntity } from '@/lib/Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerRepository';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/type-orm/type-orm-player.repository';
+import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 import { TypeOrmMatchAparitionEntity } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
 import { TypeOrmMatchAparitionRepository } from '@/lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.repository';
 

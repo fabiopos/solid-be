@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ILike, Repository } from 'typeorm';
 
 import { PlayerRepository } from '@/lib/player/domain/player.repository';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/TypeOrm/TypeOrmPlayerEntity';
+import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 import {
   EmptyPlayer,
   FulfilledPlayer,
