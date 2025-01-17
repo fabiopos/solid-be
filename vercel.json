@@ -1,7 +1,6 @@
 {
-  "version": 2,
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm build",
+  "version": 2,  
+  "outputDirectory": "dist",  
   "builds": [
     {
       "src": "src/main.js",
