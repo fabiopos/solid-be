@@ -4,8 +4,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
-import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmPlayerEntity } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.entity';
+import { TypeOrmFieldPositionEntity } from '../../../../lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
 
 @Entity('player_position')
 export class TypeOrmPlayerPositionEntity {
