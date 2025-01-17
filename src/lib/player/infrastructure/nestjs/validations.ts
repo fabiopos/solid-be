@@ -1,8 +1,3 @@
-import {
-  DocumentType,
-  DominantFoot,
-  ShirtSize,
-} from '@/shared/enums/player.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
@@ -19,6 +14,11 @@ import {
   Max,
   Min,
 } from 'class-validator';
+import {
+  DocumentType,
+  DominantFoot,
+  ShirtSize,
+} from '../../../../shared/enums/player.enum';
 
 export class PlayerDetailsParams {
   @IsUUID()

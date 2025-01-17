@@ -1,25 +1,29 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { TypeOrmSubscriptionEntity } from '../type-orm/type-orm-subscription.entity';
+
 import { SubscriptionController } from './subscription.controller';
+
+import { TypeOrmSubscriptionEntity } from '../type-orm/type-orm-subscription.entity';
 import { TypeOrmSubscriptionRepository } from '../type-orm/type-orm-subscription.repository';
+
 import { SubscriptionCreate } from '../../application/subscription-create/SubscriptionCreate';
-import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmTeamRepository } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamRepository';
-import { TypeOrmPlanRepository } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.repository';
-import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.entity';
-import { TypeOrmUserRepository } from '@/lib/user/infrastructure/TypeOrm/TypeOrmUserRepository';
-import { TypeOrmUserEntity } from '@/lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
 import { SubscriptionGetAll } from '../../application/subscription-getall/subscription.getall';
-import { TypeOrmPlayerRepository } from '@/lib/player/infrastructure/type-orm/type-orm-player.repository';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 import { SubscriptionFind } from '../../application/subscription-find/subscription.find';
-import { TypeOrmSubscriptionFeatureRepository } from '@/lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.repository';
-import { TypeOrmSubscriptionFeatureEntity } from '@/lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
-import { TypeOrmFeatureRepository } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.repository';
-import { TypeOrmFeatureEntity } from '@/lib/feature/infrastructure/type-orm/type-orm-feature.entity';
-import { JwtModule } from '@nestjs/jwt';
-import { JWT_OPTIONS } from '@/utils/constants';
+
+import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmTeamRepository } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamRepository';
+import { TypeOrmPlanRepository } from '../../../../lib/plan/infrastructure/type-orm/type-orm-plan.repository';
+import { TypeOrmPlanEntity } from '../../../../lib/plan/infrastructure/type-orm/type-orm-plan.entity';
+import { TypeOrmUserRepository } from '../../../../lib/user/infrastructure/TypeOrm/TypeOrmUserRepository';
+import { TypeOrmUserEntity } from '../../../../lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { TypeOrmPlayerRepository } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.repository';
+import { TypeOrmPlayerEntity } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.entity';
+import { TypeOrmSubscriptionFeatureRepository } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.repository';
+import { TypeOrmSubscriptionFeatureEntity } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
+import { TypeOrmFeatureRepository } from '../../../../lib/feature/infrastructure/type-orm/type-orm-feature.repository';
+import { TypeOrmFeatureEntity } from '../../../../lib/feature/infrastructure/type-orm/type-orm-feature.entity';
+import { JWT_OPTIONS } from '../../../../utils/constants';
 
 @Module({
   imports: [

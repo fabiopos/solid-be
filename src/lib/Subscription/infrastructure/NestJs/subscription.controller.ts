@@ -21,7 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { SubscriptionGetAll } from '../../application/subscription-getall/subscription.getall';
 import { SubscriptionFind } from '../../application/subscription-find/subscription.find';
-import { JwtAuthGuard } from '@/lib/auth/infraestructure/nestjs/jwt-auth.guard';
+import { JwtAuthGuard } from '../../../../lib/auth/infraestructure/nestjs/jwt-auth.guard';
 
 @ApiTags('subscription')
 @Controller('subscription')

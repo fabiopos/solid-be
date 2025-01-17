@@ -5,7 +5,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
 
 @Entity('plan')
 export class TypeOrmPlanEntity {

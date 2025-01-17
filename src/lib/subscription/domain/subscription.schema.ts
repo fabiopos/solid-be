@@ -1,11 +1,15 @@
+import { add, isAfter } from 'date-fns';
+import * as S from '@effect/schema/Schema';
+
 import {
   subscriptionFeatureCreateSchema,
   subscriptionFeatureSchema,
-} from '@/lib/subscription-feature/domain/subscription-feature.schema';
-import { teamCreateSchema, teamSchema } from '@/lib/team/domain/TeamSchema';
-import { userSchema } from '@/lib/user/domain/UserSchema';
-import * as S from '@effect/schema/Schema';
-import { add, isAfter } from 'date-fns';
+} from '../../../lib/subscription-feature/domain/subscription-feature.schema';
+import {
+  teamCreateSchema,
+  teamSchema,
+} from '../../../lib/team/domain/TeamSchema';
+import { userSchema } from '../../../lib/user/domain/UserSchema';
 
 export const planSchema = S.Struct({
   id: S.NullishOr(S.String),

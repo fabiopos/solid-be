@@ -7,9 +7,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { TypeOrmCompetitionEntity } from '@/lib/competition/infrastructure/type-orm/type-orm-competition.entity';
-import { SeasonStatusEnum } from '@/shared/enums/season-status.enum';
-import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmCompetitionEntity } from '../../../../lib/competition/infrastructure/type-orm/type-orm-competition.entity';
+import { SeasonStatusEnum } from '../../../../shared/enums/season-status.enum';
+import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 @Entity('season')
 export class TypeOrmSeasonEntity {

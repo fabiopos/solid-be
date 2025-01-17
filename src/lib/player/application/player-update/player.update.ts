@@ -1,11 +1,12 @@
-import { PlayerPositionRepository } from '@/lib/player-position/domain/player-position.repository';
+import { Logger } from '@nestjs/common';
+
+import { PlayerPositionRepository } from '../../../../lib/player-position/domain/player-position.repository';
 import { PlayerRepository } from '../../domain/player.repository';
-import { FieldPositionRepository } from '@/lib/field-position/domain/field-position.repository';
-import { SubscriptionRepository } from '@/lib/subscription/domain/subscription.repository';
-import { TeamRepository } from '@/lib/team/domain/TeamRepository';
+import { FieldPositionRepository } from '../../../../lib/field-position/domain/field-position.repository';
+import { SubscriptionRepository } from '../../../../lib/subscription/domain/subscription.repository';
+import { TeamRepository } from '../../../../lib/team/domain/TeamRepository';
 import { PartialPlayer } from '../../domain/player.schema';
 import { PlayerNotFoundError } from '../../domain/player-not-found-error';
-import { Logger } from '@nestjs/common';
 
 export class PlayerUpdate {
   constructor(

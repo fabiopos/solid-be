@@ -1,6 +1,7 @@
-import { playerSchema } from '@/lib/player/domain/player.schema';
-import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
 import * as S from '@effect/schema/Schema';
+
+import { playerSchema } from '../../../lib/player/domain/player.schema';
+import { CompetitionStatusEnum } from '../../../shared/enums/competition-status.enum';
 
 const matchTeam = S.Struct({
   id: S.optional(S.NullishOr(S.String)),

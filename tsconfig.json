@@ -19,10 +19,10 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       // "@/*": ["./src/*"]
-      "@/lib/*": ["./src/lib/*"],
-      "@/mocks/*": ["./src/mocks/*"],
-      "@/shared/*": ["./src/shared/*"],
-      "@/utils/*": ["./src/utils/*"],
+      // "@/lib/*": ["./src/lib/*"],
+      // "@/mocks/*": ["./src/mocks/*"],
+      // "@/shared/*": ["./src/shared/*"],
+      // "@/utils/*": ["./src/utils/*"],
       
     }
   }

@@ -1,4 +1,4 @@
-import { PlayerPositionRepository } from '@/lib/player-position/domain/player-position.repository';
+import { PlayerPositionRepository } from '../../../../lib/player-position/domain/player-position.repository';
 import { PlayerRepository } from '../../domain/player.repository';
 import { PlayerNotFoundError } from '../../domain/player-not-found-error';
 

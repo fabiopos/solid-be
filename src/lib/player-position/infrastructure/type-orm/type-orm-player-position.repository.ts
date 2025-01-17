@@ -6,8 +6,8 @@ import {
 } from '../../domain/player-position.schema';
 import { TypeOrmPlayerPositionEntity } from './type-orm-player-position.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
-import { TypeOrmFieldPositionEntity } from '@/lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
+import { TypeOrmPlayerEntity } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.entity';
+import { TypeOrmFieldPositionEntity } from '../../../../lib/field-position/infrastructure/type-orm/type-orm-field-position.entity';
 
 export class TypeOrmPlayerPositionRepository
   implements PlayerPositionRepository

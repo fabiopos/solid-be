@@ -1,6 +1,7 @@
-import { fieldPositionSchema } from '@/lib/field-position/domain/field-position.schema';
-import { playerSchema } from '@/lib/player/domain/player.schema';
 import { Schema as S } from '@effect/schema';
+
+import { fieldPositionSchema } from '../../../lib/field-position/domain/field-position.schema';
+import { playerSchema } from '../../../lib/player/domain/player.schema';
 
 export const playerPositionSchema = S.Struct({
   id: S.optional(S.String),

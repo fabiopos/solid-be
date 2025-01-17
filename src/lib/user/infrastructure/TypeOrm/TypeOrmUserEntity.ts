@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
-import { RoleEnum } from '@/shared/enums/role.enum';
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
-import { PersonAbstract } from '@/shared/abstracts/person-abstract';
+import { RoleEnum } from '../../../../shared/enums/role.enum';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { PersonAbstract } from '../../../../shared/abstracts/person-abstract';
 
 @Entity('user')
 export class TypeOrmUserEntity extends PersonAbstract {

@@ -1,5 +1,5 @@
-import { DocumentType } from '@/shared/enums/player.enum';
-import { RoleEnum } from '@/shared/enums/role.enum';
+import { DocumentType } from '../../../../shared/enums/player.enum';
+import { RoleEnum } from '../../../../shared/enums/role.enum';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBoolean,

@@ -1,4 +1,8 @@
+import { NotFoundException } from '@nestjs/common';
+import { toDate } from 'date-fns';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
 import { SeasonRepository } from '../../domain/season.repository';
 import {
   EmptySeason,
@@ -6,10 +10,7 @@ import {
   PartialSeason,
 } from '../../domain/season.schema';
 import { TypeOrmSeasonEntity } from './type-orm-season.entity';
-import { Repository } from 'typeorm';
-import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { NotFoundException } from '@nestjs/common';
-import { toDate } from 'date-fns';
+import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 export class TypeOrmSeasonRepository implements SeasonRepository {
   constructor(

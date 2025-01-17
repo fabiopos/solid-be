@@ -1,14 +1,15 @@
 import { Repository } from 'typeorm';
+import { toDate } from 'date-fns';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { CompetitionRepository } from '../../domain/competition.repository';
 import {
   EmptyCompetition,
   FulfilledCompetition,
 } from '../../domain/competition.schema';
 import { TypeOrmCompetitionEntity } from './type-orm-competition.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { TypeOrmSeasonEntity } from '@/lib/season/infrastructure/type-orm/type-orm-season.entity';
-import { FulfilledSeason } from '@/lib/season/domain/season.schema';
-import { toDate } from 'date-fns';
+import { TypeOrmSeasonEntity } from '../../../../lib/season/infrastructure/type-orm/type-orm-season.entity';
+import { FulfilledSeason } from '../../../../lib/season/domain/season.schema';
 
 export class TypeOrmCompetitionRepository implements CompetitionRepository {
   constructor(

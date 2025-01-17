@@ -1,10 +1,11 @@
 import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { NotFoundException } from '@nestjs/common';
+
 import { UserRepository } from '../../domain/UserRepository';
 import { TypeOrmUserEntity } from './TypeOrmUserEntity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../domain/User';
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
-import { NotFoundException } from '@nestjs/common';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
 import { FulfilledUser, UserUpdateInput } from '../../domain/UserSchema';
 
 export class TypeOrmUserRepository implements UserRepository {

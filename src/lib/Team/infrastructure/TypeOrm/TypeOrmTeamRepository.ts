@@ -3,7 +3,7 @@ import { TypeOrmTeamEntity } from './TypeOrmTeamEntity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Team } from '../../domain/Team';
 import { TeamRepository } from '../../domain/TeamRepository';
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
 import { NotFoundException } from '@nestjs/common';
 import { FulfilledTeam, TeamType } from '../../domain/TeamSchema';
 

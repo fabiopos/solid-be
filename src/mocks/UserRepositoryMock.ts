@@ -1,7 +1,7 @@
-import { User } from '@/lib/user/domain/User';
-import { UserRepository } from '@/lib/user/domain/UserRepository';
-import { DocumentType } from '@/shared/enums/player.enum';
-import { RoleEnum } from '@/shared/enums/role.enum';
+import { User } from '../lib/user/domain/User';
+import { UserRepository } from '../lib/user/domain/UserRepository';
+import { DocumentType } from '../shared/enums/player.enum';
+import { RoleEnum } from '../shared/enums/role.enum';
 
 export class UserRepositoryMock implements UserRepository {
   async create(payload: any) {
@@ -22,13 +22,13 @@ export class UserRepositoryMock implements UserRepository {
   async getAll() {
     return [];
   }
-  async getOneById(id: string) {
+  async getOneById(_id: string) {
     return null;
   }
-  async edit(payload: any) {
+  async edit(_payload: any) {
     return;
   }
-  async delete(id: string) {
+  async delete(_id: string) {
     return;
   }
   async getOneByEmail(email: string) {

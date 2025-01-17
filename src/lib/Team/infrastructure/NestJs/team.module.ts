@@ -5,7 +5,7 @@ import { TeamController } from './team.controller';
 import { TypeOrmTeamRepository } from '../TypeOrm/TypeOrmTeamRepository';
 import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
 import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
 import { TeamValidate } from '../../application/TeamValidate/TeamValidate';
 import { TeamFind } from '../../application/TeamFind/TeamFind';
 import { TeamUpdate } from '../../application/TeamUpdate/TeamUpdate';

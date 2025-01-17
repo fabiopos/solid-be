@@ -1,23 +1,24 @@
 import { InjectRepository } from '@nestjs/typeorm';
+import { Logger, NotFoundException } from '@nestjs/common';
+
 import { SubscriptionRepository } from '../../domain/subscription.repository';
 import { TypeOrmSubscriptionEntity } from './type-orm-subscription.entity';
 import { DataSource, QueryRunner, Repository } from 'typeorm';
 import { Subscription } from '../../domain/subscription';
-import { Logger, NotFoundException } from '@nestjs/common';
-import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.entity';
+import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmPlanEntity } from '../../../../lib/plan/infrastructure/type-orm/type-orm-plan.entity';
 import {
   EmptySubscription,
   FulfilledSubscription,
   planSchema,
   subscriptionToAddSchema,
 } from '../../domain/subscription.schema';
-import { teamSchema } from '@/lib/team/domain/TeamSchema';
-import { playerSchema } from '@/lib/player/domain/player.schema';
-import { TypeOrmUserEntity } from '@/lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
-import { TypeOrmSubscriptionFeatureEntity } from '@/lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
-import { subscriptionFeatureSchema } from '@/lib/subscription-feature/domain/subscription-feature.schema';
-import { userSchema } from '@/lib/user/domain/UserSchema';
+import { teamSchema } from '../../../../lib/team/domain/TeamSchema';
+import { playerSchema } from '../../../../lib/player/domain/player.schema';
+import { TypeOrmUserEntity } from '../../../../lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { TypeOrmSubscriptionFeatureEntity } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
+import { subscriptionFeatureSchema } from '../../../../lib/subscription-feature/domain/subscription-feature.schema';
+import { userSchema } from '../../../../lib/user/domain/UserSchema';
 
 interface AddonPayload {
   queryRunner: QueryRunner;

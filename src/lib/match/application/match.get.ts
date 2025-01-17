@@ -1,5 +1,5 @@
-import { MatchResultEnum } from '@/shared/enums/match.enum';
 import { MatchRepository } from '../domain/match.repository';
+import { MatchResultEnum } from '../../../shared/enums/match.enum';
 
 export class MatchGet {
   constructor(private readonly repository: MatchRepository) {}

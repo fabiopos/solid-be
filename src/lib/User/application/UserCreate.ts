@@ -1,4 +1,4 @@
-import { SubscriptionRepository } from '@/lib/subscription/domain/subscription.repository';
+import { SubscriptionRepository } from '../../../lib/subscription/domain/subscription.repository';
 import { UserRepository } from '../domain/UserRepository';
 import { User } from '../domain/User';
 import { UserAlreadyExistsError } from '../domain/UserAlreadyExistsError';

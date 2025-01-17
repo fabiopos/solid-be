@@ -9,12 +9,11 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-import { TypeOrmPlanEntity } from '@/lib/plan/infrastructure/type-orm/type-orm-plan.entity';
-import { TypeOrmPaymentEntity } from '@/lib/payment/infrastructure/type-orm/type-orm-payment.entity';
-import { TypeOrmUserEntity } from '@/lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
-
-import { TypeOrmTeamEntity } from '@/lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmSubscriptionFeatureEntity } from '@/lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
+import { TypeOrmPlanEntity } from '../../../../lib/plan/infrastructure/type-orm/type-orm-plan.entity';
+import { TypeOrmPaymentEntity } from '../../../../lib/payment/infrastructure/type-orm/type-orm-payment.entity';
+import { TypeOrmUserEntity } from '../../../../lib/user/infrastructure/TypeOrm/TypeOrmUserEntity';
+import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmSubscriptionFeatureEntity } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
 
 @Entity('subscription')
 export class TypeOrmSubscriptionEntity {

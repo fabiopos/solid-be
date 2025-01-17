@@ -1,10 +1,10 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
 
-import { TypeOrmSubscriptionEntity } from '@/lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
-import { TeamAbstract } from '@/shared/abstracts/team-abstract';
-import { TypeOrmMatchEntity } from '@/lib/match/infrastructure/type-orm/type-orm-match.entity';
-import { TypeOrmSeasonEntity } from '@/lib/season/infrastructure/type-orm/type-orm-season.entity';
+import { TypeOrmPlayerEntity } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.entity';
+import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { TeamAbstract } from '../../../../shared/abstracts/team-abstract';
+import { TypeOrmMatchEntity } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.entity';
+import { TypeOrmSeasonEntity } from '../../../../lib/season/infrastructure/type-orm/type-orm-season.entity';
 
 @Entity('team')
 export class TypeOrmTeamEntity extends TeamAbstract {

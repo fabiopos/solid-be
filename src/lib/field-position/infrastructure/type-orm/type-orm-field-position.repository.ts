@@ -1,7 +1,8 @@
+import { Repository } from 'typeorm';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { FieldPositionRepository } from '../../domain/field-position.repository';
 import { TypeOrmFieldPositionEntity } from './type-orm-field-position.entity';
-import { Repository } from 'typeorm';
 import { FieldPosition } from '../../domain/field-position';
 import { FulfilledFieldPosition } from '../../domain/field-position.schema';
 

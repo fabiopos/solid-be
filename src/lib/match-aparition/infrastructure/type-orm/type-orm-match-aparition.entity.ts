@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { TypeOrmMatchEntity } from '@/lib/match/infrastructure/type-orm/type-orm-match.entity';
-import { TypeOrmPlayerEntity } from '@/lib/player/infrastructure/type-orm/type-orm-player.entity';
+
+import { TypeOrmMatchEntity } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.entity';
+import { TypeOrmPlayerEntity } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.entity';
 
 @Entity('match_aparition')
 export class TypeOrmMatchAparitionEntity {

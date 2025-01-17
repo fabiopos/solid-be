@@ -1,8 +1,9 @@
+import { Repository } from 'typeorm';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { FeatureRepository } from '../../domain/feature.repository';
 import { FeatureT, FeatureToUpdate } from '../../domain/feature.schema';
 import { TypeOrmFeatureEntity } from './type-orm-feature.entity';
-import { Repository } from 'typeorm';
 
 export class TypeOrmFeatureRepository implements FeatureRepository {
   constructor(

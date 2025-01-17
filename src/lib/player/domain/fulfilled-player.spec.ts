@@ -1,12 +1,12 @@
 import { describe } from 'node:test';
+import { Arbitrary, FastCheck } from '@effect/schema';
 
 import {
   DocumentType,
   DominantFoot,
   ShirtSize,
-} from '@/shared/enums/player.enum';
+} from '../../../shared/enums/player.enum';
 import { FulfilledPlayer } from './player.schema';
-import { Arbitrary, FastCheck } from '@effect/schema';
 
 // export const playerSchema = S.Struct({
 //   id: S.optional(S.String),

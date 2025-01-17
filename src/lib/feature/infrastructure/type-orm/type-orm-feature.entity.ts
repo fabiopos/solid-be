@@ -1,4 +1,4 @@
-import { TypeOrmSubscriptionFeatureEntity } from '@/lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
+import { TypeOrmSubscriptionFeatureEntity } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
 import {
   Column,
   CreateDateColumn,

@@ -1,7 +1,7 @@
-import { comparePassword } from '@/utils/encription';
-import { AuthSchemaType, Token } from '../../domain/auth-login.schema';
 import { JwtService } from '@nestjs/jwt';
-import { UserFindBy } from '@/lib/user/application/UserFindBy';
+import { comparePassword } from '../../../../utils/encription';
+import { AuthSchemaType, Token } from '../../domain/auth-login.schema';
+import { UserFindBy } from '../../../../lib/user/application/UserFindBy';
 import { InvalidCredentialsError } from '../../domain/invalid-credentials-error';
 
 export class AuthLogin {

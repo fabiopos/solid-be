@@ -1,5 +1,5 @@
-import { SubscriptionRepository } from '@/lib/subscription/domain/subscription.repository';
-import { FulfilledSubscription } from '@/lib/subscription/domain/subscription.schema';
+import { SubscriptionRepository } from '../lib/subscription/domain/subscription.repository';
+import { FulfilledSubscription } from '../lib/subscription/domain/subscription.schema';
 
 export class SubscriptionRepositoryMock implements SubscriptionRepository {
   async create(payload: any) {

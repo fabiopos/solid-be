@@ -1,5 +1,5 @@
 // import { Subscription } from '@/lib/Subscription/domain/Subscription';
-import { CreateTeamDto } from '@/shared/dto/create-team.dto';
+import { CreateTeamDto } from '../../../shared/dto/create-team.dto';
 
 export class Team {
   id: string;

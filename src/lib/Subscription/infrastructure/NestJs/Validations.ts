@@ -1,5 +1,3 @@
-import { CreateTeamPayload } from '@/lib/team/infrastructure/NestJs/Validations';
-import { CreateUserPayload } from '@/lib/user/infrastructure/NestJs/CreateUserPayload';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -10,6 +8,9 @@ import {
   Length,
   ValidateNested,
 } from 'class-validator';
+
+import { CreateTeamPayload } from '../../../../lib/team/infrastructure/NestJs/Validations';
+import { CreateUserPayload } from '../../../../lib/user/infrastructure/NestJs/CreateUserPayload';
 
 export class SubscriptionCreatePayload {
   @ApiProperty()

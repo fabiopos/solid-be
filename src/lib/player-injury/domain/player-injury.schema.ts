@@ -1,5 +1,6 @@
-import { playerSchema } from '@/lib/player/domain/player.schema';
 import * as S from '@effect/schema/Schema';
+
+import { playerSchema } from '../../../lib/player/domain/player.schema';
 
 const playerItem = playerSchema.pick(
   'firstName',

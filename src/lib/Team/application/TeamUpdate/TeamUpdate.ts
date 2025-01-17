@@ -1,4 +1,4 @@
-import { UpdateTeamDto } from '@/shared/dto/update-team.dto';
+import { UpdateTeamDto } from '../../../../shared/dto/update-team.dto';
 import { TeamRepository } from '../../domain/TeamRepository';
 import { TeamType } from '../../domain/TeamSchema';
 import { TeamNotFoundError } from '../../domain/TeamNotFoundError';

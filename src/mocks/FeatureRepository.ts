@@ -1,4 +1,4 @@
-import { FeatureRepository } from '@/lib/feature/domain/feature.repository';
+import { FeatureRepository } from '../lib/feature/domain/feature.repository';
 
 export class FeatureRepositoryMock implements FeatureRepository {
   async getAll() {

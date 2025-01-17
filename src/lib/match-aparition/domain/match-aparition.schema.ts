@@ -1,6 +1,7 @@
-import { matchSchema } from '@/lib/match/domain/match.schema';
-import { playerSchema } from '@/lib/player/domain/player.schema';
 import * as S from '@effect/schema/Schema';
+
+import { matchSchema } from '../../../lib/match/domain/match.schema';
+import { playerSchema } from '../../../lib/player/domain/player.schema';
 
 const matchItem = matchSchema.pick('id', 'title', 'completed');
 const playerItem = playerSchema.pick(

@@ -6,10 +6,10 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { TypeOrmSeasonEntity } from '@/lib/season/infrastructure/type-orm/type-orm-season.entity';
+import { TypeOrmSeasonEntity } from '../../../../lib/season/infrastructure/type-orm/type-orm-season.entity';
 
-import { TypeOrmMatchEntity } from '@/lib/match/infrastructure/type-orm/type-orm-match.entity';
-import { CompetitionStatusEnum } from '@/shared/enums/competition-status.enum';
+import { TypeOrmMatchEntity } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.entity';
+import { CompetitionStatusEnum } from '../../../../shared/enums/competition-status.enum';
 
 @Entity('competition')
 export class TypeOrmCompetitionEntity {

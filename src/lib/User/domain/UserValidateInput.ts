@@ -1,4 +1,4 @@
-import { DocumentType } from '@/shared/enums/player.enum';
+import { DocumentType } from '../../../shared/enums/player.enum';
 
 export class UserValidateInput {
   email: string;

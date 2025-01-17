@@ -1,4 +1,8 @@
-import { EmptyPlayer, FulfilledPlayer, UpdatePlayerType } from './player.schema';
+import {
+  EmptyPlayer,
+  FulfilledPlayer,
+  UpdatePlayerType,
+} from './player.schema';
 
 export interface PlayerRepository {
   create(player: EmptyPlayer): Promise<FulfilledPlayer>;

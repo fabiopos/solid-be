@@ -1,9 +1,9 @@
-import { PlayerRepository } from '@/lib/player/domain/player.repository';
+import { PlayerRepository } from '../../../../lib/player/domain/player.repository';
 import {
   FulfilledPlayer,
   FulfilledPlayerWithStats,
 } from '../../domain/player.schema';
-import { MatchRepository } from '@/lib/match/domain/match.repository';
+import { MatchRepository } from '../../../../lib/match/domain/match.repository';
 
 export class PlayerGetAll {
   constructor(

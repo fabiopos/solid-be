@@ -1,14 +1,14 @@
 import * as S from '@effect/schema/Schema';
+import { faker } from '@faker-js/faker';
 // import { teamSchema } from '@/lib/Team/domain/TeamSchema';
 import {
   DocumentType,
   DominantFoot,
   PlayerStatus,
   ShirtSize,
-} from '@/shared/enums/player.enum';
-import { fieldPositionSchema } from '@/lib/field-position/domain/field-position.schema';
-import { FieldPositionCategoryEnum } from '@/shared/enums/fieldpositioncategory.enum';
-import { faker } from '@faker-js/faker';
+} from '../../../shared/enums/player.enum';
+import { fieldPositionSchema } from '../../../lib/field-position/domain/field-position.schema';
+import { FieldPositionCategoryEnum } from '../../../shared/enums/fieldpositioncategory.enum';
 
 const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const urlRegex =
