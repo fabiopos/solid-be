@@ -45,7 +45,7 @@ export class CompetitionController {
     status: '2XX',
     description: 'Get all competitions by season',
   })
-  async findCompetitionVyId(@Param() params: { id: string }) {
+  async findCompetitionById(@Param() params: { id: string }) {
     const { id } = params;
     return this.competitionGet.findById(id);
   }

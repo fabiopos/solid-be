@@ -15,8 +15,31 @@ const matchCompetition = S.Struct({
   status: S.NullishOr(S.Enums(CompetitionStatusEnum)),
 });
 
+const playerItem = playerSchema.pick(
+  'id',
+  'firstName',
+  'lastName',
+  'shirtNumber',
+  'shirtName',
+  'favPosition',
+  'avatarUrl',
+);
+
 const matchAparition = S.Struct({
   id: S.String,
+  minutes: S.optional(S.NullishOr(S.Number)),
+  goals: S.optional(S.NullishOr(S.Number)),
+  assists: S.optional(S.NullishOr(S.Number)),
+  yellowCards: S.optional(S.NullishOr(S.Number)),
+  redCards: S.optional(S.NullishOr(S.Number)),
+  injury: S.optional(S.NullishOr(S.Boolean)),
+  manOfTheMatch: S.optional(S.NullishOr(S.Boolean)),
+  rating: S.optional(S.NullishOr(S.Number)),
+  played: S.optional(S.NullishOr(S.Boolean)),
+  confirmed: S.optional(S.NullishOr(S.Boolean)),
+  playerId: S.optional(S.NullishOr(S.String)),
+  matchId: S.optional(S.NullishOr(S.String)),
+  player: S.optional(playerItem),
 });
 
 export const matchSchema = S.Struct({

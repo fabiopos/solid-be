@@ -111,7 +111,7 @@ export class TypeOrmSeasonRepository implements SeasonRepository {
   mapEntityToDomain(entity: TypeOrmSeasonEntity): FulfilledSeason {
     return FulfilledSeason.make({
       active: entity?.active,
-      competitions: (entity.competitions ?? []).map((x) => ({
+      competitions: (entity?.competitions ?? []).map((x) => ({
         name: x.name,
         id: x.id,
         startDate: toDate(x.startDate),
