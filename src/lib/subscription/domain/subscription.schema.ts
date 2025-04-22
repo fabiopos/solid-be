@@ -4,12 +4,9 @@ import * as S from '@effect/schema/Schema';
 import {
   subscriptionFeatureCreateSchema,
   subscriptionFeatureSchema,
-} from '../../../lib/subscription-feature/domain/subscription-feature.schema';
-import {
-  teamCreateSchema,
-  teamSchema,
-} from '../../../lib/team/domain/TeamSchema';
-import { userSchema } from '../../../lib/user/domain/UserSchema';
+} from '../../subscription-feature/domain/subscription-feature.schema';
+import { teamCreateSchema, teamSchema } from '../../Team/domain/TeamSchema';
+import { userSchema } from '../../User/domain/UserSchema';
 
 export const planSchema = S.Struct({
   id: S.NullishOr(S.String),

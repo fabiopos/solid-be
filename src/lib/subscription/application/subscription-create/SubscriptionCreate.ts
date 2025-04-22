@@ -4,28 +4,30 @@ import { Effect, pipe } from 'effect';
 import { CreateSubscriptionDto } from '../../../../shared/dto/create-subscription.dto';
 import { SubscriptionRepository } from '../../domain/subscription.repository';
 // import { Subscription } from '../../domain/Subscription';
-import { TeamRepository } from '../../../../lib/team/domain/TeamRepository';
-import { Team } from '../../../../lib/team/domain/Team';
-import { PlanRepository } from '../../../../lib/plan/domain/plan.repository';
+import { TeamRepository } from '../../../Team/domain/TeamRepository';
+import { Team } from '../../../Team/domain/Team';
+import { PlanRepository } from '../../../plan/domain/plan.repository';
 import { PlanNotFoundError } from '../../domain/plan-not-found-error';
-import { UserRepository } from '../../../../lib/user/domain/UserRepository';
-import { UserAlreadyExistsError } from '../../../../lib/user/domain/UserAlreadyExistsError';
-import { TeamNotProvidedError } from '../../../../lib/team/domain/TeamNotProvidedError';
-import { UserNoPolicyError } from '../../../../lib/user/domain/UserNoPolicyError';
-import { UserInvalidError } from '../../../../lib/user/domain/UserInvalidError';
+import { UserRepository } from '../../../User/domain/UserRepository';
+import { UserAlreadyExistsError } from '../../../User/domain/UserAlreadyExistsError';
+import { TeamNotProvidedError } from '../../../Team/domain/TeamNotProvidedError';
+import { UserNoPolicyError } from '../../../User/domain/UserNoPolicyError';
+import { UserInvalidError } from '../../../User/domain/UserInvalidError';
 import {
   EmptySubscription,
   SubscriptionCreateResponse,
 } from '../../domain/subscription.schema';
-import { SubscriptionFeatureRepository } from '../../../../lib/subscription-feature/domain/subscription-feature-repository';
-import { subscriptionFeatureCreateSchema } from '../../../../lib/subscription-feature/domain/subscription-feature.schema';
-import { FeatureRepository } from '../../../../lib/feature/domain/feature.repository';
-import { FeatureT } from '../../../../lib/feature/domain/feature.schema';
+import { SubscriptionFeatureRepository } from '../../../subscription-feature/domain/subscription-feature-repository';
+import { subscriptionFeatureCreateSchema } from '../../../subscription-feature/domain/subscription-feature.schema';
+import { FeatureRepository } from '../../../feature/domain/feature.repository';
+import { FeatureT } from '../../../feature/domain/feature.schema';
 import { encryptPassword } from '../../../../utils/encription';
-import { UserEncryptError } from '../../../../lib/user/domain/UserEncryptError';
+import { UserEncryptError } from '../../../User/domain/UserEncryptError';
 import { SubscriptionMapError } from '../../domain/subscription-map-error';
 
 export class SubscriptionCreate {
+  private readonly logger = new Logger(SubscriptionCreate.name);
+
   constructor(
     private repository: SubscriptionRepository,
     private teamRepository: TeamRepository,
@@ -34,8 +36,6 @@ export class SubscriptionCreate {
     private subFeatureRepository: SubscriptionFeatureRepository,
     private featureRepository: FeatureRepository,
   ) {}
-
-  private readonly logger = new Logger(SubscriptionCreate.name);
 
   async run(dto: CreateSubscriptionDto): Promise<SubscriptionCreateResponse> {
     try {

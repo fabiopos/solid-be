@@ -3,6 +3,8 @@ import { TeamRepository } from '../lib/team/domain/TeamRepository';
 import { FulfilledTeam } from '../lib/team/domain/TeamSchema';
 
 export class TeamRepositoryMock implements TeamRepository {
+  private _teams: FulfilledTeam[] = [];
+
   getOneByName(name: string): Promise<FulfilledTeam> {
     return Promise.resolve(
       FulfilledTeam.make({
@@ -13,6 +15,7 @@ export class TeamRepositoryMock implements TeamRepository {
       }),
     );
   }
+
   searchByName(name: string): Promise<FulfilledTeam[]> {
     return Promise.resolve([
       FulfilledTeam.make({
@@ -23,8 +26,9 @@ export class TeamRepositoryMock implements TeamRepository {
       }),
     ]);
   }
+
   async create(payload: Team) {
-    const baseTeam = FulfilledTeam.make({
+    const team = FulfilledTeam.make({
       active: true,
       hasSubscription: true,
       name: 'team name',
@@ -32,24 +36,28 @@ export class TeamRepositoryMock implements TeamRepository {
       players: [],
       ...payload,
     });
-    return baseTeam;
+    this._teams.push(team);
+    return team;
   }
+
   async getAll() {
-    return [];
+    return this._teams;
   }
+
   async getOneById(id: string) {
-    return FulfilledTeam.make({
-      id,
-      active: true,
-      hasSubscription: true,
-      name: 'team name',
-      createdAt: new Date(),
-    });
+    const team = this._teams.find((t) => t.id === id);
+    if (!team) throw new Error('Team not found');
+    return team;
   }
+
   async edit(payload: any) {
-    return;
+    const index = this._teams.findIndex((t) => t.id === payload.id);
+    if (index !== -1) {
+      this._teams[index] = { ...this._teams[index], ...payload };
+    }
   }
+
   async delete(id: string) {
-    return;
+    this._teams = this._teams.filter((t) => t.id !== id);
   }
 }
