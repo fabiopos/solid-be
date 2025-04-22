@@ -1,8 +1,16 @@
-import { Body, Controller, Get, Inject, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PlayerPositionGet } from '../../application/player-position.get';
 import { PlayerPositionCreate } from '../../application/player-position.create';
-import { PlayerPositionUpsertPayload } from './validations';
+import { LineupDto, PlayerPositionUpsertPayload } from './validations';
 
 @ApiTags('player-position')
 @Controller('player-position')
@@ -29,5 +37,25 @@ export class PlayerPositionController {
     const { positions } = body;
 
     return this.playerCreate.upsert(playerId, positions);
+  }
+
+  @Post('lineup')
+  async saveLineup(@Body() body: LineupDto) {
+    const updates = body.positions.reduce(
+      (acc, { playerId, positionId }) => {
+        if (!acc[playerId]) acc[playerId] = [];
+        acc[playerId].push(positionId);
+        return acc;
+      },
+      {} as Record<string, string[]>,
+    );
+
+    const results = await Promise.all(
+      Object.entries(updates).map(([playerId, positions]) =>
+        this.playerCreate.upsert(playerId, positions),
+      ),
+    );
+
+    return results.flat();
   }
 }

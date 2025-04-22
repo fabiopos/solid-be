@@ -1,10 +1,11 @@
 import { add } from 'date-fns';
 
-import { User } from '../../../lib/user/domain/User';
-import { Team } from '../../../lib/team/domain/Team';
-import { Plan } from '../../../lib/plan/domain/plan';
+import { User } from '../../User/domain/User';
+import { Team } from '../../Team/domain/Team';
+import { Plan } from '../../plan/domain/plan';
 import { CreateSubscriptionDto } from '../../../shared/dto/create-subscription.dto';
 import { TypeOrmSubscriptionEntity } from '../infrastructure/type-orm/type-orm-subscription.entity';
+
 export class Subscription {
   id: string;
   name: string;

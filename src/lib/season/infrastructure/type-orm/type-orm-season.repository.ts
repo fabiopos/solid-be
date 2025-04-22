@@ -10,16 +10,16 @@ import {
   PartialSeason,
 } from '../../domain/season.schema';
 import { TypeOrmSeasonEntity } from './type-orm-season.entity';
-import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmTeamEntity } from '../../../Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
 
 export class TypeOrmSeasonRepository implements SeasonRepository {
   constructor(
     @InjectRepository(TypeOrmSeasonEntity)
     private readonly repository: Repository<TypeOrmSeasonEntity>,
-
     @InjectRepository(TypeOrmTeamEntity)
     private readonly teamRepository: Repository<TypeOrmTeamEntity>,
   ) {}
+
   async find(seasonId: string): Promise<FulfilledSeason> {
     const season = await this.repository.findOne({
       where: { id: seasonId },

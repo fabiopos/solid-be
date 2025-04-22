@@ -1,6 +1,6 @@
 import * as S from '@effect/schema/Schema';
 
-import { featureSchema } from '../../../lib/feature/domain/feature.schema';
+import { featureSchema } from '../../feature/domain/feature.schema';
 
 export const subscriptionFeatureSchema = S.Struct({
   id: S.String,
