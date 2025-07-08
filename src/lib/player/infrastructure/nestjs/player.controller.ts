@@ -54,11 +54,14 @@ export class PlayerController {
   }
 
   @ApiParam({ name: 'teamId' })
-  @Get(':teamId/with-stats')
+  @ApiParam({ name: 'active' })
+  @Get(':teamId/with-stats/:active?')
   //@UseGuards(JwtAuthGuard)
   async getAllWithStats(@Param() params: PlayerGetAllParams) {
-    const { teamId } = params;
-    return this.playerGetAll.getAllWithStats(teamId);
+    const { teamId, active } = params;
+    const isActive = active === 'active';
+    console.log('entrando a getAllWithStats', teamId, isActive);
+    return this.playerGetAll.getAllWithStats(teamId, isActive);
   }
 
   @ApiParam({ name: 'playerId' })

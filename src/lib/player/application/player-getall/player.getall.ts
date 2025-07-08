@@ -27,11 +27,11 @@ export class PlayerGetAll {
     return this.mapPlayerStats(fulfiledPlayer, totalTeamMatches);
   }
 
-  async getAllWithStats(teamId: string) {
+  async getAllWithStats(teamId: string, active: boolean = true) {
     const players = await this.repository.getAllByTeamWithFilters(
       teamId,
       undefined,
-      true,
+      active,
     );
     const totalTeamMatches = await this.getTotalTeamMatches(teamId);
 

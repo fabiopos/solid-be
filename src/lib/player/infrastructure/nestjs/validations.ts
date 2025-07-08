@@ -28,6 +28,10 @@ export class PlayerDetailsParams {
 export class PlayerGetAllParams {
   @IsUUID()
   teamId: string;
+
+  @IsOptional()
+  @IsString()
+  active?: string;
 }
 
 export class PlayerQueryParams {
