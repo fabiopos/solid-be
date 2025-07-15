@@ -83,10 +83,9 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   async getAllByTeamWithFilters(
     teamId: string,
     limit?: number,
-    active?: boolean,
   ): Promise<FulfilledPlayer[]> {
     const allPlayers = await this.repository.find({
-      where: { team: { id: teamId }, active },
+      where: { team: { id: teamId } },
       relations: {
         team: true,
         favPosition: true,

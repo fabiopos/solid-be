@@ -27,11 +27,10 @@ export class PlayerGetAll {
     return this.mapPlayerStats(fulfiledPlayer, totalTeamMatches);
   }
 
-  async getAllWithStats(teamId: string, active: boolean = true) {
+  async getAllWithStats(teamId: string) {
     const players = await this.repository.getAllByTeamWithFilters(
       teamId,
       undefined,
-      active,
     );
     const totalTeamMatches = await this.getTotalTeamMatches(teamId);
 
@@ -70,10 +69,14 @@ export class PlayerGetAll {
       minutesPlayed,
       playedMatches,
       totalTeamMatches,
-      assistsAvg: assistsCount / playedMatches,
-      goalsAvg: goalsCount / playedMatches,
-      minutesPerc: (minutesPlayed / (totalTeamMatches * 60)) * 100,
-      playedMatchesPerc: (playedMatches / totalTeamMatches) * 100,
+      assistsAvg: assistsCount === 0 ? 0 : assistsCount / playedMatches,
+      goalsAvg: goalsCount === 0 ? 0 : goalsCount / playedMatches,
+      minutesPerc:
+        minutesPlayed === 0
+          ? 0
+          : (minutesPlayed / (totalTeamMatches * 60)) * 100,
+      playedMatchesPerc:
+        playedMatches === 0 ? 0 : (playedMatches / totalTeamMatches) * 100,
     });
   }
 
