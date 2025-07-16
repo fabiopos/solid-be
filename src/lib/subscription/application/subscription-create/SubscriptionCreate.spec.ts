@@ -1,21 +1,21 @@
 import { SubscriptionCreate } from './SubscriptionCreate';
 import { add, format } from 'date-fns';
 
-import { TeamRepository } from '../../../../lib/team/domain/TeamRepository';
+import { TeamRepository } from '../../../Team/domain/TeamRepository';
 import { SubscriptionRepository } from '../../domain/subscription.repository';
-import { PlanRepository } from '../../../../lib/plan/domain/plan.repository';
-import { UserRepository } from '../../../../lib/user/domain/UserRepository';
+import { PlanRepository } from '../../../plan/domain/plan.repository';
+import { UserRepository } from '../../../User/domain/UserRepository';
 import { DocumentType } from '../../../../shared/enums/player.enum';
-import { Plan } from '../../../../lib/plan/domain/plan';
+import { Plan } from '../../../plan/domain/plan';
 import { PlanRepositoryMock } from '../../../../mocks/PlanRepositoryMock';
 import { UserRepositoryMock } from '../../../../mocks/UserRepositoryMock';
 import { TeamRepositoryMock } from '../../../../mocks/TeamRepositoryMock';
 import { SubscriptionRepositoryMock } from '../../../../mocks/SubscriptionRepositoryMock';
 import { SubscriptionCreateResponse } from '../../domain/subscription.schema';
 import { CreateSubscriptionDto } from '../../../../shared/dto/create-subscription.dto';
-import { SubscriptionFeatureRepository } from '../../../../lib/subscription-feature/domain/subscription-feature-repository';
+import { SubscriptionFeatureRepository } from '../../../subscription-feature/domain/subscription-feature-repository';
 import { SubscriptionFeatureRepositoryMock } from '../../../../mocks/SubscriptionFeatureRepository';
-import { FeatureRepository } from '../../../../lib/feature/domain/feature.repository';
+import { FeatureRepository } from '../../../feature/domain/feature.repository';
 import { FeatureRepositoryMock } from '../../../../mocks/FeatureRepository';
 import { RoleEnum } from '../../../../shared/enums/role.enum';
 

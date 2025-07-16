@@ -7,9 +7,9 @@ import { TypeOrmSeasonRepository } from '../type-orm/type-orm-season.repository'
 import { SeasonGet } from '../../application/season.get';
 import { SeasonCreate } from '../../application/season.create';
 import { SeasonUpdate } from '../../application/season.update';
-import { TypeOrmTeamRepository } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamRepository';
-import { TypeOrmTeamEntity } from '../../../../lib/team/infrastructure/TypeOrm/TypeOrmTeamEntity';
-import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastructure/type-orm/type-orm-subscription.entity';
+import { TypeOrmTeamRepository } from '../../../Team/infrastructure/TypeOrm/TypeOrmTeamRepository';
+import { TypeOrmTeamEntity } from '../../../Team/infrastructure/TypeOrm/TypeOrmTeamEntity';
+import { TypeOrmSubscriptionEntity } from '../../../Subscription/infrastructure/type-orm/type-orm-subscription.entity';
 import { SeasonDelete } from '../../application/season.delete';
 
 @Module({

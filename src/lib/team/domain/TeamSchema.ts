@@ -1,4 +1,4 @@
-import { playerSchema } from '../../../lib/player/domain/player.schema';
+import { playerSchema } from '../../player/domain/player.schema';
 import * as S from '@effect/schema/Schema';
 
 export const teamSchema = S.Struct({
@@ -35,6 +35,7 @@ export class EmptyTeam extends S.TaggedClass<EmptyTeam>()('EmptyTeam', {
   get active(): boolean {
     return true;
   }
+
   get hasSubscription(): boolean {
     return this.subscriptionId !== null;
   }
