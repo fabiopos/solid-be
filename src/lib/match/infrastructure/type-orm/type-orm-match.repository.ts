@@ -129,7 +129,7 @@ export class TypeOrmMatchRepository implements MatchRepository {
         awayTeam: true,
       },
       order: {
-        matchDay: 'DESC',
+        matchDay: 'ASC',
       },
       take: limit,
     });
