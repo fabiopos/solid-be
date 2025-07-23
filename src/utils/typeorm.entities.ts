@@ -13,6 +13,7 @@ import { TypeOrmSeasonEntity } from '../lib/season/infrastructure/type-orm/type-
 import { TypeOrmFeatureEntity } from '../lib/feature/infrastructure/type-orm/type-orm-feature.entity';
 import { TypeOrmPlayerInjuryEntity } from '../lib/player-injury/infrastructure/type-orm/type-orm-player-injury.entity';
 import { TypeOrmSubscriptionFeatureEntity } from '../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.entity';
+import { TypeOrmTwoFactorEntity } from 'src/lib/auth/infraestructure/type-orm/twofactor.entity';
 
 export default [
   TypeOrmSubscriptionEntity,
@@ -30,4 +31,5 @@ export default [
   TypeOrmFeatureEntity,
   TypeOrmPlayerInjuryEntity,
   TypeOrmSubscriptionFeatureEntity,
+  TypeOrmTwoFactorEntity,
 ];

@@ -92,7 +92,7 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
         playerPositions: { fieldPosition: true },
         matchAparitions: true,
       },
-      order: { shirtName: 'ASC' },
+      order: { favPosition: { order: 'ASC' } },
       take: limit,
     });
     const mappedPlayers = allPlayers.map((p) => this.mapToFulfilledPlayer(p));
@@ -168,6 +168,15 @@ export class TypeOrmPlayerRepository implements PlayerRepository {
   ): Promise<FulfilledPlayer | null> {
     const player = await this.repository.findOne({
       where: { documentNumber },
+    });
+    return this.mapToFulfilledPlayer(player);
+  }
+
+  async getOneByPhoneNumber(
+    phoneNumber: string,
+  ): Promise<FulfilledPlayer | null> {
+    const player = await this.repository.findOne({
+      where: { phone: phoneNumber },
     });
     return this.mapToFulfilledPlayer(player);
   }

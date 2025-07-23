@@ -20,6 +20,8 @@ import { TypeOrmPlanRepository } from '../../../../lib/plan/infrastructure/type-
 import { TypeOrmPlayerRepository } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.repository';
 import { TypeOrmSubscriptionFeatureRepository } from '../../../../lib/subscription-feature/infrastructure/type-orm/type-orm-subscription-feature.repository';
 import { TypeOrmFeatureRepository } from '../../../../lib/feature/infrastructure/type-orm/type-orm-feature.repository';
+import { TypeOrmTwoFactorEntity } from '../type-orm/twofactor.entity';
+import { TypeOrmTwoFactorRepository } from '../type-orm/twofactor.repository';
 
 @Module({
   imports: [
@@ -31,6 +33,7 @@ import { TypeOrmFeatureRepository } from '../../../../lib/feature/infrastructure
     TypeOrmModule.forFeature([TypeOrmPlayerEntity]),
     TypeOrmModule.forFeature([TypeOrmSubscriptionFeatureEntity]),
     TypeOrmModule.forFeature([TypeOrmFeatureEntity]),
+    TypeOrmModule.forFeature([TypeOrmTwoFactorEntity]),
   ],
   providers: [
     {
@@ -62,6 +65,10 @@ import { TypeOrmFeatureRepository } from '../../../../lib/feature/infrastructure
       useClass: TypeOrmFeatureRepository,
     },
     {
+      provide: 'TwoFactorRepository',
+      useClass: TypeOrmTwoFactorRepository,
+    },
+    {
       provide: 'UserFindBy',
       useFactory: (userRepository: TypeOrmUserRepository) =>
         new UserFindBy(userRepository),
@@ -69,9 +76,25 @@ import { TypeOrmFeatureRepository } from '../../../../lib/feature/infrastructure
     },
     {
       provide: 'AuthLogin',
-      useFactory: (userService: UserFindBy) =>
-        new AuthLogin(userService, new JwtService(JWT_OPTIONS)),
-      inject: ['UserFindBy'],
+      useFactory: (
+        userService: UserFindBy,
+        playerRepository: TypeOrmPlayerRepository,
+        twoFactorRepository: TypeOrmTwoFactorRepository,
+        teamRepository: TypeOrmTeamRepository,
+      ) =>
+        new AuthLogin(
+          userService,
+          new JwtService(JWT_OPTIONS),
+          playerRepository,
+          twoFactorRepository,
+          teamRepository,
+        ),
+      inject: [
+        'UserFindBy',
+        'PlayerRepository',
+        'TwoFactorRepository',
+        'TeamRepository',
+      ],
     },
   ],
   controllers: [AuthController],

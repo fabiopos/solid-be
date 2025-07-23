@@ -58,6 +58,19 @@ export class ValidateTeamPayload {
   name: string;
 }
 
+export class ValidateTeamInvitePayload {
+  @IsUUID()
+  id: string;
+}
+
+export class QueryTeamInvitePayload {
+  @IsString()
+  sid: string;
+
+  @IsUUID()
+  tid: string;
+}
+
 export class UpdateTeamParams {
   @IsUUID()
   id: string;
