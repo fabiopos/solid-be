@@ -5,7 +5,6 @@ import { TypeOrmSubscriptionEntity } from '../../../../lib/subscription/infrastr
 import { TeamAbstract } from '../../../../shared/abstracts/team-abstract';
 import { TypeOrmMatchEntity } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.entity';
 import { TypeOrmSeasonEntity } from '../../../../lib/season/infrastructure/type-orm/type-orm-season.entity';
-import { TypeOrmTwoFactorEntity } from 'src/lib/auth/infraestructure/type-orm/twofactor.entity';
 
 @Entity('team')
 export class TypeOrmTeamEntity extends TeamAbstract {
@@ -29,9 +28,6 @@ export class TypeOrmTeamEntity extends TeamAbstract {
 
   @OneToMany(() => TypeOrmSeasonEntity, (season) => season.team)
   seasons: TypeOrmSeasonEntity[];
-
-  @OneToMany(() => TypeOrmTwoFactorEntity, (twoFactor) => twoFactor.team)
-  twoFactorRegs: TypeOrmTwoFactorEntity[];
 
   // relations to
   // seasons
