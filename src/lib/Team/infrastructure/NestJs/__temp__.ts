@@ -93,3 +93,11 @@ export class UpdateTeamPayload {
   @IsOptional()
   shieldUrl?: string;
 }
+
+export class QueryTeamInvitePayload {
+  @IsUUID()
+  tid: string;
+
+  @IsString()
+  sid: string;
+}
