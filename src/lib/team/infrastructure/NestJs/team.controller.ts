@@ -18,7 +18,6 @@ import {
   TeamSearchParams,
   UpdateTeamParams,
   UpdateTeamPayload,
-  ValidateTeamInvitePayload,
   ValidateTeamPayload,
 } from './Validations';
 import { TeamGetAll } from '../../application/TeamGetAll/TeamGetAll';
@@ -107,11 +106,6 @@ export class TeamController {
       secondaryColor: team.secondaryColor,
       shieldUrl: team.shieldUrl,
     });
-  }
-
-  @Post('/invite-validate')
-  async inviteValidate(@Body() payload: ValidateTeamInvitePayload) {
-    return this.teamFind.run(payload.id);
   }
 
   @Delete(':id')

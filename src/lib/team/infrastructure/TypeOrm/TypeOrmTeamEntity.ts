@@ -32,6 +32,7 @@ export class TypeOrmTeamEntity extends TeamAbstract {
 
   @OneToMany(() => TypeOrmTwoFactorEntity, (twoFactor) => twoFactor.team)
   twoFactorRegs: TypeOrmTwoFactorEntity[];
+
   // relations to
   // seasons
 }

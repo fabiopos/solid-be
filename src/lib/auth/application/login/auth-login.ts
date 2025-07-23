@@ -6,9 +6,10 @@ import { InvalidCredentialsError } from '../../domain/invalid-credentials-error'
 import { TypeOrmPlayerRepository } from 'src/lib/player/infrastructure/type-orm/type-orm-player.repository';
 import * as TW from 'twilio';
 import { TypeOrmTwoFactorRepository } from '../../infraestructure/type-orm/twofactor.repository';
-import { QueryTeamInvitePayload } from 'src/lib/team/infrastructure/NestJs/Validations';
+//import { QueryTeamInvitePayload } from 'src/lib/team/infrastructure/NestJs/Validations';
 import { inviteDataSchema, numberTaken } from '../../domain/invite-data.schema';
 import { TypeOrmTeamRepository } from 'src/lib/team/infrastructure/TypeOrm/TypeOrmTeamRepository';
+import { QueryTeamInvitePayload } from 'src/lib/team/infrastructure/NestJs/Validations';
 
 export class AuthLogin {
   constructor(
