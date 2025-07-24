@@ -42,6 +42,11 @@ export class PlayerCreate {
     });
   }
 
+  async getSubscriptionIdByTeamId(teamId: string) {
+    const team = await this.teamRepository.getOneById(teamId);
+    return team.subscriptionId;
+  }
+
   makeEmptyPlayer(dto: CreatePlayerDto) {
     return pipe(
       dto,

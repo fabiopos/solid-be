@@ -101,3 +101,8 @@ export class QueryTeamInvitePayload {
   @IsString()
   sid: string;
 }
+
+export class TeamInviteValidatePayload {
+  @IsUUID()
+  id: string;
+}

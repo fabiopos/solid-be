@@ -119,7 +119,7 @@ export class AuthLogin {
 
     if (!team) return { success: false, message: 'No team found' };
 
-    const players = await this.playerRepository.getAll(twoFactor.teamId);
+    const players = await this.playerRepository.getAllByTeam(twoFactor.teamId);
 
     return inviteDataSchema.make({
       email: twoFactor.email,

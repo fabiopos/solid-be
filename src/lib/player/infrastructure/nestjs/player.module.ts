@@ -24,6 +24,9 @@ import { TypeOrmPlayerPositionEntity } from '../../../../lib/player-position/inf
 import { TypeOrmMatchRepository } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.repository';
 import { TypeOrmMatchEntity } from '../../../../lib/match/infrastructure/type-orm/type-orm-match.entity';
 import { TypeOrmMatchAparitionEntity } from '../../../../lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.entity';
+import { UserCreate } from 'src/lib/user/application/UserCreate';
+import { UserRepository } from 'src/lib/user/domain/UserRepository';
+import { SubscriptionRepository } from 'src/lib/subscription/domain/subscription.repository';
 
 @Module({
   imports: [
@@ -70,6 +73,14 @@ import { TypeOrmMatchAparitionEntity } from '../../../../lib/match-aparition/inf
     {
       provide: 'MatchRepository',
       useClass: TypeOrmMatchRepository,
+    },
+    {
+      provide: 'UserCreate',
+      useFactory: (
+        userRepository: UserRepository,
+        subscriptionRepository: SubscriptionRepository,
+      ) => new UserCreate(userRepository, subscriptionRepository),
+      inject: ['UserRepository', 'SubscriptionRepository'],
     },
     {
       provide: 'PlayerGetAll',

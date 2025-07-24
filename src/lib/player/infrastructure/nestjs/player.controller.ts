@@ -32,6 +32,10 @@ import { PlayerUpdate } from '../../application/player-update/player.update';
 import { PartialPlayer } from '../../domain/player.schema';
 import { JwtAuthGuard } from '../../../../lib/auth/infraestructure/nestjs/jwt-auth.guard';
 import { toDate } from 'date-fns';
+import { UserCreate } from 'src/lib/user/application/UserCreate';
+import { User } from 'src/lib/user/domain/User';
+import { RoleEnum } from 'src/shared/enums/role.enum';
+import { encryptPassword } from 'src/utils/encription';
 
 @ApiTags('player')
 @Controller('player')
@@ -41,6 +45,7 @@ export class PlayerController {
     @Inject('PlayerCreate') private readonly playerCreate: PlayerCreate,
     @Inject('PlayerDelete') private readonly playerDelete: PlayerDelete,
     @Inject('PlayerUpdate') private readonly playerUpdate: PlayerUpdate,
+    @Inject('UserCreate') private readonly userCreate: UserCreate,
   ) {}
 
   private readonly logger = new Logger(PlayerController.name);
@@ -87,6 +92,30 @@ export class PlayerController {
       const result = await this.playerCreate.run({
         ...player,
       });
+
+      const subscriptionId = await this.playerCreate.getSubscriptionIdByTeamId(
+        player.teamId,
+      );
+
+      const password = await encryptPassword(player.documentNumber);
+
+      await this.userCreate.run(
+        User.create({
+          active: true,
+          documentNumber: player.documentNumber,
+          documentType: player.documentType,
+          email: player.email,
+          password,
+          firstName: player.firstName,
+          lastName: player.lastName,
+          roleId: RoleEnum.USER,
+          policy: false,
+          avatarUrl: player.avatarUrl,
+          city: player.city,
+          phone: player.phone,
+          subscriptionId,
+        }),
+      );
       return result;
     } catch (error) {
       if (isFiberFailure(error)) throw new BadRequestException(error.message);

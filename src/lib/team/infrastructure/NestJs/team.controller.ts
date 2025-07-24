@@ -15,6 +15,7 @@ import { TeamCreate } from '../../application/TeamCreate/TeamCreate';
 import {
   CreateTeamPayload,
   DeleteTeamParams,
+  TeamInviteValidatePayload,
   TeamSearchParams,
   UpdateTeamParams,
   UpdateTeamPayload,
@@ -72,6 +73,12 @@ export class TeamController {
   @Post('/validate')
   async validate(@Body() team: ValidateTeamPayload) {
     return this.teamValidate.run({ teamName: team.name });
+  }
+
+  @Post('/invite-validate')
+  async inviteValidate(@Body() { id }: TeamInviteValidatePayload) {
+    const team = await this.teamFind.run(id);
+    return { ...team, players: [] };
   }
 
   @UseGuards(JwtAuthGuard)
