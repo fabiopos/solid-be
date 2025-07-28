@@ -9,6 +9,7 @@ export interface Token {
   email: string;
   name: string;
   subscriptionId: string;
+  tid: string;
 }
 
 export type AuthSchemaType = S.Schema.Type<typeof authLoginSchema>;

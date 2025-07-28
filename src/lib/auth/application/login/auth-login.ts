@@ -28,10 +28,15 @@ export class AuthLogin {
 
     if (!isValidPwd) return new InvalidCredentialsError('Invalid credentials');
 
+    const teams = await this.teamRepository.getAll(user.subscriptionId);
+
+    const teamsCandidates = teams.filter((x) => x.hasSubscription);
+
     const payload = {
       email: user.email,
       name: `${user.firstName} ${user.lastName}`,
       subscriptionId: user.subscriptionId,
+      tid: teams.length > 0 ? teamsCandidates[0].id : undefined,
     } as Token;
     const token = this.jwtService.sign(payload);
 

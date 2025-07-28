@@ -37,6 +37,7 @@ export class DashboardController {
       params.id,
       query.limit,
     );
+    console.log('lastmatches query res', lastMatches.length);
     return lastMatches;
   }
 

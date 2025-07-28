@@ -6,6 +6,7 @@ import { FulfilledMatch } from '../../../../lib/match/domain/match.schema';
 import { TypeOrmPlayerRepository } from '../../../../lib/player/infrastructure/type-orm/type-orm-player.repository';
 import { TypeOrmMatchAparitionRepository } from '../../../../lib/match-aparition/infrastructure/type-orm/type-orm-match-aparition.repository';
 import { Logger } from '@nestjs/common';
+import { FulfilledScorer } from 'src/lib/match-aparition/domain/match-aparition.schema';
 
 export class DashboardGet {
   constructor(
@@ -51,14 +52,14 @@ export class DashboardGet {
     const allPlayers = await this.playerRepository.getAllByTeam(teamId);
     const mappedScorers = rawScorers.map((r) => {
       const player = allPlayers.find((p) => p.id === r.id);
-      return {
+      return FulfilledScorer.make({
         id: r.id,
         name: `${player?.firstName} ${player?.lastName}`,
         shirtName: player?.shirtName,
         goals: r.goals,
         avatarUrl: player?.avatarUrl,
         shirtNumber: player?.shirtNumber,
-      };
+      });
     });
 
     return mappedScorers;
@@ -73,6 +74,7 @@ export class DashboardGet {
       teamId,
       limit,
     );
+    console.log('Lastmatches', limit);
     return matches;
   }
 
